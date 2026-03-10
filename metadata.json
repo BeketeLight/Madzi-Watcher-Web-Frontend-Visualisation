@@ -1,0 +1,5 @@
+{
+  "name": "Madzi Watcher",
+  "description": "Real-time water quality monitoring system visualizing sensor data from IoT systems.",
+  "requestFramePermissions": []
+}

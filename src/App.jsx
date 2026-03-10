@@ -1,13 +1,12 @@
-import AppRoutes from "./routes";
+import React from 'react';
+import { AppProviders } from './providers/AppProviders';
+import AppRoutes from './routes';
+import './index.css';
 
-function App() {
+export default function App() {
   return (
-    <>
-    <div className="h-screen flex items-center justify-center bg-gray-100">
+    <AppProviders>
       <AppRoutes />
-    </div>
-    </>
+    </AppProviders>
   );
 }
-
-export default App;

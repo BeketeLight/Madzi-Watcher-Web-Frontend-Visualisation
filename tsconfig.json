@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "target": "ES2022",                      // Latest JS features
+    "module": "ESNext",                      // Use ES modules
+    "lib": ["ES2022", "DOM"],                // JS + browser APIs
+    "jsx": "react-jsx",                       // React JSX support
+    "allowJs": true,                          // Allow JS files
+    "paths": { "@/*": ["./*"] },             // Path alias for @
+    "noEmit": true                            // Don’t output JS (Vite handles bundling)
   }
 }

@@ -1,7 +1,11 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
+// import dotenv from 'dotenv';
 
-const SOCKET_URL = "http://localhost:3000";
+// dotenv.config();
+
+// In a real app, this would be your backend URL
+const SOCKET_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 
 export const socket = io(SOCKET_URL, {
-  transports: ["websocket"],
+  autoConnect: false,
 });

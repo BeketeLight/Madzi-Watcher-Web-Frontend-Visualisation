@@ -1,25 +1,38 @@
-import { useEffect, useState } from "react";
-import { socket } from "../../../lib/socket";
+import { useState, useEffect } from 'react';
+//import { socket } from '@/lib/socket';
 
-export default function useWaterSocket() {
-  const [reading, setReading] = useState(null);
+export const useWaterSocket = () => {
+  const [data, setData] = useState(null);
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
+    // socket.connect();
 
-    socket.on("connect", () => {
-      console.log("Connected to backend socket");
-    });
+    // socket.on('water-data', (newData) => {
+    //   setData(newData);
+    //   setHistory((prev) => [...prev.slice(-19), newData]);
+    // });
 
-    socket.on("newReading", (data) => {
-      console.log("New sensor reading:", data);
-      setReading(data);
-    });
+    // Simulation for demo purposes since we don't have a real backend socket
+    const interval = setInterval(() => {
+      const mockData = {
+        turbidity: 0.5 + Math.random() * 4.5,
+        ph: 6.5 + Math.random() * 2.0,
+        tds: 150 + Math.random() * 350,
+        conductivity: 250 + Math.random() * 500,
+        wqi: 65 + Math.random() * 30,
+        timestamp: new Date().toLocaleTimeString(),
+      };
+      setData(mockData);
+      setHistory((prev) => [...prev.slice(-19), mockData]);
+    }, 5000);
 
     return () => {
-      socket.off("newReading");
+      // socket.off('water-data');
+      // socket.disconnect();
+      clearInterval(interval);
     };
-
   }, []);
 
-  return reading;
-}
+  return { data, history };
+};
