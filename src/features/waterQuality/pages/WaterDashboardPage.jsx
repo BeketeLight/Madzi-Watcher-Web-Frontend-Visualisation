@@ -19,16 +19,27 @@ import {
 } from 'lucide-react';
 
 export const WaterDashboardPage = () => {
-  const { data, history } = useWaterSocket();
+  const { data, history, isConnected, error } = useWaterSocket();
 
-  if (!data) return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-slate-600">Connecting to sensor network...</p>
-      </div>
+if (error) return (
+  <div className="min-h-screen flex items-center justify-center bg-red-50">
+    <div className="text-center text-red-600">
+      <p>Connection failed: {error}</p>
+      <p>Check backend/MQTT bridge is running</p>
     </div>
-  );
+  </div>
+);
+
+if (!isConnected || !data) return (
+  <div className="min-h-screen flex items-center justify-center bg-slate-50">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <p className="text-slate-600">
+        {isConnected ? 'Waiting for first data...' : 'Connecting to real-time server...'}
+      </p>
+    </div>
+  </div>
+);
 
   return (
     <DashboardLayout>
@@ -68,11 +79,11 @@ export const WaterDashboardPage = () => {
 
           {/* Metric Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
-            <WaterQualityCard title="Turbidity" value={data.turbidity.toFixed(2)} unit="NTU" icon={Droplets} color="bg-blue-500" />
-            <WaterQualityCard title="Water pH" value={data.ph.toFixed(1)} unit="pH" icon={Activity} color="bg-emerald-500" />
-            <WaterQualityCard title="TDS" value={data.tds.toFixed(0)} unit="ppm" icon={TableIcon} color="bg-indigo-500" />
-            <WaterQualityCard title="Conductivity" value={data.conductivity.toFixed(0)} unit="µS/cm" icon={Zap} color="bg-orange-500" />
-            <WaterQualityCard title="Quality Index" value={data.wqi.toFixed(0)} unit="WQI" icon={ShieldCheck} color="bg-blue-600" />
+            <WaterQualityCard title="Turbidity" value={data.turbidity?.toFixed(2) ?? '—'} unit="NTU" icon={Droplets} color="bg-blue-500" />
+            <WaterQualityCard title="Water pH" value={data.pH?.toFixed(1) ?? '—'} icon={Activity} color="bg-emerald-500" />
+            <WaterQualityCard title="TDS" value={data.tds?.toFixed(0) ?? '—'} unit="ppm" icon={TableIcon} color="bg-indigo-500" />
+            <WaterQualityCard title="Conductivity" value={data.electricalConductivity?.toFixed(0) ?? '—'} unit="µS/cm" icon={Zap} color="bg-orange-500" />
+            <WaterQualityCard title="Quality Index" value={data.waterQualityIndex?.toFixed(0) ?? '—'} unit="WQI" icon={ShieldCheck} color="bg-blue-600" />
           </div>
 
           {/* Charts */}

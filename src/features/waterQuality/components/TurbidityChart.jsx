@@ -60,13 +60,13 @@ export const TurbidityChart = ({ history }) => {
       <Card className="border-none shadow-md">
         <CardHeader><CardTitle className="text-lg font-semibold">pH Level Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
-          <Line options={commonOptions} data={chartData('pH Level', 'ph', '#10B981')} />
+          <Line options={commonOptions} data={chartData('pH Level', 'pH', '#10B981')} />
         </CardContent>
       </Card>
       <Card className="border-none shadow-md">
         <CardHeader><CardTitle className="text-lg font-semibold">WQI Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
-          <Line options={commonOptions} data={chartData('Water Quality Index', 'wqi', '#F59E0B')} />
+          <Line options={commonOptions} data={chartData('Water Quality Index', 'waterQualityIndex', '#F59E0B')} />
         </CardContent>
       </Card>
     </div>
