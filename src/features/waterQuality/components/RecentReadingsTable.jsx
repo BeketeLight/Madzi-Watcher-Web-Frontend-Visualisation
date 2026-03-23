@@ -4,9 +4,10 @@ import { cn } from '@/lib/utils';
 
 export const RecentReadingsTable = ({ readings }) => {
   const getWQIStatus = (waterQualityIndex) => {
-    if (waterQualityIndex >= 90) return { label: 'Excellent', color: 'text-green-600 bg-green-50' };
-    if (waterQualityIndex >= 70) return { label: 'Good', color: 'text-blue-600 bg-blue-50' };
-    if (waterQualityIndex >= 50) return { label: 'Fair', color: 'text-yellow-600 bg-yellow-50' };
+    if (waterQualityIndex <= 25) return { label: 'Excellent', color: 'text-green-600 bg-green-50' };
+    if (waterQualityIndex <= 50) return { label: 'Good', color: 'text-blue-600 bg-blue-50' };
+    if (waterQualityIndex <= 75) return { label: 'Fair', color: 'text-yellow-600 bg-yellow-50' };
+    if (waterQualityIndex >= 100) return { label: 'Poor', color: 'text-red-600 bg-red-50' };
     return { label: 'Poor', color: 'text-red-600 bg-red-50' };
   };
 
