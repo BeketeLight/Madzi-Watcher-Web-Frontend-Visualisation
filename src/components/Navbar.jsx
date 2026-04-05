@@ -1,15 +1,17 @@
 import React from 'react';
 import { Droplets, Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
-export const Navbar = () => {
+export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const navigate = useNavigate();
+
 
   const navLinks = [
     { name: 'Overview', href: '#' },
     { name: 'Dashboard', href: '#dashboard' },
     { name: 'Downloads', href: '#downloads' },
-    { name: 'Products', href: '#' },
     { name: 'Newsletter', href: '#newsletter' },
   ];
 
@@ -30,7 +32,7 @@ export const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <Button size="sm" className="bg-[#2C7BE5] hover:bg-blue-700 rounded-full px-6">Subscribe</Button>
+            <Button size="sm" onClick={() => navigate('/login')} className="bg-[#2C7BE5] hover:bg-blue-700 rounded-full px-6">Login</Button>
           </div>
 
           <div className="md:hidden flex items-center">
