@@ -64,7 +64,7 @@ export const TurbidityChart = ({ history }) => {
         </CardContent>
       </Card>
       <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
-        <CardHeader><CardTitle className="text-lg font-semibold text-white">WQI Trend</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-lg font-semibold text-white"q>WQI Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
           <Line options={commonOptions} data={chartData('Water Quality Index', 'waterQualityIndex', '#F59E0B')} />
         </CardContent>
