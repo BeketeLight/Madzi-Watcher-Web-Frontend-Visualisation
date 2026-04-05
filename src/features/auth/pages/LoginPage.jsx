@@ -1,89 +1,4 @@
-// import LoginForm from "@/features/auth/components/LoginForm";
-// import { useEffect, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
-// import { useAuth } from '@/features/auth/hooks/useAuth'
 
-
-// export default function LoginPage() {
-//   const [formState, setFormState] = useState({ email: '', password: '' })
-//   const navigate = useNavigate()
-
-//   const {
-//     login,
-//     error,
-//     loading,
-//     status,
-//     clearStatus,
-//     verificationSessionId,
-//     loginSessionId,
-//     isAuthenticated,
-//     isAuthReady,
-//   } = useAuth()
-
-//   const preparePayload = () => ({
-//     emailAddress: formState.email.trim(),
-//     password: formState.password,
-//   })
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target
-//     setFormState((prev) => ({ ...prev, [name]: value }))
-//   }
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault()
-//     try {
-//       const {message, status} = await login({ credentials: preparePayload() })
-//       console.log('LOGIN PAGE RECEIVED:', {message, status})
-//       if(status)
-//       navigate('/otp',{ state: { otpMessage: message } })
-//     } catch (err) {
-//       console.error('LOGIN PAGE ERROR:', err)
-//     }
-//   }
-
-//   /* -------- ROUTE GUARD -------- */
-//   useEffect(() => {
-//     if (!isAuthReady) return
-
-//     // if (isAuthenticated) {
-//     //   navigate("/dashboard", { replace: true })
-//     // } 
-//     // else if (!verificationSessionId) {
-//     //   navigate("/identity/verify", { replace: true })
-//     // } 
-//     //navigating to OTP page on submit only ......
-//     // else if (loginSessionId) {
-//     //   navigate("/otp", { replace: true })
-//     // }
-//   }, [
-//     isAuthReady,
-//     isAuthenticated,
-//     verificationSessionId,
-//     loginSessionId,
-//     navigate,
-//   ])
-
-//   useEffect(() => {
-//     if (status === "success") {
-//       clearStatus()
-//     }
-//   }, [status, clearStatus])
-
-//   return (
-//     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-//       <div className="w-full max-w-lg">
-//         <LoginForm
-//           values={formState}
-//           onChange={handleChange}
-//           onSubmit={handleSubmit}
-//           error={error}
-//           loading={loading}
-//         />
-//       </div>
-//     </div>
-//   )
-// }
 import LoginForm from "@/features/auth/components/LoginForm";
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -105,7 +20,7 @@ export default function LoginPage() {
     try {
       const { message, status: loginStatus } = await login({ 
         credentials: { 
-            emailAddress: formState.email.trim(), 
+            email: formState.email.trim(), 
             password: formState.password 
         } 
       })
@@ -134,7 +49,7 @@ export default function LoginPage() {
         />
         
         {/* Footer info */}
-        <p className="mt-8 text-center text-xs text-blue-400 font-medium uppercase tracking-widest">
+        <p className="mt-12 text-center text-xs text-blue-400 font-medium uppercase tracking-widest">
             &copy; {new Date().getFullYear()} Madzi-Watcher Project • Clean Water for All
         </p>
       </div>
