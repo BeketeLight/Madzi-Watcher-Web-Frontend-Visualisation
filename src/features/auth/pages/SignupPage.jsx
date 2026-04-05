@@ -1,8 +1,3 @@
-import React from 'react'
-import SignupForm from '../components/SignupForm'
-import LoginAvatar from "@/assets/LoginAvatar.png"
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/features/auth/hooks/useAuth'
 
 function SignupPage() {
  

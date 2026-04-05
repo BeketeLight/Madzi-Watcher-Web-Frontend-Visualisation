@@ -1,6 +1,3 @@
-import LoginForm from '@/features/auth/components/LoginForm'
-import LoginAvatar from '@/assets/LoginAvatar.png'
-
 
 function LoginPage() {
   
