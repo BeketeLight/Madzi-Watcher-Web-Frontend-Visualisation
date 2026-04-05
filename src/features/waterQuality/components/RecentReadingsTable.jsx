@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
-export const RecentReadingsTable = ({ readings }) => {
+export const RecentReadingsTable = ({ readings, className, ...props }) => {
   const getWQIStatus = (waterQualityIndex) => {
     if (waterQualityIndex <= 25) return { label: 'Excellent', color: 'text-green-600 bg-green-50' };
     if (waterQualityIndex <= 50) return { label: 'Good', color: 'text-blue-600 bg-blue-50' };
@@ -12,7 +12,7 @@ export const RecentReadingsTable = ({ readings }) => {
   };
 
   return (
-    <Card className="border-none shadow-md overflow-hidden">
+    <Card className={cn("border-none shadow-md overflow-hidden bg-[#0a2540] border border-[#1e3a5f]", className)} {...props}>
       <CardHeader className="bg-slate-50/50 border-b border-slate-100">
         <CardTitle className="text-lg font-semibold">Recent Sensor Readings</CardTitle>
       </CardHeader>

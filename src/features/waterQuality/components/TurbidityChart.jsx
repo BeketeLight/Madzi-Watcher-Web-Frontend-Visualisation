@@ -51,20 +51,20 @@ export const TurbidityChart = ({ history }) => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <Card className="border-none shadow-md">
-        <CardHeader><CardTitle className="text-lg font-semibold">Turbidity Trend</CardTitle></CardHeader>
+      <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
+        <CardHeader><CardTitle className="text-lg font-semibold text-white">Turbidity Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
           <Line options={commonOptions} data={chartData('Turbidity (NTU)', 'turbidity', '#2C7BE5')} />
         </CardContent>
       </Card>
-      <Card className="border-none shadow-md">
-        <CardHeader><CardTitle className="text-lg font-semibold">pH Level Trend</CardTitle></CardHeader>
+      <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
+        <CardHeader><CardTitle className="text-lg font-semibold text-white">pH Level Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
           <Line options={commonOptions} data={chartData('pH Level', 'pH', '#10B981')} />
         </CardContent>
       </Card>
-      <Card className="border-none shadow-md">
-        <CardHeader><CardTitle className="text-lg font-semibold">WQI Trend</CardTitle></CardHeader>
+      <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
+        <CardHeader><CardTitle className="text-lg font-semibold text-white">WQI Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
           <Line options={commonOptions} data={chartData('Water Quality Index', 'waterQualityIndex', '#F59E0B')} />
         </CardContent>
