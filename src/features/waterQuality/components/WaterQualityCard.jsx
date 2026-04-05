@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 export const WaterQualityCard = ({ title, value, unit, icon: Icon, color }) => {
   return (
-    <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow bg-[#0a2540] border border-[#1e3a5f]">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div className={cn("p-3 rounded-xl", color)}>

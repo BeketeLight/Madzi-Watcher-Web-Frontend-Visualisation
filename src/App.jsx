@@ -1,12 +1,5 @@
-import React from 'react';
-import { AppProviders } from './providers/AppProviders';
-import AppRoutes from './routes';
-import './index.css';
+import { Outlet } from 'react-router-dom'
 
 export default function App() {
-  return (
-    <AppProviders>
-      <AppRoutes />
-    </AppProviders>
-  );
+  return <Outlet />
 }
