@@ -1,9 +1,13 @@
-import React from 'react';
+import { QueryClientProvider } from "./QueryClientProvider";
+import { AuthProvider } from "./AuthProvider";
 
-export const AppProviders = ({ children }) => {
+export function AppProviders({ children }) {
   return (
-    <>
-      {children}
-    </>
+    <QueryClientProvider>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </QueryClientProvider>
   );
-};
+}
+
