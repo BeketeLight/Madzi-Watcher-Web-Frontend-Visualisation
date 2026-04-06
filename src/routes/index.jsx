@@ -13,6 +13,7 @@ import NotFoundPage from '@/pages/NotFoundPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
 import SignupPage from '@/features/auth/pages/SignupPage'
 import OtpVerificationPage from '@/features/auth/pages/OtpVerificationPage'
+import RequestPasswordResetPage from '@/features/auth/pages/RequestPasswordResetPage'
 
 import DashboardPage from '@/features/dashboard/pages/DashboardPage'
 import DashboardOverview from '@/features/dashboard/components/DashboardOverview'
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       { path: '/login', element: <LoginPage /> },
       { path: '/signup', element: <SignupPage /> },
       { path: '/otp', element: <OtpVerificationPage /> },
+      { path: '/request-reset', element: <RequestPasswordResetPage />},
       { path: '/unauthorized', element: <UnauthorizedPage /> },
     ],
   },

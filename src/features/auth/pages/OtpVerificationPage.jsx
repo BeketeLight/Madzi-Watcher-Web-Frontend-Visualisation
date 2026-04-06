@@ -28,11 +28,11 @@ function OtpVerificationPage() {
     if (!isAuthReady) return
 
     if (isAuthenticated) {
-      navigate("/dashboard", { replace: false})
+      navigate("/dashboard", { replace: true })
     } else if (!verificationSessionId) {
-      navigate("/identity", { replace: false })
+      navigate("/identity", { replace: true })
     } else if (!loginSessionId) {
-      navigate("/login", { replace: false })
+      navigate("/login", { replace: true })
     }
   }, [
     isAuthReady,

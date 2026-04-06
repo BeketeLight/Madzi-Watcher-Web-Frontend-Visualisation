@@ -36,8 +36,6 @@ export default function LoginForm({
       )}
       {...props}
     >
-      
-    
       <div className="flex flex-col items-center gap-1 text-center">
         <img
           src={waterDrop}
@@ -81,7 +79,6 @@ export default function LoginForm({
             Password
           </Label>
 
-          
           <div className="relative">
             <Input
               id="password"
@@ -116,7 +113,7 @@ export default function LoginForm({
           size="lg"
           type="submit"
           disabled={loading}
-          className="rounded-full text-base w-full max-w-[200px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold"
+           className="rounded-full text-base w-full max-w-[240px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold shadow-lg shadow-blue-200 mt-8 mb-4 "
         >
           {loading ? (
             <>
@@ -127,8 +124,6 @@ export default function LoginForm({
             "Log in"
           )}
         </Button>
-
-       
       </div>
     </form>
   )
