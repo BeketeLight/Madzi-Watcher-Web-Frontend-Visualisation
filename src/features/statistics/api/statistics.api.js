@@ -23,7 +23,7 @@ function handleError(error) {
 // Dashboard Overview Stats
 export async function getDashboardStatistics() {
   try {
-    const { data } = await api.get('/stats/dashboard');
+    const { data } = await api.get('/api/water-quality/stats/dashboard');
     return data;
   } catch (error) {
     return handleError(error);
@@ -32,7 +32,7 @@ export async function getDashboardStatistics() {
 
 export async function getMeanStatistics() {
   try {
-    const { data } = await api.get('/stats/mean');
+    const { data } = await api.get('/api/water-quality/stats/mean');
     return data;
   } catch (error) {
     return handleError(error);
@@ -41,7 +41,7 @@ export async function getMeanStatistics() {
 
 export async function getVarianceStatistics() {
   try {
-    const { data } = await api.get('/stats/variance');
+    const { data } = await api.get('/api/water-quality/stats/variance');
     return data;
   } catch (error) {
     return handleError(error);
@@ -50,7 +50,7 @@ export async function getVarianceStatistics() {
 
 export async function getStandardDeviationStatistics() {
   try {
-    const { data } = await api.get('/stats/std-dev');
+    const { data } = await api.get('/water-quality/stats/std-dev');
     return data;
   } catch (error) {
     return handleError(error);
@@ -59,7 +59,7 @@ export async function getStandardDeviationStatistics() {
 
 export async function getMedianStatistics() {
   try {
-    const { data } = await api.get('/stats/median');
+    const { data } = await api.get('/api/water-quality/stats/median');
     return data;
   } catch (error) {
     return handleError(error);
@@ -68,7 +68,7 @@ export async function getMedianStatistics() {
 
 export async function getMinMaxStatistics() {
   try {
-    const { data } = await api.get('/stats/min-max');
+    const { data } = await api.get('/api/water-quality/stats/min-max');
     return data;
   } catch (error) {
     return handleError(error);
@@ -78,7 +78,7 @@ export async function getMinMaxStatistics() {
 // Time-based Statistics
 export async function getDailyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/daily', { params });
+    const { data } = await api.get('/api/water-quality/stats/daily', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -87,7 +87,7 @@ export async function getDailyStatistics(params = {}) {
 
 export async function getWeeklyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/weekly', { params });
+    const { data } = await api.get('/api/water-quality/stats/weekly', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -96,7 +96,7 @@ export async function getWeeklyStatistics(params = {}) {
 
 export async function getMonthlyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/monthly', { params });
+    const { data } = await api.get('/api/water-quality/stats/monthly', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -106,7 +106,7 @@ export async function getMonthlyStatistics(params = {}) {
 // Advanced Analytics
 export async function getTrendAnalysis(params = {}) {
   try {
-    const { data } = await api.get('/stats/trend', { params });
+    const { data } = await api.get('/api/water-quality/stats/trend', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -115,7 +115,7 @@ export async function getTrendAnalysis(params = {}) {
 
 export async function getMovingAverage(params = {}) {
   try {
-    const { data } = await api.get('/stats/moving-average', { params });
+    const { data } = await api.get('/api/water-quality/stats/moving-average', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -124,7 +124,7 @@ export async function getMovingAverage(params = {}) {
 
 export async function getParameterCorrelation(params = {}) {
   try {
-    const { data } = await api.get('/stats/correlation', { params });
+    const { data } = await api.get('/api/water-quality/stats/correlation', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -133,7 +133,7 @@ export async function getParameterCorrelation(params = {}) {
 
 export async function detectOutliers(params = {}) {
   try {
-    const { data } = await api.get('/stats/outliers', { params });
+    const { data } = await api.get('/api/water-quality/stats/outliers', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -142,7 +142,7 @@ export async function detectOutliers(params = {}) {
 
 export async function getWaterQualityClassification() {
   try {
-    const { data } = await api.get('/stats/classification');
+    const { data } = await api.get('/api/water-quality/stats/classification');
     return data;
   } catch (error) {
     return handleError(error);
@@ -151,7 +151,7 @@ export async function getWaterQualityClassification() {
 
 export async function getWaterStabilityScore() {
   try {
-    const { data } = await api.get('/stats/stability-score');
+    const { data } = await api.get('/api/water-quality/stats/stability-score');
     return data;
   } catch (error) {
     return handleError(error);
@@ -161,7 +161,7 @@ export async function getWaterStabilityScore() {
 // Location-based
 export async function getDistrictStatistics(district) {
   try {
-    const { data } = await api.get(`/stats/${district}/district`);
+    const { data } = await api.get(`/api/water-quality/stats/${district}/district`);
     return data;
   } catch (error) {
     return handleError(error);
@@ -170,7 +170,7 @@ export async function getDistrictStatistics(district) {
 
 export async function getTreatmentPlantStatistics(plant) {
   try {
-    const { data } = await api.get(`/stats/${plant}/treatment-plant`);
+    const { data } = await api.get(`/api/water-quality/stats/${plant}/treatment-plant`);
     return data;
   } catch (error) {
     return handleError(error);
