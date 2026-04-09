@@ -1,5 +1,7 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import * as statisticsApi from '../api/statistics.api';
+import { socket } from '@/lib/socket'; // Use your existing socket instance
 
 export function useStatistics() {
   // ==================== STATE ====================
@@ -18,10 +20,11 @@ export function useStatistics() {
   const [outliers, setOutliers] = useState(null);
   const [classification, setClassification] = useState(null);
   const [stabilityScore, setStabilityScore] = useState(null);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [status, setStatus] = useState(null);   // 'success' | 'failed'
+  const [status, setStatus] = useState(null);
   const [message, setMessage] = useState(null);
 
   const clearError = () => setError(null);
@@ -262,7 +265,7 @@ export function useStatistics() {
     }
   }, []);
 
-  // ==================== COMBINED FETCH (Recommended for Dashboard) ====================
+  // ==================== COMBINED FETCH ====================
   const fetchAllBasicStats = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -292,7 +295,50 @@ export function useStatistics() {
     }
   }, []);
 
-  // Auto-fetch dashboard stats when hook mounts (like many dashboards do)
+  // ==================== WEBSOCKET REAL-TIME UPDATES ====================
+  // Listen to the same socket instance from useWaterSocket
+  useEffect(() => {
+    // Make sure socket is connected
+    if (socket && !socket.connected) {
+      socket.connect();
+    }
+
+    const handleConnect = () => {
+      console.log('📊 Statistics: Socket connected');
+      setIsSocketConnected(true);
+    };
+
+    const handleWaterQualityData = (newData) => {
+      console.log('📊 New sensor data received, refreshing statistics...');
+      // Refresh all statistics when new data arrives
+      fetchAllBasicStats();
+    };
+
+    const handleDisconnect = () => {
+      console.log('📊 Statistics: Socket disconnected');
+      setIsSocketConnected(false);
+    };
+
+    const handleConnectError = (err) => {
+      console.error('📊 Statistics: Socket connection error', err);
+      setIsSocketConnected(false);
+    };
+
+    // Register listeners
+    socket.on('connect', handleConnect);
+    socket.on('water-quality-data', handleWaterQualityData);
+    socket.on('disconnect', handleDisconnect);
+    socket.on('connect_error', handleConnectError);
+
+    return () => {
+      socket.off('connect', handleConnect);
+      socket.off('water-quality-data', handleWaterQualityData);
+      socket.off('disconnect', handleDisconnect);
+      socket.off('connect_error', handleConnectError);
+    };
+  }, [fetchAllBasicStats]);
+
+  // Auto-fetch dashboard stats when hook mounts
   useEffect(() => {
     fetchDashboardStatistics();
   }, [fetchDashboardStatistics]);
@@ -321,6 +367,7 @@ export function useStatistics() {
     error,
     status,
     message,
+    isSocketConnected,
 
     // Actions
     clearError,
