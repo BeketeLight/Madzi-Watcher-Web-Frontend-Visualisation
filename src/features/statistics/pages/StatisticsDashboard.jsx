@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 // Import components
+import { StatisticsCards } from '../components/StatisticsCards';
 import { QualityMetricsCards } from '../components/QualityMetricsCards';
 import { LatestReadingCard } from '../components/LatestReadingCard';
 import { RangeStatistics } from '../components/RangeStatistics';
@@ -203,6 +204,12 @@ export default function StatisticsDashboard() {
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div className="mt-8 space-y-8">
+            {/* Statistics Summary Cards */}
+            <StatisticsCards 
+              dashboardStats={dashboardData} 
+              meanStats={meanData} 
+            />
+
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-2">Live Monitoring</h2>
               <p className="text-gray-500 text-sm mb-4">Real-time data from IoT Sensor Node</p>
@@ -221,33 +228,8 @@ export default function StatisticsDashboard() {
 
         {/* Trends Tab */}
         {activeTab === 'trends' && (
-          <div className="mt-8 space-y-8">
+          <div className="mt-8">
             <TrendChart trends={trends} loading={advancedLoading} />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="p-4 bg-[#0a2540] rounded-lg">
-                <h3 className="text-white text-lg mb-4">Interpretation Guide</h3>
-                <ul className="space-y-2 text-blue-300 text-sm">
-                  <li>📈 <span className="text-white">Increasing trend</span> - Values are going up</li>
-                  <li>📉 <span className="text-white">Decreasing trend</span> - Values are going down</li>
-                  <li>➡️ <span className="text-white">Stable trend</span> - Values are consistent</li>
-                  <li className="mt-2 text-yellow-400">⚠️ For WQI: Decreasing = Improving water quality</li>
-                </ul>
-              </div>
-              <div className="p-4 bg-[#0a2540] rounded-lg">
-                <h3 className="text-white text-lg mb-4">Recommendations</h3>
-                <ul className="space-y-2 text-blue-300 text-sm">
-                  {trends?.trends?.wqi?.direction === 'decreasing' && (
-                    <li className="text-green-400">✓ Water quality is improving. Continue current practices.</li>
-                  )}
-                  {trends?.trends?.wqi?.direction === 'increasing' && (
-                    <li className="text-yellow-400">⚠️ Water quality is degrading. Investigate potential sources of contamination.</li>
-                  )}
-                  {trends?.trends?.turbidity?.direction === 'increasing' && (
-                    <li>📊 Turbidity is increasing - Check for sediment runoff or treatment issues.</li>
-                  )}
-                </ul>
-              </div>
-            </div>
           </div>
         )}
 
@@ -255,43 +237,17 @@ export default function StatisticsDashboard() {
         {activeTab === 'correlations' && (
           <div className="mt-8">
             <CorrelationMatrix correlations={correlations} loading={advancedLoading} />
-            <div className="mt-6 p-4 bg-[#0a2540] rounded-lg">
-              <h3 className="text-white text-lg mb-2">How to Read Correlations</h3>
-              <p className="text-blue-300 text-sm">
-                Correlation coefficients range from -1 to +1:
-              </p>
-              <ul className="mt-2 space-y-1 text-blue-300 text-sm">
-                <li>• <span className="text-green-400">+0.7 to +1.0</span> - Strong positive relationship</li>
-                <li>• <span className="text-yellow-400">+0.3 to +0.7</span> - Moderate positive relationship</li>
-                <li>• <span className="text-gray-400">-0.3 to +0.3</span> - Weak or no relationship</li>
-                <li>• <span className="text-yellow-400">-0.7 to -0.3</span> - Moderate negative relationship</li>
-                <li>• <span className="text-red-400">-1.0 to -0.7</span> - Strong negative relationship</li>
-              </ul>
-            </div>
           </div>
         )}
 
         {/* Outliers Tab */}
         {activeTab === 'outliers' && (
-          <div className="mt-8 space-y-8">
+          <div className="mt-8">
             <OutlierDetection 
               outliers={outliers} 
               loading={advancedLoading} 
               onRefresh={() => statisticsApi.detectOutliers('turbidity', 3).then(setOutliers)}
             />
-            <div className="p-4 bg-[#0a2540] rounded-lg">
-              <h3 className="text-white text-lg mb-2">About Outlier Detection</h3>
-              <p className="text-blue-300 text-sm">
-                Outliers are readings that deviate significantly from the normal range.
-                These may indicate:
-              </p>
-              <ul className="mt-2 space-y-1 text-blue-300 text-sm">
-                <li>• 🔧 Sensor malfunction or calibration issues</li>
-                <li>• 🏭 Contamination events or pollution spikes</li>
-                <li>• 📊 Data entry errors</li>
-                <li className="mt-2">Recommendation: Investigate outliers promptly and verify sensor readings.</li>
-              </ul>
-            </div>
           </div>
         )}
 
