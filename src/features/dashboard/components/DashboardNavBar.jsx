@@ -7,6 +7,7 @@ import {
   LogOut,
   BarChart3,
   User,
+  Settings,
   Users
 } from "lucide-react";
 import React from "react";
@@ -28,6 +29,12 @@ const CLIENT_NAV_ITEMS = [
     icon: Bell,
     badge: '3',
     path: '/dashboard/notifications'
+  },
+  {
+    label: 'Configuration',
+    icon: Settings,
+    badge: '3',
+    path: '/dashboard/configuration'
   },
 ];
 
