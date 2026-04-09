@@ -47,7 +47,7 @@ export default function OtpForm({
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-gray-200 rounded-xl",
+        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl",
         className
       )}
       {...props}
