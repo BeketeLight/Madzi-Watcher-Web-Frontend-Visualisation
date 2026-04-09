@@ -175,14 +175,16 @@ export function useStatistics() {
   }, []);
 
   // Advanced
-  const fetchTrendAnalysis = useCallback(async (params = {}) => {
+  const fetchTrendAnalysis = useCallback(async (params) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await statisticsApi.getTrendAnalysis(params);
-      setTrendStats(data);
+      const data = await statisticsApi.getTrendAnalysis(30);
+      // console.log('trend data api response', data.data)
+      setTrendStats(data.data);
       return data;
     } catch (err) {
+      // console.log('Failed to fetch trend analysis')
       setError(err?.message || 'Failed to fetch trend analysis');
       throw err;
     } finally {
@@ -272,17 +274,27 @@ export function useStatistics() {
     setStatus(null);
 
     try {
-      const [dashboard, mean, minMax, classificationData] = await Promise.all([
+      const [dashboard, mean, minMax, classificationData, trends, dailystats] = await Promise.all([
         statisticsApi.getDashboardStatistics(),
         statisticsApi.getMeanStatistics(),
         statisticsApi.getMinMaxStatistics(),
         statisticsApi.getWaterQualityClassification(),
+        statisticsApi.getTrendAnalysis(30),
+
+        //  statisticsApi.getParameterCorrelation(),
+        //       statisticsApi.detectOutliers('turbidity', 3),
+        statisticsApi.getDailyStatistics(30),
+        //       statisticsApi.getWeeklyStatistics(12),
+        //       statisticsApi.getMonthlyStatistics(12),
+        //       statisticsApi.getYearlyStatistics(),
       ]);
 
       setDashboardStats(dashboard);
       setMeanStats(mean);
       setMinMaxStats(minMax);
       setClassification(classificationData);
+      setTrendStats(trends);
+      setDailyStats(dailystats);
 
       setStatus('success');
       return { dashboard, mean, minMax, classification: classificationData };

@@ -3,9 +3,9 @@ import { useStatistics } from '../hooks/useStatistics';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { 
-  BarChart3, 
-  RefreshCw, 
+import {
+  BarChart3,
+  RefreshCw,
   AlertCircle,
   TrendingUp,
   Link as LinkIcon,
@@ -38,7 +38,11 @@ export default function StatisticsDashboard() {
     classification,
     loading,
     error,
+    trendStats,
+    // dailyStats,
     fetchAllBasicStats,
+
+    fetchTrendAnalysis
   } = useStatistics();
 
   // Additional state for advanced features
@@ -65,8 +69,10 @@ export default function StatisticsDashboard() {
   const refreshAllData = () => {
     fetchAllBasicStats();
     fetchAdvancedAnalytics();
+    fetchTrendAnalysis(30); //new
   };
 
+  // console.log(trendStats)
   // Fetch advanced analytics
   const fetchAdvancedAnalytics = async () => {
     setAdvancedLoading(true);
@@ -80,7 +86,7 @@ export default function StatisticsDashboard() {
         statisticsApi.getMonthlyStatistics(12),
         statisticsApi.getYearlyStatistics(),
       ]);
-      
+
       setTrends(trendRes.data);
       setCorrelations(correlationRes.data);
       setOutliers(outliersRes);
@@ -88,7 +94,7 @@ export default function StatisticsDashboard() {
       setWeeklyStats(weeklyRes.data || []);
       setMonthlyStats(monthlyRes.data || []);
       setYearlyStats(yearlyRes.data || []);
-      
+
       // Get available districts from the data
       const uniqueDistricts = [...new Set(
         (dailyRes.data || []).map(item => item.district).filter(Boolean)
@@ -117,6 +123,8 @@ export default function StatisticsDashboard() {
 
   useEffect(() => {
     fetchAdvancedAnalytics();
+     
+    fetchTrendAnalysis(30); //new
   }, []);
 
   useEffect(() => {
@@ -198,8 +206,8 @@ export default function StatisticsDashboard() {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-gray-100 w-full justify-start overflow-x-auto">
           {tabs.map((tab) => (
-            <TabsTrigger 
-              key={tab.id} 
+            <TabsTrigger
+              key={tab.id}
               value={tab.id}
               className="data-[state=active]:bg-[#2C7BE5] data-[state=active]:text-white"
             >
@@ -213,9 +221,9 @@ export default function StatisticsDashboard() {
         {activeTab === 'overview' && (
           <div className="mt-8 space-y-8">
             {/* Statistics Summary Cards */}
-            <StatisticsCards 
-              dashboardStats={dashboardData} 
-              meanStats={meanData} 
+            <StatisticsCards
+              dashboardStats={dashboardData}
+              meanStats={meanData}
             />
 
             <div>
@@ -227,17 +235,22 @@ export default function StatisticsDashboard() {
             {latestReading && <LatestReadingStatistics latestReading={latestReading} />}
 
             <RangeStatistics dashboardStats={dashboardData} minMaxStats={minMaxData} />
-            
+
             <StabilityStatistics dashboardStats={dashboardData} stdDevStats={null} />
-            
+
             <ClassificationDistribution classification={classification} />
           </div>
         )}
 
         {/* Trends Tab */}
-        {activeTab === 'trends' && (
+        {/* {activeTab === 'trends' && (
           <div className="mt-8">
             <TrendChart trends={trends} loading={advancedLoading} />
+          </div>
+        )} */}
+          {activeTab === 'trends' && (
+          <div className="mt-8">
+            <TrendChart trends={trendStats} loading={advancedLoading} />
           </div>
         )}
 
@@ -251,9 +264,9 @@ export default function StatisticsDashboard() {
         {/* Outliers Tab */}
         {activeTab === 'outliers' && (
           <div className="mt-8">
-            <OutlierDetection 
-              outliers={outliers} 
-              loading={advancedLoading} 
+            <OutlierDetection
+              outliers={outliers}
+              loading={advancedLoading}
               onRefresh={() => statisticsApi.detectOutliers('turbidity', 3).then(setOutliers)}
             />
           </div>
@@ -262,8 +275,9 @@ export default function StatisticsDashboard() {
         {/* Time Series Tab */}
         {activeTab === 'time-series' && (
           <div className="mt-8">
-            <TimeSeriesStats 
+            <TimeSeriesStats
               dailyData={dailyStats}
+              // dailyData={dailyStats}
               weeklyData={weeklyStats}
               monthlyData={monthlyStats}
               yearlyData={yearlyStats}
@@ -275,7 +289,7 @@ export default function StatisticsDashboard() {
         {/* Districts Tab */}
         {activeTab === 'districts' && (
           <div className="mt-8">
-            <DistrictSelector 
+            <DistrictSelector
               districts={districts}
               selectedDistrict={selectedDistrict}
               onSelectDistrict={setSelectedDistrict}
