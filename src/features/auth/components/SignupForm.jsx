@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import waterDrop from "@/assets/waterDrop.png"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import { Loader2, Eye, EyeOff } from "lucide-react"
+import { Loader2, Eye, EyeOff, Droplets} from "lucide-react"
 
 export default function SignupForm({
   onSubmit,
@@ -26,11 +26,10 @@ export default function SignupForm({
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-        <img
-          src={waterDrop}
-          alt="Madzi-Watcher Logo"
-          className="opacity-50 w-32 h-32 mx-auto"
-        />
+        <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
+       
         <h1 className="text-xl font-bold">Register Madzi-Watcher </h1>
         <p className="text-sm text-gray-600">Register an Employee to become Madzi-Watcher</p>
       </div>

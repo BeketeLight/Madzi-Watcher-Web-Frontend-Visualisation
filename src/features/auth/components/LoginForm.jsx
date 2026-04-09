@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import { Loader2, Eye, EyeOff} from "lucide-react"
+import { Loader2, Eye, EyeOff, Droplets} from "lucide-react"
 import { useState } from "react"
 import { AUTH_FLOW } from "@/utils/constants"
 import { useAuth } from "../hooks/useAuth"
@@ -37,11 +37,11 @@ export default function LoginForm({
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-        <img
-          src={waterDrop}
-          alt="Madzi-Watcher Logo"
-          className="opacity-50 w-32 h-32 mx-auto"
-        />
+       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
+
+
         <h1 className="text-xl font-bold">Madzi-Watcher Account</h1>
         <p className="text-sm text-gray-600">
           Enter your credentials to access your account
