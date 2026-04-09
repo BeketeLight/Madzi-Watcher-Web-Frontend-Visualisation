@@ -137,3 +137,5 @@ export const TrendChart = ({ trends, loading, className, ...props }) => {
 };
 
 export default TrendChart;
+
+

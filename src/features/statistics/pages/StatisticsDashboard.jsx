@@ -15,12 +15,12 @@ import {
 } from 'lucide-react';
 
 // Import components
-import { StatisticsCards } from '../components/StatisticsCards';
-import { QualityMetricsCards } from '../components/QualityMetricsCards';
-import { LatestReadingCard } from '../components/LatestReadingCard';
-import { RangeStatistics } from '../components/RangeStatistics';
-import { StabilityStatistics } from '../components/StabilityStatistics';
-import { ClassificationDistribution } from '../components/ClassificationDistribution';
+import StatisticsCards from '../components/StatisticsCards';
+import QualityMetricsCards from '../components/QualityMetricsCards';
+import LatestReadingStatistics from '../components/LatestReadingStatistics';
+import RangeStatistics from '../components/RangeStatistics';
+import StabilityStatistics from '../components/StabilityStatistics';
+import ClassificationDistribution from '../components/ClassificationDistribution';
 import TrendChart from '../components/TrendChart';
 import CorrelationMatrix from '../components/CorrelationMatrix';
 import OutlierDetection from '../components/OutlierDetection';
@@ -60,6 +60,12 @@ export default function StatisticsDashboard() {
   const minMaxData = minMaxStats?.data || {};
   const classificationData = classification?.data || {};
   const latestReading = dashboardData.latestReading;
+
+  // Function to refresh all data
+  const refreshAllData = () => {
+    fetchAllBasicStats();
+    fetchAdvancedAnalytics();
+  };
 
   // Fetch advanced analytics
   const fetchAdvancedAnalytics = async () => {
@@ -137,7 +143,7 @@ export default function StatisticsDashboard() {
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <p className="text-red-600 text-lg mb-4">Error Loading Statistics</p>
           <p className="text-red-500 text-sm mb-6">{error}</p>
-          <Button onClick={fetchAllBasicStats} className="bg-[#2C7BE5] hover:bg-blue-600 text-white">
+          <Button onClick={refreshAllData} className="bg-[#2C7BE5] hover:bg-blue-600 text-white">
             <RefreshCw className="h-4 w-4 mr-2" />
             Try Again
           </Button>
@@ -156,8 +162,8 @@ export default function StatisticsDashboard() {
   ];
 
   return (
-    <div className="space-y-8 p-6 bg-white min-h-screen">
-      {/* Header Section */}
+    <div className="space-y-8 p-6 bg-white min-h-screen relative">
+      {/* Header Section with Green DATA ANALYTICS badge */}
       <div className="bg-[#0a2540] border border-[#1e3a5f] rounded-3xl p-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
@@ -173,16 +179,18 @@ export default function StatisticsDashboard() {
               Comprehensive water quality analytics and statistical insights
             </p>
           </div>
-          <Button
-            onClick={() => {
-              fetchAllBasicStats();
-              fetchAdvancedAnalytics();
-            }}
-            className="bg-[#2C7BE5] hover:bg-blue-600 text-white"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh All Data
-          </Button>
+
+          {/* Green DATA ANALYTICS badge */}
+          <div className="flex items-center gap-3 bg-[#112b4a] border border-[#2C7BE5]/30 px-6 py-3 rounded-2xl">
+            <div className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </div>
+            <div>
+              <p className="text-green-400 font-medium text-sm">DATA ANALYTICS</p>
+              <p className="text-blue-400 text-xs">Statistical analysis</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -216,7 +224,7 @@ export default function StatisticsDashboard() {
               <QualityMetricsCards dashboardStats={dashboardData} meanStats={meanData} />
             </div>
 
-            {latestReading && <LatestReadingCard latestReading={latestReading} />}
+            {latestReading && <LatestReadingStatistics latestReading={latestReading} />}
 
             <RangeStatistics dashboardStats={dashboardData} minMaxStats={minMaxData} />
             
@@ -278,7 +286,7 @@ export default function StatisticsDashboard() {
         )}
       </Tabs>
 
-      {/* Footer */}
+      {/* Footer with total readings */}
       {dashboardData.totalReadings > 0 && (
         <div className="bg-gray-100 rounded-xl p-4 text-center">
           <p className="text-gray-600 text-sm">
@@ -286,6 +294,18 @@ export default function StatisticsDashboard() {
           </p>
         </div>
       )}
+
+      {/* Refresh Button - Floating at bottom right */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          onClick={refreshAllData}
+          className="bg-[#2C7BE5] hover:bg-blue-600 text-white rounded-full shadow-lg px-6 py-3"
+        >
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Refresh Data
+        </Button>
+      </div>
     </div>
   );
 }
+
