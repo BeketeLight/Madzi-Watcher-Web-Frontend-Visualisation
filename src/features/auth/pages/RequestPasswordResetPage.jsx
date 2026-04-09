@@ -5,16 +5,34 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 
 export default function RequestPasswordResetPage() {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const { requestPasswordReset, loading, error } = useAuth(); // Assuming this exists in your hook
+  const [formState, setFormState] = useState({
+    email: ''
+  });
+  
+  const { 
+    forgotPassword, 
+    loading, 
+    error,
+    status
+  } = useAuth(); // Assuming this exists in your hook
 
+  const preparePayload = () => {
+    return {
+      email: email.trim(),
+    }
+  } 
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  } 
+
+//handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const payload = preparePayload();
     try {
-      // Logic to call your backend
-      // await requestPasswordReset(email.trim());
-      setSubmitted(true);
+      await forgotPassword(payload);
     } catch (err) {
       console.error('RESET REQUEST ERROR:', err);
     }
@@ -31,17 +49,12 @@ export default function RequestPasswordResetPage() {
 
       <div className="relative z-10 w-full max-w-lg">
         <RequestPasswordResetForm
-         email={email}
-          setEmail={setEmail}
+         values={formState}
+         onChange={handleChange}
           onSubmit={handleSubmit}
           loading={loading}
           error={error}
-          submitted={submitted}
         />
-        
-        <p className="mt-12 text-center text-xs text-blue-400 font-medium uppercase tracking-widest">
-            &copy; {new Date().getFullYear()} Madzi-Watcher Project • Clean Water for All
-        </p>
       </div>
     </div>
   );

@@ -8,12 +8,11 @@ import { Link } from "react-router-dom";
 import { Loader2, ArrowLeft, Send } from "lucide-react";
 
 export default function RequestPasswordResetForm({
-  email,
-  setEmail,
+  values,
   onSubmit,
+  onChange,
   error,
   loading,
-  submitted,
   className,
   ...props
 }) {
@@ -38,7 +37,7 @@ export default function RequestPasswordResetForm({
         </p>
       </div>
 
-      {!submitted ? (
+      
         <div className="grid gap-4 mt-4">
           {error && (
             <p className="text-sm font-bold text-red-600 text-center">{error}</p>
@@ -54,11 +53,11 @@ export default function RequestPasswordResetForm({
               placeholder="employee@madzi.com"
               required
               disabled={loading}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={onChange}
               className={cn(
                 "rounded-2xl border-opacity-30 border-black h-12 placeholder:text-gray-500 text-lg",
-                email ? "border-blue-500" : "border-black"
+                values.email ? "border-blue-500" : "border-black"
               )}
             />
           </div>
@@ -81,15 +80,7 @@ export default function RequestPasswordResetForm({
             </Button>
           </div>
         </div>
-      ) : (
-        <div className="text-center py-6 animate-in fade-in zoom-in duration-300">
-            <div className="bg-blue-100 text-blue-700 p-4 rounded-xl font-bold mb-6">
-                Recovery Link Dispatched.
-            </div>
-            <p className="text-sm text-gray-500 mb-4">Check your inbox for instructions.</p>
-        </div>
-      )}
-
+    
       <div className="text-center">
         <Link 
           to="/login" 

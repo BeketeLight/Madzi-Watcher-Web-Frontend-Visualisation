@@ -13,13 +13,17 @@ import NotFoundPage from '@/pages/NotFoundPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
 import SignupPage from '@/features/auth/pages/SignupPage'
 import OtpVerificationPage from '@/features/auth/pages/OtpVerificationPage'
+
+//password-management
 import RequestPasswordResetPage from '@/features/auth/pages/RequestPasswordResetPage'
+import  ChangePasswordPage  from '@/features/auth/pages/ChangePasswordPage'
 
 import DashboardPage from '@/features/dashboard/pages/DashboardPage'
 import DashboardOverview from '@/features/dashboard/components/DashboardOverview'
 import NotificationsPage from '@/features/notifications/pages/NotificationsPage'
-// import StatisticsPage from '@/features/dashboard/pages/StatisticsPage'
-import StatisticsPage from '@/features/statistics/pages/StatisticsDashboard'
+import StatisticsPage from '@/features/dashboard/pages/StatisticsPage'
+// import StatisticsPage from '@/features/statistics/pages/StatisticsDashboard'
+//import StatisticsPage from '@/features/statistics/pages/StatisticsPage'
 import { RoleRoute } from './RoleRoute'
 import ProfilePage from '@/features/dashboard/pages/ProfilePage'
 import UserDetailPage from '@/features/dashboard/pages/UserDetailsPage'
@@ -33,6 +37,7 @@ export const router = createBrowserRouter([
       { path: '/login', element: <LoginPage /> },
       { path: '/signup', element: <SignupPage /> },
       { path: '/otp', element: <OtpVerificationPage /> },
+      { path: '/change-password', element: <ChangePasswordPage /> },
       { path: '/request-reset', element: <RequestPasswordResetPage />},
       { path: '/unauthorized', element: <UnauthorizedPage /> },
     ],
