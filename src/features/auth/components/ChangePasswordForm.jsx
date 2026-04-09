@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import waterDrop from "@/assets/waterDrop.png"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import { Loader2, Eye, EyeOff } from "lucide-react"
+import { Loader2, Eye, EyeOff,Droplets } from "lucide-react"
 
 export default function ChangePasswordForm({
   onSubmit,
@@ -36,15 +36,13 @@ export default function ChangePasswordForm({
   return (
     <form 
       onSubmit={onSubmit}
-      className={cn("flex flex-col gap-6 p-6 md:p-8 pb-12 bg-gray-200 rounded-xl", className)} 
+      className={cn("flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl", className)} 
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-        <img
-          src={waterDrop}
-          alt="Madzi-Watcher Logo"
-          className="opacity-50 w-32 h-32 mx-auto"
-        />
+      <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
         <h1 className="text-xl font-bold">Change Madzi-Watcher Password</h1>
         <p className="text-sm text-gray-600">Update your password at any time</p>
       </div>
