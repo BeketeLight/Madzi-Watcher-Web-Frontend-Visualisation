@@ -37,9 +37,9 @@ export const RecentReadingsTable = ({ readings, className, ...props }) => {
                   <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-300">{reading.timestamp}</td>
                     <td className="px-6 py-4 text-slate-300">{reading.turbidity.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-slate-300">{reading.pH.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-slate-300">{reading.tds.toFixed(0)}</td>
-                    <td className="px-6 py-4 text-slate-300">{reading.electricalConductivity.toFixed(0)}</td>
+                    <td className="px-6 py-4 text-slate-300">{"coming soon"}</td>
+                    <td className="px-6 py-4 text-slate-300">{"coming soon"}</td>
+                    <td className="px-6 py-4 text-slate-300">{"coming soon"}</td>
                     <td className="px-6 py-4 font-semibold text-slate-300">{reading.waterQualityIndex.toFixed(1)}</td>
                     <td className="px-6 py-4">
                       <span className={cn("px-2.5 py-1 rounded-full text-xs font-semibold", status.color)}>
