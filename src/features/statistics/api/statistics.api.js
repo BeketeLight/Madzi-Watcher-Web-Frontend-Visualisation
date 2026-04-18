@@ -1,81 +1,92 @@
 // src/features/statistics/api/statistics.api.js
 import api from '@/lib/axios';
 
-// Error handler (same style as your auth.api.js)
 function handleError(error) {
   if (error.response) {
     throw error.response.data;
   } else if (error.request) {
-    throw {
-      status: 500,
-      message: 'No response from server',
-    };
+    throw { status: 500, message: 'No response from server' };
   } else {
-    throw {
-      status: 500,
-      message: error.message || 'An error occurred',
-    };
+    throw { status: 500, message: error.message || 'An error occurred' };
   }
 }
 
 // ====================== STATISTICS API FUNCTIONS ======================
 
-// Dashboard Overview Stats
-export async function getDashboardStatistics() {
+// Core Statistics with Period Filter Support
+export async function getDashboardStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/dashboard');
+    const { data } = await api.get('/stats/dashboard', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getMeanStatistics() {
+export async function getMeanStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/mean');
+    const { data } = await api.get('/stats/mean', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getVarianceStatistics() {
+export async function getVarianceStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/variance');
+    const { data } = await api.get('/stats/variance', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getStandardDeviationStatistics() {
+export async function getStandardDeviationStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/std-dev');
+    const { data } = await api.get('/stats/std-dev', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getMedianStatistics() {
+export async function getMedianStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/median');
+    const { data } = await api.get('/stats/median', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getMinMaxStatistics() {
+export async function getMinMaxStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/min-max');
+    const { data } = await api.get('/stats/min-max', { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-// Time-based Statistics
+export async function getWaterQualityClassification(params = {}) {
+  try {
+    const { data } = await api.get('/stats/classification', { params });
+    return data;
+  } catch (error) {
+    return handleError(error);
+  }
+}
+
+export async function getWaterStabilityScore(params = {}) {
+  try {
+    const { data } = await api.get('/stats/stability-score', { params });
+    return data;
+  } catch (error) {
+    return handleError(error);
+  }
+}
+
+// Time-based Statistics (already support params)
 export async function getDailyStatistics(params = {}) {
   try {
     const { data } = await api.get('/stats/daily', { params });
@@ -140,41 +151,21 @@ export async function detectOutliers(params = {}) {
   }
 }
 
-export async function getWaterQualityClassification() {
+// Location-based (keep as is for now)
+export async function getDistrictStatistics(district, params = {}) {
   try {
-    const { data } = await api.get('/stats/classification');
+    const { data } = await api.get(`/stats/${district}/district`, { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
 
-export async function getWaterStabilityScore() {
+export async function getTreatmentPlantStatistics(plant, params = {}) {
   try {
-    const { data } = await api.get('/stats/stability-score');
+    const { data } = await api.get(`/stats/${plant}/treatment-plant`, { params });
     return data;
   } catch (error) {
     return handleError(error);
   }
 }
-
-// Location-based
-export async function getDistrictStatistics(district) {
-  try {
-    const { data } = await api.get(`/stats/${district}/district`);
-    return data;
-  } catch (error) {
-    return handleError(error);
-  }
-}
-
-export async function getTreatmentPlantStatistics(plant) {
-  try {
-    const { data } = await api.get(`/stats/${plant}/treatment-plant`);
-    return data;
-  } catch (error) {
-    return handleError(error);
-  }
-}
-
-
