@@ -57,12 +57,12 @@ export const TurbidityChart = ({ history }) => {
           <Line options={commonOptions} data={chartData('Turbidity (NTU)', 'turbidity', '#2C7BE5')} />
         </CardContent>
       </Card>
-      <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
+      {/* <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
         <CardHeader><CardTitle className="text-lg font-semibold text-white">pH Level Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">
           <Line options={commonOptions} data={chartData('pH Level', 'pH', '#10B981')} />
         </CardContent>
-      </Card>
+      </Card> */}
       <Card className="border-none shadow-md bg-[#0a2540] border border-[#1e3a5f]">
         <CardHeader><CardTitle className="text-lg font-semibold text-white"q>WQI Trend</CardTitle></CardHeader>
         <CardContent className="h-[300px]">

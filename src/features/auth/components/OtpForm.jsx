@@ -7,7 +7,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { cn } from "@/lib/utils"
-import { Loader2, MailSearch } from "lucide-react"
+import { Loader2, MailSearch, Droplets } from "lucide-react"
 
 
 export default function OtpForm({
@@ -47,17 +47,15 @@ export default function OtpForm({
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-gray-200 rounded-xl",
+        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl",
         className
       )}
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-        <img
-          src={waterDrop}
-          alt="Madzi-Watcher Logo"
-          className="opacity-50 w-40 h-40 mx-auto"
-        />
+       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
         <h1 className="text-xl font-bold">Verify Identity</h1>
         <p className="text-sm text-gray-600">
           Enter the  <strong>{message ?? "OTP"}</strong> to verify your identity.

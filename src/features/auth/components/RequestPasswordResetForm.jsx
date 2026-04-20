@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Loader2, ArrowLeft, Send } from "lucide-react";
+import { Loader2, ArrowLeft, Send, Droplets} from "lucide-react";
 
 export default function RequestPasswordResetForm({
   values,
@@ -20,17 +20,15 @@ export default function RequestPasswordResetForm({
     <form
       onSubmit={onSubmit}
       className={cn(
-        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-gray-200 rounded-xl w-auto shadow-xl",
+        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl w-auto shadow-xl",
         className
       )}
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-        <img
-          src={waterDrop}
-          alt="Madzi-Watcher Logo"
-          className="opacity-50 w-24 h-24 mx-auto mb-2"
-        />
+       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
         <h1 className="text-2xl font-black tracking-tight text-gray-900">Recover Access</h1>
         <p className="text-sm text-gray-600 px-4">
           Lost your key to the Madzi-Watcher? Provide your email and we'll send a recovery link.

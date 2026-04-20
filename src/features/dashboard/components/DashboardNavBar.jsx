@@ -60,6 +60,18 @@ const OFFICER_NAV_ITEMS = [
     icon: Users,
     path: '/dashboard/users/me/profile'   // you can adjust later
   },
+   {
+    label: 'Configuration',
+    icon: Settings,
+    badge: '3',
+    path: '/dashboard/configuration'
+  },
+   {
+    label: 'Register WaterMonitor',
+    icon: Settings,
+    badge: '3',
+    path: '/dashboard/configuration'
+  },
 ];
 
 function NavItem({ item, isActive, onClick }) {

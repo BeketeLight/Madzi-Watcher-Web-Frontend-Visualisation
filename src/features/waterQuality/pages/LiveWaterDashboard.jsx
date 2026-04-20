@@ -86,21 +86,21 @@ export default function LiveWaterDashboard() {
         />
         <WaterQualityCard 
           title="pH Level" 
-          value={data.pH?.toFixed(1) ?? '—'} 
+          value={"coming soon"} 
           unit="" 
           icon={Activity} 
           color="bg-emerald-600" 
         />
         <WaterQualityCard 
           title="TDS" 
-          value={data.tds?.toFixed(0) ?? '—'} 
+          value={"coming soon"} 
           unit="ppm" 
           icon={TableIcon} 
           color="bg-indigo-600" 
         />
         <WaterQualityCard 
           title="Conductivity" 
-          value={data.electricalConductivity?.toFixed(0) ?? '—'} 
+          value={"coming soon"} 
           unit="µS/cm" 
           icon={Zap} 
           color="bg-orange-600" 
