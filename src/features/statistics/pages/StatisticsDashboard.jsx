@@ -40,11 +40,13 @@ export default function StatisticsDashboard() {
     monthlyStats,
     trendStats,
     correlation,
+    
     outliers,
     classification,
     loading,
     error,
     fetchAllBasicStats,
+    fetchTrendLineData,
     fetchTrendAnalysis,
     fetchParameterCorrelation,
     fetchOutliers,
@@ -146,10 +148,10 @@ export default function StatisticsDashboard() {
   const tabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
     { id: 'trends', name: 'Trends & Analytics', icon: TrendingUp },
-    { id: 'correlations', name: 'Correlations', icon: LinkIcon },
-    { id: 'outliers', name: 'Outliers', icon: AlertTriangle },
-    { id: 'time-series', name: 'Time Series', icon: Calendar },
-    { id: 'districts', name: 'Districts', icon: MapPin },
+    // { id: 'correlations', name: 'Correlations', icon: LinkIcon },
+    // { id: 'outliers', name: 'Outliers', icon: AlertTriangle },
+    // { id: 'time-series', name: 'Time Series', icon: Calendar },
+    // { id: 'districts', name: 'Districts', icon: MapPin },
   ];
 
   return (
@@ -258,9 +260,14 @@ export default function StatisticsDashboard() {
 
         {/* Other Tabs - Unchanged */}
         {activeTab === 'trends' && (
-          <div className="mt-8">
-            <TrendChart trends={trends} loading={advancedLoading} />
-          </div>
+        <div className="mt-8">
+        <TrendChart 
+          trendStats={trendStats}
+          classification={classification}
+          fetchTrendLineData={fetchTrendLineData}
+          loading={advancedLoading}
+        />
+        </div>
         )}
 
         {activeTab === 'correlations' && (

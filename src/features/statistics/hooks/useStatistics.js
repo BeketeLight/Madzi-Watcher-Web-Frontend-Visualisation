@@ -155,6 +155,30 @@ export function useStatistics() {
     return fetchWithParams(statisticsApi.getMonthlyStatistics, setMonthlyStats, params);
   }, [fetchWithParams]);
 
+const fetchTrendLineData = useCallback(async (period = 'last_30_days') => {
+  setLoading(true);
+  setError(null);
+
+  let params = {};
+
+  if (period === 'last_7_days') params = { days: 7 };
+  else if (period === 'last_30_days') params = { days: 30 };
+  else if (period === 'last_90_days') params = { days: 90 };
+  else if (period === 'this_year') params = { period: 'this_year' };
+  else params = { days: 30 };
+
+  try {
+    const data = await statisticsApi.getDailyStatistics(params);
+    setTrendStats(data?.data || data);   // Store daily data for line chart
+    return data;
+  } catch (err) {
+    setError(err?.message || 'Failed to fetch trend line data');
+    throw err;
+  } finally {
+    setLoading(false);
+  }
+}, []);
+
   // Advanced Analytics
   const fetchTrendAnalysis = useCallback((params = {}) => {
     return fetchWithParams(statisticsApi.getTrendAnalysis, setTrendStats, params);
@@ -231,6 +255,7 @@ export function useStatistics() {
     outliers,
     classification,
     stabilityScore,
+  
 
     // UI States
     loading,
@@ -238,6 +263,7 @@ export function useStatistics() {
     isSocketConnected,
 
     // Actions
+    fetchTrendLineData,
     fetchAllBasicStats,
     fetchDashboardStatistics,
     fetchMeanStatistics,
