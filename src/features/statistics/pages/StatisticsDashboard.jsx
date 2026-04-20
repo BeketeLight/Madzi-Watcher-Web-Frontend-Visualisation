@@ -45,7 +45,7 @@ export default function StatisticsDashboard() {
     classification,
     loading,
     error,
-    trendStats,
+    // trendStats,
     // dailyStats,
     fetchAllBasicStats,
     fetchTrendLineData,
