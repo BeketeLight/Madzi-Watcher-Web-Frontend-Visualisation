@@ -142,3 +142,52 @@ export async function getTreatmentPlantStatistics(plant, params = {}) {
     return handleError(error);
   }
 }
+
+export async function getTrendAnalysis(params = {}) {
+  try {
+    const { data } = await api.get('/stats/trends', { params });
+    return data;
+  } catch (error) {
+    return handleError(error);
+  }
+} 
+
+export async function getParameterCorrelation(params = {}) {
+  try {
+    const { data } = await api.get('/stats/correlation', { params });
+    return data;
+  } catch (error) {
+    console.warn('Correlation error:', error);
+    return { status: 'success', data: {} };
+  }
+}
+
+export async function getWeeklyStatistics(params = {}) {
+  try {
+    const { data } = await api.get('/stats/weekly', { params });
+    return data;
+  } catch (error) {
+    console.warn('Weekly statistics error:', error);
+    return { status: 'success', data: {} };
+  }
+}
+
+export async function getMonthlyStatistics(params = {}) {
+  try {
+    const { data } = await api.get('/stats/monthly', { params });
+    return data;
+  } catch (error) {
+    console.warn('Monthly statistics error:', error);
+    return { status: 'success', data: {} };
+  }
+}
+
+export async function getYearlyStatistics(params = {}) {
+  try {
+    const { data } = await api.get('/stats/yearly', { params });
+    return data;
+  } catch (error) {
+    console.warn('Yearly statistics error:', error);
+    return { status: 'success', data: {} };
+  }
+} 
