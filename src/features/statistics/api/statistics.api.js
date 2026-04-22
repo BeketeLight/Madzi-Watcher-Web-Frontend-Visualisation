@@ -191,3 +191,8 @@ export async function getYearlyStatistics(params = {}) {
     return { status: 'success', data: {} };
   }
 } 
+
+export const getTrendLine = async (params = {}) => {
+  const { data } = await api.get('/stats/trend-line', { params });
+  return data;
+};

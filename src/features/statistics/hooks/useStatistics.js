@@ -67,7 +67,6 @@ export function useStatistics() {
         statisticsApi.getMinMaxStatistics(params),
         statisticsApi.getWaterQualityClassification(params),
         statisticsApi.getStandardDeviationStatistics(params),
-        statisticsApi.getMedianStatistics(params),
       ]);
 
       setDashboardStats(dashboard?.data || dashboard);
@@ -143,6 +142,15 @@ export function useStatistics() {
   }, [fetchWithParams]);
 
   // Time-based Statistics
+   const fetchTrendLineData = useCallback((period = 'all', startDate = null, endDate = null) => {
+    const params = { period };
+    if (period === 'range') {
+      if (startDate) params.startDate = startDate;
+      if (endDate) params.endDate = endDate;
+    }
+    return fetchWithParams(statisticsApi.getTrendLine, setTrendStats, params);
+  }, [fetchWithParams]);
+    
   const fetchDailyStatistics = useCallback((params = {}) => {
     return fetchWithParams(statisticsApi.getDailyStatistics, setDailyStats, params);
   }, [fetchWithParams]);
@@ -155,32 +163,14 @@ export function useStatistics() {
     return fetchWithParams(statisticsApi.getMonthlyStatistics, setMonthlyStats, params);
   }, [fetchWithParams]);
 
-const fetchTrendLineData = useCallback(async (period = 'last_30_days') => {
-  setLoading(true);
-  setError(null);
-
-  let params = {};
-
-  if (period === 'last_7_days') params = { days: 7 };
-  else if (period === 'last_30_days') params = { days: 30 };
-  else if (period === 'last_90_days') params = { days: 90 };
-  else if (period === 'this_year') params = { period: 'this_year' };
-  else params = { days: 30 };
-
-  try {
-    const data = await statisticsApi.getDailyStatistics(params);
-    setTrendStats(data?.data || data);   // Store daily data for line chart
-    return data;
-  } catch (err) {
-    setError(err?.message || 'Failed to fetch trend line data');
-    throw err;
-  } finally {
-    setLoading(false);
-  }
-}, []);
 
   // Advanced Analytics
-  const fetchTrendAnalysis = useCallback((params = {}) => {
+  const fetchTrendAnalysis = useCallback((period = 'all', startDate = null, endDate = null) => {
+     const params = { period };
+    if (period === 'range') {
+      if (startDate) params.startDate = startDate;
+      if (endDate) params.endDate = endDate;
+    }
     return fetchWithParams(statisticsApi.getTrendAnalysis, setTrendStats, params);
   }, [fetchWithParams]);
 
@@ -188,7 +178,12 @@ const fetchTrendLineData = useCallback(async (period = 'last_30_days') => {
     return fetchWithParams(statisticsApi.getMovingAverage, setMovingAverage, params);
   }, [fetchWithParams]);
 
-  const fetchParameterCorrelation = useCallback((params = {}) => {
+  const fetchParameterCorrelation = useCallback((period = 'all', startDate = null, endDate = null) => {
+     const params = { period };
+    if (period === 'range') {
+      if (startDate) params.startDate = startDate;
+      if (endDate) params.endDate = endDate;
+    }
     return fetchWithParams(statisticsApi.getParameterCorrelation, setCorrelation, params);
   }, [fetchWithParams]);
 

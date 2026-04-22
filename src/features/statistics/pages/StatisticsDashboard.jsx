@@ -270,6 +270,7 @@ export default function StatisticsDashboard() {
           classification={classification}
           fetchTrendLineData={fetchTrendLineData}
           loading={advancedLoading}
+          onPeriodChange={fetchAllBasicStats}
         />
         </div>
         )}

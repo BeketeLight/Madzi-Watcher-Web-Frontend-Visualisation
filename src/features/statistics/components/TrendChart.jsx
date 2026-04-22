@@ -1,6 +1,6 @@
 
 // src/features/statistics/components/TrendChart.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo,useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
@@ -52,47 +52,6 @@ const PIE_DEFAULT = [
   { name: 'Good',      value: 0, color: C.blue   },
   { name: 'Poor',      value: 0, color: C.amber  },
   { name: 'Unsafe',    value: 0, color: C.red    },
-];
-
-// ─── DUMMY DATA (used when no real data) ─────────────────────────────────────
-const DUMMY_LINE_DATA = [
-  { date: 'Day 1', pH: 7.2, TDS: 320, Turbidity: 2.5, Conductivity: 850, WQI: 85 },
-  { date: 'Day 2', pH: 7.3, TDS: 315, Turbidity: 2.3, Conductivity: 845, WQI: 86 },
-  { date: 'Day 3', pH: 7.4, TDS: 310, Turbidity: 2.1, Conductivity: 840, WQI: 87 },
-  { date: 'Day 4', pH: 7.3, TDS: 312, Turbidity: 2.2, Conductivity: 842, WQI: 86 },
-  { date: 'Day 5', pH: 7.5, TDS: 308, Turbidity: 2.0, Conductivity: 838, WQI: 88 },
-  { date: 'Day 6', pH: 7.4, TDS: 305, Turbidity: 1.9, Conductivity: 835, WQI: 89 },
-  { date: 'Day 7', pH: 7.6, TDS: 300, Turbidity: 1.8, Conductivity: 830, WQI: 90 },
-];
-
-const DUMMY_PIE_DATA = [
-  { name: 'Excellent', value: 15, color: C.teal },
-  { name: 'Good', value: 25, color: C.blue },
-  { name: 'Poor', value: 8, color: C.amber },
-  { name: 'Unsafe', value: 2, color: C.red },
-];
-
-const DUMMY_HIST_DATA = [
-  { range: '0–20', count: 2, color: C.red },
-  { range: '21–40', count: 5, color: C.amber },
-  { range: '41–60', count: 8, color: '#eab308' },
-  { range: '61–80', count: 20, color: C.blue },
-  { range: '81–100', count: 15, color: C.teal },
-];
-
-const DUMMY_RADAR_DATA = [
-  { metric: 'pH', Latest: 7.4, Average: 7.3 },
-  { metric: 'TDS', Latest: 310, Average: 315 },
-  { metric: 'Turbidity', Latest: 2.1, Average: 2.3 },
-  { metric: 'Conductivity', Latest: 840, Average: 845 },
-  { metric: 'WQI', Latest: 87, Average: 86 },
-];
-
-const DUMMY_STATS = [
-  { name: 'Average', value: 75.5, color: C.teal },
-  { name: 'Std Dev', value: 12.3, color: C.blue },
-  { name: 'Variance', value: 151.3, color: C.purple },
-  { name: 'Range', value: 45.0, color: C.amber },
 ];
 
 function buildHistogram(data, key) {
@@ -269,10 +228,11 @@ function StatsDonutChart({ data, size = 200 }) {
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function TrendChart({
-  trendStats,
-  classification,
+  trendStats = [],
+  classification = {},
   fetchTrendLineData,
   loading = false,
+  onPeriodChange,
   className,
 }) {
   const [selectedPeriod, setSelectedPeriod] = useState('last_30_days');
@@ -280,111 +240,126 @@ export default function TrendChart({
   const [selectedStatParam, setSelectedStatParam] = useState('WQI');
   const [statMetrics, setStatMetrics] = useState([]);
 
-  // Check if we have real data
-  const hasRealData = trendStats && Array.isArray(trendStats) && trendStats.length > 0;
+  // 1. Unified Line Data Processing
+  const lineData = useMemo(() => {
+    if (!Array.isArray(trendStats) || trendStats.length === 0) return [];
+    return trendStats.map(item => ({
+      date: item.date || item.month || item.year || 'N/A',
+      pH: Number((item.avgPH ?? item.pH ?? 0).toFixed(2)),
+      TDS: Number((item.avgTDS ?? item.TDS ?? item.tds ?? 0).toFixed(0)),
+      Turbidity: Number((item.avgTurbidity ?? item.Turbidity ?? item.turbidity ?? 0).toFixed(2)),
+      Conductivity: Number((item.avgConductivity ?? item.Conductivity ?? item.conductivity ?? 0).toFixed(0)),
+      WQI: Number((item.avgWQI ?? item.WQI ?? item.wqi ?? 0).toFixed(1)),
+    }));
+  }, [trendStats]);
 
+  const hasRealData = lineData.length > 0;
+
+  const handlePeriodChange = (newPeriod) => {
+  setSelectedPeriod(newPeriod);
+  
+  // Directly trigger the parent's function
+  if (onPeriodChange) {
+    onPeriodChange(newPeriod);
+  }
+};
+
+  // 2. Fetch data when period changes
   useEffect(() => {
     fetchTrendLineData?.(selectedPeriod);
   }, [selectedPeriod, fetchTrendLineData]);
 
-  // Use real data or dummy data
-  const lineData = hasRealData
-    ? trendStats.map(item => ({
-        date: item.date || item.month || item.year || 'N/A',
-        pH: Number(item.avgPH?.toFixed(2)) || Number(item.pH?.toFixed(2)) || 0,
-        TDS: Number(item.avgTDS?.toFixed(0)) || Number(item.TDS?.toFixed(0)) || 0,
-        Turbidity: Number(item.avgTurbidity?.toFixed(2)) || Number(item.Turbidity?.toFixed(2)) || 0,
-        Conductivity: Number(item.avgConductivity?.toFixed(0)) || Number(item.Conductivity?.toFixed(0)) || 0,
-        WQI: Number(item.avgWQI?.toFixed(1)) || Number(item.WQI?.toFixed(1)) || 0,
-      }))
-    : DUMMY_LINE_DATA;
-
-  // Pie Data
-  const rawDistribution = classification?.data?.distribution || classification?.distribution;
-  const pieData = (rawDistribution && Array.isArray(rawDistribution) && rawDistribution.length > 0)
-    ? rawDistribution.map(item => ({
+  // 3. Process Pie Data (WQI Classification)
+  const pieData = useMemo(() => {
+    const rawDist = classification?.data?.distribution || classification?.distribution;
+    if (rawDist && Array.isArray(rawDist)) {
+      return rawDist.map(item => ({
         name: item.category || item.name,
         value: item.count || item.value,
         color: item.category === 'Excellent' ? C.teal :
                item.category === 'Good' ? C.blue :
                item.category === 'Poor' ? C.amber : C.red
-      }))
-    : (hasRealData ? PIE_DEFAULT : DUMMY_PIE_DATA);
+      }));
+    }
+    return [];
+  }, [classification]);
 
-  // Histogram Data
-  const histData = hasRealData && lineData.length > 0
-    ? buildHistogram(lineData, 'WQI')
-    : DUMMY_HIST_DATA;
-
-  // Radar Data
-  const latest = lineData[lineData.length - 1] || {};
-  const avgVal = (key) => lineData.length
-    ? lineData.reduce((sum, d) => sum + (d[key] || 0), 0) / lineData.length
-    : 0;
-
-  const radarData = (hasRealData && lineData.length > 0)
-    ? Object.entries(METRIC_META).map(([key, { label }]) => ({
+  // 4. Radar Data
+  const radarData = useMemo(() => {
+    if (!hasRealData) return [];
+    const latest = lineData[lineData.length - 1];
+    return Object.entries(METRIC_META).map(([key, { label }]) => {
+      const avgVal = lineData.reduce((sum, d) => sum + (d[key] || 0), 0) / lineData.length;
+      return {
         metric: label === 'Water Quality Index' ? 'WQI' : label.replace(' Level', ''),
         Latest: latest[key] || 0,
-        Average: avgVal(key),
-      }))
-    : DUMMY_RADAR_DATA;
+        Average: avgVal,
+      };
+    });
+  }, [lineData, hasRealData]);
 
-  // Statistical Metrics
+  // 5. Histogram Data
+  const histData = useMemo(() => buildHistogram(lineData, 'WQI'), [lineData]);
+
+  // 6. Statistical Analysis Calculation
   useEffect(() => {
-    if (!lineData.length) {
-      setStatMetrics(hasRealData ? [] : DUMMY_STATS);
-      return;
-    }
-    const values = lineData.map(d => d[selectedStatParam]).filter(v => v > 0);
-    if (values.length === 0) {
+    if (!hasRealData) {
       setStatMetrics([]);
       return;
     }
+    const values = lineData.map(d => d[selectedStatParam]).filter(v => v > 0);
+    if (values.length === 0) return;
+
     const mean = values.reduce((a, b) => a + b, 0) / values.length;
     const variance = values.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / values.length;
     const stdDev = Math.sqrt(variance);
     const range = Math.max(...values) - Math.min(...values);
+
     setStatMetrics([
       { name: 'Average', value: mean, color: C.teal },
       { name: 'Std Dev', value: stdDev, color: C.blue },
       { name: 'Variance', value: variance, color: C.purple },
       { name: 'Range', value: range, color: C.amber },
     ]);
-  }, [selectedStatParam, lineData]);
-
-  const total = pieData.reduce((s, d) => s + d.value, 0);
+  }, [selectedStatParam, lineData, hasRealData]);
 
   const toggleMetric = (k) => {
     setActiveMetrics(prev => prev.includes(k) ? prev.filter(x => x !== k) : [...prev, k]);
   };
 
-  const handlePeriodChange = (val) => {
-    setSelectedPeriod(val);
-    fetchTrendLineData?.(val);
-  };
-
   if (loading) {
     return (
       <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardContent className="py-12 text-center">
-          <p className="text-[#4a7a9b]">Loading chart data…</p>
+        <CardContent className="py-24 text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-teal-500 border-r-transparent align-[-0.125em]" />
+          <p className="mt-4 text-[#4a7a9b] font-medium animate-pulse">Fetching Real-Time Metrics...</p>
         </CardContent>
       </Card>
     );
   }
 
+  if (!hasRealData) {
+    return (
+      <Card className="bg-[#0d2137] border-[#16354f]">
+        <CardContent className="py-12 text-center text-[#4a7a9b]">
+          No data available for the selected period ({selectedPeriod.replace(/_/g, ' ')})
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const pieTotal = pieData.reduce((s, d) => s + d.value, 0);
+
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Period Filter */}
       <div className="flex justify-end">
         <Select value={selectedPeriod} onValueChange={handlePeriodChange}>
-          <SelectTrigger className="w-[150px] bg-[#0d2137] border-[#16354f] text-white">
+          <SelectTrigger className="w-[160px] bg-[#0d2137] border-[#16354f] text-white">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="bg-[#0d2137] border-[#16354f]">
             {PERIOD_OPTIONS.map(opt => (
-              <SelectItem key={opt.value} value={opt.value} className="text-white hover:bg-[#1a3f5c] focus:bg-[#1a3f5c]">
+              <SelectItem key={opt.value} value={opt.value} className="text-white hover:bg-[#1a3f5c]">
                 {opt.label}
               </SelectItem>
             ))}
@@ -392,7 +367,7 @@ export default function TrendChart({
         </Select>
       </div>
 
-      {/* Chart 1: Area Trend */}
+      {/* Chart 1: Area Trends */}
       <Card className="bg-[#0d2137] border-[#16354f]">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
@@ -401,50 +376,45 @@ export default function TrendChart({
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-6">
             {Object.entries(METRIC_META).map(([key, { color, label }]) => (
               <button
                 key={key}
                 onClick={() => toggleMetric(key)}
                 className={cn(
-                  "px-3 py-1 rounded-full text-xs font-medium transition-all",
-                  activeMetrics.includes(key)
-                    ? "text-white"
-                    : "text-[#4a7a9b] border border-[#16354f] bg-transparent"
+                  "px-3 py-1 rounded-full text-xs font-medium transition-all border",
+                  activeMetrics.includes(key) ? "text-white" : "text-[#4a7a9b] border-[#16354f]"
                 )}
-                style={{
-                  backgroundColor: activeMetrics.includes(key) ? color : 'transparent',
-                }}
+                style={{ backgroundColor: activeMetrics.includes(key) ? color : 'transparent', borderColor: color }}
               >
                 {label}
               </button>
             ))}
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={lineData} margin={{ top: 8, right: 12, left: -8, bottom: 0 }}>
+          <ResponsiveContainer width="100%" height={320}>
+            <AreaChart data={lineData}>
               <defs>
                 {Object.entries(METRIC_META).map(([key, { color }]) => (
                   <linearGradient key={key} id={`grad-${key}`} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={color} stopOpacity={0.35} />
-                    <stop offset="90%" stopColor={color} stopOpacity={0.02} />
+                    <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={color} stopOpacity={0} />
                   </linearGradient>
                 ))}
               </defs>
-              <CartesianGrid strokeDasharray="4 4" stroke={C.divider} strokeOpacity={0.7} />
-              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} />
-              <YAxis tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} />
+              <CartesianGrid strokeDasharray="3 3" stroke={C.divider} vertical={false} />
+              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
+              <YAxis tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
               <Tooltip content={<CustomTooltip />} />
-              {Object.entries(METRIC_META).map(([key, { color }]) =>
+              {Object.entries(METRIC_META).map(([key, { color }]) => 
                 activeMetrics.includes(key) && (
                   <Area
                     key={key}
                     type="monotone"
                     dataKey={key}
                     stroke={color}
-                    strokeWidth={2.5}
+                    strokeWidth={2}
                     fill={`url(#grad-${key})`}
                     dot={false}
-                    activeDot={{ r: 5, strokeWidth: 0, fill: color }}
                   />
                 )
               )}
@@ -453,178 +423,102 @@ export default function TrendChart({
         </CardContent>
       </Card>
 
-      {/* Chart 2: WQI Classification - Donut Chart */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <PieIcon className="h-4 w-4 text-[#3b82f6]" />
-            <CardTitle className="text-white text-lg">WQI Classification Breakdown</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <DonutChart data={pieData} size={220} />
-          <div className="flex flex-col gap-2 mt-4">
-            {pieData.map((e, i) => {
-              const pct = total > 0 ? ((e.value / total) * 100).toFixed(1) : '0';
-              return (
-                <div key={i} className="flex items-center gap-3 p-2 bg-[#0a2540] rounded-lg border border-[#16354f]">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: e.color }} />
-                  <span className="text-[#7aadc8] text-sm flex-1">{e.name}</span>
-                  <div className="flex-1 h-1.5 bg-[#1a3f5c] rounded-full overflow-hidden">
-                    <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: e.color }} />
-                  </div>
-                  <span className="text-white text-sm font-semibold min-w-[40px] text-right">{pct}%</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Chart 2: WQI Breakdown */}
+        <Card className="bg-[#0d2137] border-[#16354f]">
+          <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><PieIcon className="h-4 w-4 text-blue-400" /> Classification Breakdown</CardTitle></CardHeader>
+          <CardContent>
+            <DonutChart data={pieData} />
+            <div className="space-y-2 mt-4">
+              {pieData.map((e, i) => (
+                <div key={i} className="flex items-center gap-3 p-2 bg-[#0a2540] rounded-md border border-[#16354f]">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: e.color }} />
+                  <span className="text-[#7aadc8] text-xs flex-1">{e.name}</span>
+                  <span className="text-white text-xs font-bold">{pieTotal > 0 ? ((e.value/pieTotal)*100).toFixed(1) : 0}%</span>
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Chart 3: WQI Score Distribution - Histogram */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <BarChart2 className="h-4 w-4 text-[#a855f7]" />
-            <CardTitle className="text-white text-lg">WQI Score Distribution</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-2 mb-4">
-            {histData.map((b, i) => (
-              <div key={i} className="flex-1 text-center p-2 bg-[#0a2540] rounded-lg border border-[#16354f]">
-                <div className="text-lg font-bold" style={{ color: b.color }}>{b.count}</div>
-                <div className="text-[#4a7a9b] text-xs">{b.range}</div>
-              </div>
-            ))}
-          </div>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={histData} margin={{ top: 4, right: 8, left: -18, bottom: 0 }} barCategoryGap="28%">
-              <CartesianGrid strokeDasharray="4 4" stroke={C.divider} strokeOpacity={0.7} />
-              <XAxis dataKey="range" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} />
-              <YAxis tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} allowDecimals={false} />
-              <Tooltip contentStyle={{ backgroundColor: '#081e30', border: `1px solid ${C.border}`, borderRadius: 10, color: C.text }} />
-              <Bar dataKey="count" radius={[6, 6, 0, 0]}>
-                {histData.map((e, i) => <Cell key={i} fill={e.color} fillOpacity={0.9} />)}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+        {/* Chart 3: Distribution */}
+        <Card className="bg-[#0d2137] border-[#16354f]">
+          <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><BarChart2 className="h-4 w-4 text-purple-400" /> WQI Distribution</CardTitle></CardHeader>
+          <CardContent>
+             <ResponsiveContainer width="100%" height={220}>
+                <BarChart data={histData}>
+                  <XAxis dataKey="range" tick={{ fill: C.muted, fontSize: 10 }} />
+                  <Tooltip cursor={{fill: '#ffffff10'}} contentStyle={{backgroundColor: '#0d2137', border: '1px solid #16354f'}} />
+                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                    {histData.map((entry, index) => <Cell key={index} fill={entry.color} />)}
+                  </Bar>
+                </BarChart>
+             </ResponsiveContainer>
+             <div className="grid grid-cols-5 gap-1 mt-4">
+                {histData.map((b, i) => (
+                  <div key={i} className="text-center">
+                    <div className="text-xs font-bold text-white">{b.count}</div>
+                    <div className="text-[10px] text-[#4a7a9b]">{b.range}</div>
+                  </div>
+                ))}
+             </div>
+          </CardContent>
+        </Card>
+      </div>
 
-      {/* Chart 4: pH vs WQI - Grouped Bar Chart */}
+      {/* Chart 4: Radar Comparison */}
       <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Activity className="h-4 w-4 text-[#f59e0b]" />
-            <CardTitle className="text-white text-lg">pH vs WQI Daily Comparison</CardTitle>
-          </div>
-        </CardHeader>
+        <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><Zap className="h-4 w-4 text-red-400" /> Latest vs Average</CardTitle></CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={lineData} margin={{ top: 8, right: 8, left: -18, bottom: 0 }} barGap={2} barCategoryGap="32%">
-              <CartesianGrid strokeDasharray="4 4" stroke={C.divider} strokeOpacity={0.7} />
-              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} interval={Math.max(0, Math.floor(lineData.length / 6) - 1)} />
-              <YAxis tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ fontSize: 11, color: C.subtext }} iconType="circle" iconSize={8} />
-              <Bar dataKey="pH" fill={C.teal} radius={[4, 4, 0, 0]} maxBarSize={14} name="pH Level" />
-              <Bar dataKey="WQI" fill={C.cyan} radius={[4, 4, 0, 0]} maxBarSize={14} name="WQI Score" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      {/* Chart 5: Latest vs Average - Radar Chart */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-[#ef4444]" />
-            <CardTitle className="text-white text-lg">Latest Reading vs Period Average</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={280}>
-            <RadarChart data={radarData} cx="50%" cy="48%" outerRadius={85}>
-              <PolarGrid stroke={C.divider} strokeOpacity={0.9} />
-              <PolarAngleAxis dataKey="metric" tick={{ fill: C.subtext, fontSize: 10, fontWeight: 500 }} />
-              <PolarRadiusAxis tick={{ fill: C.muted, fontSize: 9 }} stroke={C.divider} axisLine={false} />
-              <Radar name="Latest" dataKey="Latest" stroke={C.teal} fill={C.teal} fillOpacity={0.2} strokeWidth={2.5} dot={{ fill: C.teal, r: 3, strokeWidth: 0 }} />
-              <Radar name="Average" dataKey="Average" stroke={C.blue} fill={C.blue} fillOpacity={0.1} strokeWidth={2} dot={{ fill: C.blue, r: 3, strokeWidth: 0 }} />
-              <Legend wrapperStyle={{ fontSize: 11, color: C.subtext }} iconType="circle" iconSize={8} />
-              <Tooltip contentStyle={{ backgroundColor: '#081e30', border: `1px solid ${C.border}`, borderRadius: 10, color: C.text }} />
+          <ResponsiveContainer width="100%" height={300}>
+            <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="80%">
+              <PolarGrid stroke={C.divider} />
+              <PolarAngleAxis dataKey="metric" tick={{ fill: C.subtext, fontSize: 10 }} />
+              <Radar name="Latest" dataKey="Latest" stroke={C.teal} fill={C.teal} fillOpacity={0.5} />
+              <Radar name="Average" dataKey="Average" stroke={C.blue} fill={C.blue} fillOpacity={0.3} />
+              <Legend />
+              <Tooltip contentStyle={{backgroundColor: '#0d2137'}} />
             </RadarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      {/* Chart 6: TDS & Turbidity Correlation */}
+      {/* Chart 5: TDS & Turbidity Correlation */}
       <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-[#a855f7]" />
-            <CardTitle className="text-white text-lg">TDS & Turbidity Correlation</CardTitle>
-          </div>
-        </CardHeader>
+        <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><Activity className="h-4 w-4 text-amber-400" /> Parameter Correlation</CardTitle></CardHeader>
         <CardContent>
-          <div className="flex gap-3 mb-4">
-            <div className="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <span className="text-[#4a7a9b] text-xs">Avg TDS:</span>
-              <span className="text-blue-400 font-bold ml-1">{(lineData.reduce((s, d) => s + d.TDS, 0) / (lineData.length || 1)).toFixed(0)} ppm</span>
-            </div>
-            <div className="px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30">
-              <span className="text-[#4a7a9b] text-xs">Avg Turbidity:</span>
-              <span className="text-purple-400 font-bold ml-1">{(lineData.reduce((s, d) => s + d.Turbidity, 0) / (lineData.length || 1)).toFixed(2)} NTU</span>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={lineData} margin={{ top: 8, right: 26, left: -8, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="4 4" stroke={C.divider} strokeOpacity={0.7} />
-              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} />
-              <YAxis yAxisId="tds" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} orientation="left" />
-              <YAxis yAxisId="turbidity" tick={{ fill: C.muted, fontSize: 11 }} stroke={C.divider} orientation="right" />
+          <ResponsiveContainer width="100%" height={280}>
+            <LineChart data={lineData}>
+              <CartesianGrid strokeDasharray="3 3" stroke={C.divider} vertical={false} />
+              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} />
+              <YAxis yAxisId="left" tick={{ fill: C.muted, fontSize: 11 }} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fill: C.muted, fontSize: 11 }} />
               <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ fontSize: 11, color: C.subtext }} iconType="circle" iconSize={8} />
-              <Line yAxisId="tds" type="monotone" dataKey="TDS" stroke={C.blue} strokeWidth={2.5} dot={false} activeDot={{ r: 5, strokeWidth: 0 }} name="TDS" />
-              <Line yAxisId="turbidity" type="monotone" dataKey="Turbidity" stroke={C.purple} strokeWidth={2.5} dot={false} activeDot={{ r: 5, strokeWidth: 0 }} name="Turbidity" strokeDasharray="5 3" />
+              <Legend />
+              <Line yAxisId="left" type="monotone" dataKey="TDS" stroke={C.blue} dot={false} strokeWidth={3} />
+              <Line yAxisId="right" type="monotone" dataKey="Turbidity" stroke={C.purple} dot={false} strokeWidth={3} strokeDasharray="5 5" />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      {/* Chart 7: Statistical Metrics */}
+      {/* Chart 6: Statistics */}
       <Card className="bg-[#0d2137] border-[#16354f]">
-        <CardHeader>
-          <div className="flex justify-between items-center flex-wrap gap-4">
-            <div className="flex items-center gap-2">
-              <Sigma className="h-4 w-4 text-[#06b6d4]" />
-              <CardTitle className="text-white text-lg">Statistical Metrics Analysis</CardTitle>
-            </div>
-            <Select value={selectedStatParam} onValueChange={setSelectedStatParam}>
-              <SelectTrigger className="w-[140px] bg-[#0a2540] border-[#16354f] text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-[#0d2137] border-[#16354f]">
-                {Object.entries(METRIC_META).map(([key, meta]) => (
-                  <SelectItem key={key} value={key} className="text-white hover:bg-[#1a3f5c] focus:bg-[#1a3f5c]">
-                    {meta.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-white text-lg flex items-center gap-2"><Sigma className="h-4 w-4 text-cyan-400" /> Statistical Analysis</CardTitle>
+          <Select value={selectedStatParam} onValueChange={setSelectedStatParam}>
+            <SelectTrigger className="w-[140px] bg-[#0a2540] border-[#16354f] text-white">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-[#0d2137] border-[#16354f]">
+              {Object.entries(METRIC_META).map(([k, m]) => (
+                <SelectItem key={k} value={k} className="text-white">{m.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </CardHeader>
         <CardContent>
-          <StatsDonutChart data={statMetrics} size={200} />
-          <div className="mt-6 p-3 bg-[#0a2540] rounded-lg">
-            <p className="text-[#7aadc8] text-xs mb-2">📊 What these metrics tell you:</p>
-            <ul className="text-[#4a7a9b] text-xs space-y-1">
-              <li><span className="text-[#10b981]">Average</span> - Typical value over the period</li>
-              <li><span className="text-[#3b82f6]">Std Dev</span> - How much values fluctuate (lower = more stable)</li>
-              <li><span className="text-[#a855f7]">Variance</span> - Spread of data points</li>
-              <li><span className="text-[#f59e0b]">Range</span> - Difference between highest and lowest</li>
-            </ul>
-          </div>
+          <StatsDonutChart data={statMetrics} />
         </CardContent>
       </Card>
     </div>
