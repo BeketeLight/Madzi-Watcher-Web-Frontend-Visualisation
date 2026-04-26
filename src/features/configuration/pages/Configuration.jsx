@@ -14,6 +14,9 @@ export default function ConfigPage() {
   const [damName, setDamName] = useState("");
   const [damId, setDamId] = useState("");
   const [damError, setDamError] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteType, setDeleteType] = useState("");
+  const [deleteIndex, setDeleteIndex] = useState(null);
 
   const addEmployee = () => {
     if (!name || !selectedDam) return;
@@ -31,7 +34,9 @@ export default function ConfigPage() {
   };
 
   const deleteEmployee = (index) => {
-    setEmployees(employees.filter((_, i) => i !== index));
+    setDeleteType("employee");
+    setDeleteIndex(index);
+    setShowDeleteModal(true);
   };
 
   const addDam = () => {
@@ -63,7 +68,9 @@ export default function ConfigPage() {
   };
 
   const deleteDam = (index) => {
-    setDams(dams.filter((_, i) => i !== index));
+    setDeleteType("dam");
+    setDeleteIndex(index);
+    setShowDeleteModal(true);
   };
 
   const toggleStatus = (index) => {
@@ -73,10 +80,58 @@ export default function ConfigPage() {
     setDams(updated);
   };
 
+  const confirmDelete = () => {
+    if (deleteType === "employee") {
+      setEmployees(employees.filter((_, i) => i !== deleteIndex));
+    }
+
+    if (deleteType === "dam") {
+      setDams(dams.filter((_, i) => i !== deleteIndex));
+    }
+
+    setShowDeleteModal(false);
+    setDeleteType("");
+    setDeleteIndex(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteType("");
+    setDeleteIndex(null);
+  };
+
   const activeDams = dams.filter((d) => d.status === "Active");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-700 to-blue-500 p-6 text-white">
+    <>
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md text-center border border-cyan-200">
+            <h2 className="text-2xl font-bold text-blue-900 mb-3">
+              Confirm Deletion
+            </h2>
+            <p className="text-gray-700 mb-6">
+              Are you sure you want to delete this {deleteType}?
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button
+                onClick={cancelDelete}
+                className="bg-gray-500 hover:bg-gray-600"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={confirmDelete}
+                className="bg-red-500 hover:bg-red-600"
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-700 to-blue-500 p-6 text-white">
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -93,7 +148,6 @@ export default function ConfigPage() {
         </CardContent>
       </Card>
 
-      {/* Add Dam */}
       <Card className="mb-6 bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold mb-3">Register Dam</h2>
@@ -121,7 +175,6 @@ export default function ConfigPage() {
         </CardContent>
       </Card>
 
-      {/* Dam List */}
       <Card className="mb-6 bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold mb-3">Dam List</h2>
@@ -162,7 +215,6 @@ export default function ConfigPage() {
         </CardContent>
       </Card>
 
-      {/* Add Employee */}
       <Card className="mb-6 bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold mb-3">Register Employee</h2>
@@ -197,7 +249,6 @@ export default function ConfigPage() {
         </CardContent>
       </Card>
 
-      {/* Employee List */}
       <Card className="bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold mb-3">Employee List</h2>
@@ -229,5 +280,6 @@ export default function ConfigPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }
