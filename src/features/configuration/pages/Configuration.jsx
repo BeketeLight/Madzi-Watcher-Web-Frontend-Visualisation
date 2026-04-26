@@ -96,7 +96,7 @@ export default function ConfigPage() {
       {/* Add Dam */}
       <Card className="mb-6 bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
-          <h2 className="text-xl font-semibold mb-3">Add Dam</h2>
+          <h2 className="text-xl font-semibold mb-3">Register Dam</h2>
           <div className="flex gap-3 flex-wrap">
             <Input
               placeholder="Dam ID (MW-xxx)"
@@ -114,7 +114,7 @@ export default function ConfigPage() {
               onClick={addDam}
               className="bg-blue-500 hover:bg-blue-600"
             >
-              Add Dam
+              Register
             </Button>
           </div>
           {damError && <p className="text-red-600 mt-2">{damError}</p>}
@@ -165,7 +165,7 @@ export default function ConfigPage() {
       {/* Add Employee */}
       <Card className="mb-6 bg-white/10 backdrop-blur-xl border-none rounded-2xl">
         <CardContent className="p-4">
-          <h2 className="text-xl font-semibold mb-3">Add Employee</h2>
+          <h2 className="text-xl font-semibold mb-3">Register Employee</h2>
           <div className="flex gap-3 flex-wrap">
             <Input
               placeholder="Employee Name"
@@ -191,7 +191,7 @@ export default function ConfigPage() {
               onClick={addEmployee}
               className="bg-cyan-500 hover:bg-cyan-600"
             >
-              Add
+              Register
             </Button>
           </div>
         </CardContent>
