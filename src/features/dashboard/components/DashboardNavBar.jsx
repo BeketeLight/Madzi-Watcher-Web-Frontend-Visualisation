@@ -24,16 +24,15 @@ const CLIENT_NAV_ITEMS = [
     icon: BarChart3,
     path: '/dashboard/stats'
   },
-  {
-    label: 'Notifications',
-    icon: Bell,
-    badge: '3',
-    path: '/dashboard/notifications'
-  },
+  // {
+  //   label: 'Notifications',
+  //   icon: Bell,
+  //   badge: '3',
+  //   path: '/dashboard/notifications'
+  // },
   {
     label: 'Configuration',
     icon: Settings,
-    badge: '3',
     path: '/dashboard/configuration'
   },
 ];
@@ -49,12 +48,12 @@ const OFFICER_NAV_ITEMS = [
     icon: BarChart3,
     path: '/dashboard/stats'
   },
-  {
-    label: 'Notifications',
-    icon: Bell,
-    badge: '5',
-    path: '/dashboard/notifications'
-  },
+  // {
+  //   label: 'Notifications',
+  //   icon: Bell,
+  //   badge: '5',
+  //   path: '/dashboard/notifications'
+  // },
   {
     label: 'Users',
     icon: Users,
@@ -63,7 +62,6 @@ const OFFICER_NAV_ITEMS = [
    {
     label: 'Configuration',
     icon: Settings,
-    badge: '3',
     path: '/dashboard/configuration'
   },
    {
