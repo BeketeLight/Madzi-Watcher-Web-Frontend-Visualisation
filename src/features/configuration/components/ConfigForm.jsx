@@ -1,11 +1,16 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Save } from 'lucide-react';
 
 export default function ConfigForm({
   config,
-  onConfigChange
+  onConfigChange,
+  onSave,
+  isConnected
 }) {
   return (
     <Card className="bg-[#0d2137] border-[#16354f] shadow-lg">
@@ -84,6 +89,23 @@ export default function ConfigForm({
             className="data-[state=checked]:bg-[#3b82f6]"
           />
         </div>
+
+        <Separator className="bg-[#16354f]" />
+
+        {/* SAVE BUTTON */}
+        <Button
+          onClick={onSave}
+          size="lg"
+          disabled={!isConnected}
+          className={`w-full text-white transition-all shadow-md
+            ${isConnected
+              ? 'bg-[#3b82f6] hover:bg-[#2563eb] active:scale-95'
+              : 'bg-gray-600 cursor-not-allowed'}
+          `}
+        >
+          <Save className="mr-2 h-4 w-4" />
+          Send Configuration to ESP32
+        </Button>
 
       </CardContent>
     </Card>
