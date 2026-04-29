@@ -3,6 +3,8 @@ import { useWaterQuality } from '../hooks/useWaterQuality';
 
 import SystemControl from '../components/SystemControl';
 import ConfigForm from '../components/ConfigForm';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 export default function ConfigurationPage() {
   const { isConnected, status, publish } = useMqtt();
@@ -18,7 +20,7 @@ export default function ConfigurationPage() {
 
   return (
     <div className="min-h-screen bg-[#081627] text-[#ddeef8]">
-      
+
       <div className="container mx-auto py-8 max-w-4xl space-y-6">
 
         {/* HEADER */}
@@ -26,7 +28,6 @@ export default function ConfigurationPage() {
           <h1 className="text-3xl font-bold">
             Water Quality System Control
           </h1>
-
           <p className="text-muted-foreground">
             Manage your ESP32 via MQTT
           </p>
@@ -57,6 +58,16 @@ export default function ConfigurationPage() {
           onSave={saveConfig}
           isConnected={isConnected}
         />
+
+        {/* ERROR ALERT */}
+        {!isConnected && (
+          <Alert variant="destructive" className="mt-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              MQTT is not connected. Please check your broker WebSocket URL.
+            </AlertDescription>
+          </Alert>
+        )}
 
       </div>
     </div>
