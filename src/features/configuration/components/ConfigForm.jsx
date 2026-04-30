@@ -14,9 +14,11 @@ export default function ConfigForm({
 }) {
   return (
     <Card className="bg-[#0d2137] border-[#16354f] shadow-lg">
-      
       <CardHeader>
-        <CardTitle className="text-white">Device Configuration</CardTitle>
+        <CardTitle className="text-white">
+          Device Configuration
+        </CardTitle>
+
         <CardDescription className="text-[#7aadc8]">
           Set ESP32 identity and system parameters
         </CardDescription>
@@ -66,10 +68,12 @@ export default function ConfigForm({
           />
         </div>
 
-        {/* SWITCH SECTION */}
-        <div className="flex items-center justify-between p-4 rounded-lg 
-                        bg-[#0a2540] border border-[#16354f] hover:border-[#3b82f6] transition">
-
+        {/* BUZZER ALERTS */}
+        <div
+          className="flex items-center justify-between p-4 rounded-lg 
+                     bg-[#0a2540] border border-[#16354f] 
+                     hover:border-[#3b82f6] transition"
+        >
           <div>
             <Label className="text-white">Buzzer Alerts</Label>
             <p className="text-xs text-[#4a7a9b]">
