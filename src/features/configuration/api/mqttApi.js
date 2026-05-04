@@ -3,6 +3,8 @@ export const mqttCommands = {
   TURN_ON: 'turnon',
   TURN_OFF: 'turnoff',
   POWER_OFF: 'poweroff',
+  CLOSE_VALVE: 'closesolenoidvalve',
+  OPEN_VALVE: 'opensolenoidvalve',
 };
 
 export const publishCommand = (publish, command) => {

@@ -17,6 +17,14 @@ export const useWaterQuality = (publish) => {
     publishCommand(publish, mqttCommands.TURN_ON);
   }, [publish]);
 
+  const closeValve = useCallback(() => {
+    publishCommand(publish, mqttCommands.CLOSE_VALVE);
+  }, [publish]);
+
+  const openValve = useCallback(() => {   
+    publishCommand(publish, mqttCommands.OPEN_VALVE);
+  }, [publish]);  
+
   const turnOff = useCallback(() => {
     publishCommand(publish, mqttCommands.TURN_OFF);
   }, [publish]);
@@ -36,6 +44,8 @@ export const useWaterQuality = (publish) => {
     config,
     handleConfigChange,
     turnOn,
+    closeValve,
+    openValve,
     turnOff,
     deepSleep,
     saveConfig,

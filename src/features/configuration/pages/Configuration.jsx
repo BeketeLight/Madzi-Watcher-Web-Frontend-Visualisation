@@ -13,6 +13,8 @@ export default function ConfigurationPage() {
     config,
     handleConfigChange,
     turnOn,
+    closeValve,
+    openValve,
     turnOff,
     deepSleep,
     saveConfig
@@ -49,6 +51,8 @@ export default function ConfigurationPage() {
           onTurnOn={turnOn}
           onTurnOff={turnOff}
           onDeepSleep={deepSleep}
+          onCloseValve={closeValve}
+          onOpenValve={openValve}
         />
 
         {/* CONFIG FORM */}
