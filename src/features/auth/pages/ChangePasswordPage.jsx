@@ -1,9 +1,10 @@
 import React from "react"
-import SignupForm from "../components/SignupForm"
+import ChangePasswordForm from '@/features/auth/components/ChangePasswordForm'
 import { useNavigate } from "react-router-dom"
+
 import { useAuth } from '@/features/auth/hooks/useAuth' 
 
-function SignupPage() {
+function ChangePasswordPage() {
 
   const [formState, setFormState] = React.useState({
     email: '',
@@ -11,34 +12,34 @@ function SignupPage() {
     assignedArea: '', 
     district: ''
   })
+  const[passWortMatchError, setPasswortMatchError] = React.useState('')
   const navigate = useNavigate()
 
   const{
-    signup,
+    changePassword,
     error,
     loading,
     status
   } = useAuth()
 
-  //preparing signup payload
+  //preparing changePassword payload
   const preparePayload = () => {
     return {
-      email: formState.email.trim(),
-      role: formState.role.trim(),
-      assignedArea: formState.assignedArea.trim(),
-      district: formState.district.trim()
+      currentPassword: formState.currentPassword.trim(),
+      newPassword: formState.newPassword.trim(),
+      confirmNewPassword: formState.confirmNewPassword.trim(),
     }
   }
- //handling register form change fields
+ //handling changePassword form change fields
  const handleChange = (e) => {
   const { name, value } = e.target
   setFormState((prev) => ({ ...prev, [name]: value }))
 }
-//handling register form submission
+//handling changePassword form submission
 const handleSubmit = async (e) => {
   e.preventDefault()
   const payload = preparePayload()
-  await signup(payload)
+  await changePassword(payload)
 }
 
 React.useEffect(() => {
@@ -49,19 +50,19 @@ React.useEffect(() => {
 }, [status, navigate])
  return (
     <div className="relative min-h-svh w-full flex items-center justify-center p-6 overflow-hidden">
-      {/* Background Water Elements */}
       <div className=" absolute inset-0 z-0 bg-[#0a2540]"></div>
       <div className="relative z-10 w-full max-w-lg">
-        <SignupForm
+        <ChangePasswordForm
           values={formState}
           onChange={handleChange}
           onSubmit={handleSubmit}
           error={error}
           loading={loading}
         />
+
       </div>
     </div>
   )
 }
 
-export default SignupPage
+export default ChangePasswordPage

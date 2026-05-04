@@ -1,8 +1,118 @@
+import React, { useEffect, useState } from "react"
+import waterDrop from "@/assets/waterDrop.png"
+import { Button } from "@/components/ui/button"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import { cn } from "@/lib/utils"
+import { Loader2, MailSearch, Droplets } from "lucide-react"
 
-export default function OtpForm() {
- 
+
+export default function OtpForm({
+  onSubmit,
+  onResend,
+  loading,
+  error,
+  className,
+  user,
+  message,
+  ...props
+}) {
+  const [otp, setOtp] = useState("")
+
+  const otpLength = 6
+  const isComplete = otp.length === otpLength
+//including user to get masked email
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!isComplete || loading) return
+    onSubmit({ otp })
+  }
+
+  const handleResend = (e) => {
+    e.preventDefault()
+    if (loading) return
+    onResend?.()
+  }
+
+  useEffect(() => {
+    if (error) setOtp("")
+  }, [error])
 
   return (
-    <h1>OTP component</h1>
+    <form
+      onSubmit={handleSubmit}
+      className={cn(
+        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl",
+        className
+      )}
+      {...props}
+    >
+      <div className="flex flex-col items-center gap-1 text-center">
+       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+          <Droplets className="w-12 h-12 text-white" />
+       </div>
+        <h1 className="text-xl font-bold">Verify Identity</h1>
+        <p className="text-sm text-gray-600">
+          Enter the  <strong>{message ?? "OTP"}</strong> to verify your identity.
+        </p>
+      </div>  
+
+      {/* Error */}
+      {error && (
+        <p className="text-sm text-red-600 text-center">{error}</p>
+      )}
+
+      <div className="flex flex-col items-center justify-center gap-6 mt-4 md:mt-6">
+        <InputOTP 
+          maxLength={otpLength} 
+          disabled={loading}
+          onChange={(value) => setOtp(value)}
+        >
+          <InputOTPGroup className="flex gap-1 sm:gap-2">
+            {Array.from({ length: otpLength }).map((_, index) => (
+              <InputOTPSlot 
+                key={index}
+                index={index}
+                className={cn(
+                  "h-10 w-10 sm:h-12 sm:w-12 rounded-xl border-2 border-black text-2xl transition-colors",
+                  otp[index] ? "border-blue-500" : "border-black"
+                )}
+              />
+            ))}
+          </InputOTPGroup>
+        </InputOTP>
+
+        <button
+          type="button"
+          disabled={loading}
+          className="text-sm font-semibold text-blue-600 hover:underline disabled:opacity-50"
+          onClick={handleResend}
+        >
+          Resend OTP
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center mt-6 mb-4 md:mt-12 md:mb-8">
+        <Button
+          type="submit"
+          disabled={loading || !isComplete}
+          className="rounded-full text-base w-full max-w-[240px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Verifying...
+            </>
+          ) : (
+            "Verify"
+          )}
+        </Button>
+      </div>
+    </form>
   )
 }

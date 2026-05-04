@@ -7,6 +7,7 @@ import {
   LogOut,
   BarChart3,
   User,
+  Settings,
   Users
 } from "lucide-react";
 import React from "react";
@@ -23,11 +24,16 @@ const CLIENT_NAV_ITEMS = [
     icon: BarChart3,
     path: '/dashboard/stats'
   },
+  // {
+  //   label: 'Notifications',
+  //   icon: Bell,
+  //   badge: '3',
+  //   path: '/dashboard/notifications'
+  // },
   {
-    label: 'Notifications',
-    icon: Bell,
-    badge: '3',
-    path: '/dashboard/notifications'
+    label: 'Configuration',
+    icon: Settings,
+    path: '/dashboard/configuration'
   },
 ];
 
@@ -42,16 +48,27 @@ const OFFICER_NAV_ITEMS = [
     icon: BarChart3,
     path: '/dashboard/stats'
   },
-  {
-    label: 'Notifications',
-    icon: Bell,
-    badge: '5',
-    path: '/dashboard/notifications'
-  },
+  // {
+  //   label: 'Notifications',
+  //   icon: Bell,
+  //   badge: '5',
+  //   path: '/dashboard/notifications'
+  // },
   {
     label: 'Users',
     icon: Users,
     path: '/dashboard/users/me/profile'   // you can adjust later
+  },
+   {
+    label: 'Configuration',
+    icon: Settings,
+    path: '/dashboard/configuration'
+  },
+   {
+    label: 'Register WaterMonitor',
+    icon: Settings,
+    badge: '3',
+    path: '/dashboard/configuration'
   },
 ];
 

@@ -80,9 +80,9 @@ if (!isConnected || !data) return (
           {/* Metric Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
             <WaterQualityCard title="Turbidity" value={data.turbidity?.toFixed(2) ?? '—'} unit="NTU" icon={Droplets} color="bg-blue-500" />
-            <WaterQualityCard title="Water pH" value={data.pH?.toFixed(1) ?? '—'} icon={Activity} color="bg-emerald-500" />
-            <WaterQualityCard title="TDS" value={data.tds?.toFixed(0) ?? '—'} unit="ppm" icon={TableIcon} color="bg-indigo-500" />
-            <WaterQualityCard title="Conductivity" value={data.electricalConductivity?.toFixed(0) ?? '—'} unit="µS/cm" icon={Zap} color="bg-orange-500" />
+            <WaterQualityCard title="Water pH" value={"coming soon"} icon={Activity} color="bg-emerald-500" />
+            <WaterQualityCard title="TDS" value={"coming soon"} unit="ppm" icon={TableIcon} color="bg-indigo-500" />
+            <WaterQualityCard title="Conductivity" value={"coming soon"} unit="µS/cm" icon={Zap} color="bg-orange-500" />
             <WaterQualityCard title="Quality Index" value={data.waterQualityIndex?.toFixed(0) ?? '—'} unit="WQI" icon={ShieldCheck} color="bg-blue-600" />
           </div>
 
@@ -97,7 +97,7 @@ if (!isConnected || !data) return (
           </div>
 
           {/* Downloads Section */}
-          <div id="downloads" className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
+          {/* <div id="downloads" className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold text-slate-900 mb-4">Export Data & Reports</h2>
@@ -108,7 +108,7 @@ if (!isConnected || !data) return (
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
