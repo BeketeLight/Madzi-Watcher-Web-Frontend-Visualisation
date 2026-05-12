@@ -1,13 +1,10 @@
 import { cn } from "@/lib/utils"
-import Logo from "@/assets/Logo.svg"
-import waterDrop from "@/assets/waterDrop.png"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import { Loader2, Eye, EyeOff, Droplets} from "lucide-react"
+import { Loader2, Eye, EyeOff, Droplets } from "lucide-react"
 import { useState } from "react"
-import { AUTH_FLOW } from "@/utils/constants"
 import { useAuth } from "../hooks/useAuth"
 
 export default function LoginForm({
@@ -19,8 +16,7 @@ export default function LoginForm({
   className,
   ...props
 }) {
-
-  //state for password visibility
+  // State for password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -31,18 +27,16 @@ export default function LoginForm({
     <form
       onSubmit={onSubmit}
       className={cn(
-        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl w-auto ",
+        "flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-3xl w-auto shadow-xl",
         className
       )}
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
-       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
+        <div className="bg-blue-500 p-5 rounded-full mx-auto mb-2 shadow-sm">
           <Droplets className="w-12 h-12 text-white" />
-       </div>
-
-
-        <h1 className="text-xl font-bold">Madzi-Watcher Account</h1>
+        </div>
+        <h1 className="text-2xl font-bold text-gray-900">Madzi-Watcher Account</h1>
         <p className="text-sm text-gray-600">
           Enter your credentials to access your account
         </p>
@@ -50,74 +44,75 @@ export default function LoginForm({
 
       <div className="grid gap-3 mt-4">
         {error && (
-          <p className="text-sm text-red-600 mt-1 text-center">{error}</p>
+          <p className="text-sm text-red-600 mt-1 text-center font-medium">{error}</p>
         )}
 
+        {/* Email Input */}
         <div className="grid gap-1.5">
-          <Label htmlFor="email" className="font-bold text-base">
-            Email
+          <Label htmlFor="email" className="font-semibold text-gray-700">
+            Email Address
           </Label>
           <Input
             id="email"
             name="email"
             type="email"
-            placeholder="Enter email"
+            placeholder="you@example.com"
             autoComplete="email"
             required
             disabled={loading}
-            value={values.email}
+            value={values.email || ""}
             onChange={onChange}
             className={cn(
-              "rounded-2xl border-opacity-30 border-black h-12  placeholder:text-gray-500 text-lg",
-               values.email ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-sm hover:shadow-md"
             )}
           />
         </div>
 
+        {/* Password Input */}
         <div className="grid gap-1.5">
-          <Label htmlFor="password" className="font-bold text-base">
+          <Label htmlFor="password" className="font-semibold text-gray-700">
             Password
           </Label>
-
           <div className="relative">
             <Input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
+              placeholder="Enter your password"
               autoComplete="current-password"
               required
               disabled={loading}
-              value={values.password}
+              value={values.password || ""}
               onChange={onChange}
               className={cn(
-                "rounded-xl border-opacity-30 h-12 placeholder:text-gray-500 text-lg",
-                 values.password ? "border-blue-500" : "border-black"
+                "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400 pr-12",
+                "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+                "transition-all duration-200 shadow-sm hover:shadow-md"
               )}
             />
             <button
               type="button"
-              variant="ghost"
-              size="sm"
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               onClick={togglePasswordVisibility}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
         </div>
       </div>
-     
-      <div className="flex flex-col items-center gap-4 mt-4">
+
+      <div className="flex flex-col items-center gap-4 mt-6">
         <Button
           size="lg"
           type="submit"
           disabled={loading}
-           className="rounded-full text-base w-full max-w-[240px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold shadow-lg shadow-blue-200 mt-8 mb-4 "
+          className="rounded-2xl text-base w-full h-14 bg-blue-600 hover:bg-blue-700 font-semibold shadow-lg shadow-blue-200 transition-all duration-200"
         >
           {loading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               Logging in...
             </>
           ) : (
@@ -128,4 +123,3 @@ export default function LoginForm({
     </form>
   )
 }
-
