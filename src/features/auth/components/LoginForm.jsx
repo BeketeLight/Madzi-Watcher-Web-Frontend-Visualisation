@@ -36,7 +36,7 @@ export default function LoginForm({
         <div className="bg-blue-500 p-5 rounded-full mx-auto mb-2 shadow-sm">
           <Droplets className="w-12 h-12 text-white" />
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">Madzi-Watcher Account</h1>
+        <h1 className="text-2xl font-bold text-blue-400">Madzi-Watcher Account</h1>
         <p className="text-sm text-gray-600">
           Enter your credentials to access your account
         </p>
@@ -50,13 +50,13 @@ export default function LoginForm({
         {/* Email Input */}
         <div className="grid gap-1.5">
           <Label htmlFor="email" className="font-semibold text-gray-700">
-            Email Address
+            Email
           </Label>
           <Input
             id="email"
             name="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="admin@madzi.com"
             autoComplete="email"
             required
             disabled={loading}
