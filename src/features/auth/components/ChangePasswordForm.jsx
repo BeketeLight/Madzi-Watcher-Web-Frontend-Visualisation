@@ -43,7 +43,7 @@ export default function ChangePasswordForm({
       <div className="bg-blue-300 p-5 rounded-full mx-auto mb-2 shadow-sm">
           <Droplets className="w-12 h-12 text-white" />
        </div>
-        <h1 className="text-xl font-bold">Change Madzi-Watcher Password</h1>
+        <h1 className="text-xl font-bold text-blue-400">Change Account Password</h1>
         <p className="text-sm text-gray-600">Update your password at any time</p>
       </div>
        {/* error message display */}
@@ -54,7 +54,7 @@ export default function ChangePasswordForm({
         )}
        <div className="relative">
        </div>
-      <div className="grid gap-3 mt-4">
+      <div className="grid gap-3 ">
         <div className="grid gap-1.5">
           <Label htmlFor="currentPassword" className="font-bold text-base">Current Password</Label>
 
@@ -69,8 +69,9 @@ export default function ChangePasswordForm({
             disabled={loading}
             onChange={onChange}
              className={cn(
-                "rounded-xl border-opacity-30 border-black h-12 placeholder:text-gray-500 text-lg",
-                  values.currentPassword ? "border-blue-500" : "border-black"
+                "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400 pr-12",
+                "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+                "transition-all duration-200 shadow-sm hover:shadow-lg"
              )}
           />
                <button
@@ -128,8 +129,9 @@ export default function ChangePasswordForm({
             disabled={loading}
             onChange={onChange}
             className={cn(
-              "rounded-xl border-opacity-30 h-12 placeholder:text-gray-500 text-lg",
-               values.confirmNewPassword ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400 pr-12",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-sm hover:shadow-md"
             )}
           />
             <button
@@ -151,7 +153,7 @@ export default function ChangePasswordForm({
           size="lg"
           type="submit"
           disabled={loading}
-          className="rounded-full text-base w-full max-w-[240px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold" 
+          className="rounded-2xl text-base w-full h-14 bg-blue-600 hover:bg-blue-700 font-semibold shadow-lg shadow-blue-200 transition-all duration-200" 
         >
           {loading ? (
             <>
