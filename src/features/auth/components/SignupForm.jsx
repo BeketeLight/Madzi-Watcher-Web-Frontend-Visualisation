@@ -30,7 +30,7 @@ export default function SignupForm({
           <Droplets className="w-12 h-12 text-white" />
        </div>
        
-        <h1 className="text-xl font-bold">Register Madzi-Watcher </h1>
+        <h1 className="text-xl font-bold text-blue-400">Register Madzi-Watcher </h1>
         <p className="text-sm text-gray-600">Register an Employee to become Madzi-Watcher</p>
       </div>
        {/* error message display */}
@@ -41,7 +41,7 @@ export default function SignupForm({
         )}
       <div className="grid gap-3 mt-4">
         <div className="grid gap-1.5">
-          <Label htmlFor="email" className="font-bold text-base">Email</Label>
+          <Label htmlFor="email" className="font-semibold text-gray-700">Email</Label>
           <Input 
             id="email" 
             name="email"
@@ -52,14 +52,15 @@ export default function SignupForm({
             disabled={loading}
             onChange={onChange}
              className={cn(
-                "rounded-xl border-opacity-30 border-black h-10 placeholder:text-gray-500 text-lg",
-                  values.email ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400 ",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-md hover:shadow-lg"
              )}
           />
         </div>
 
         <div className="grid gap-1.5">
-          <Label htmlFor="Role" className="font-bold text-base">Role</Label>
+          <Label htmlFor="Role" className="font-semibold text-gray-700">Role</Label>
           <Input 
             id="role" 
             name="role"
@@ -78,7 +79,7 @@ export default function SignupForm({
         </div>
 
         <div className="grid gap-1.5">
-          <Label htmlFor="assignedArea" className="font-bold text-base">Assigned Area</Label>
+          <Label htmlFor="assignedArea" className="font-semibold text-gray-700">Assigned Area</Label>
           <div className="relative"> 
           <Input 
             
@@ -101,7 +102,7 @@ export default function SignupForm({
         </div>
       </div>
        <div className="grid gap-1.5">
-          <Label htmlFor="district" className="font-bold text-base">District</Label>
+          <Label htmlFor="district" className="font-semibold text-gray-700">District</Label>
           <Input 
             id="district" 
             name="district"
@@ -112,8 +113,9 @@ export default function SignupForm({
             disabled={loading}
             onChange={onChange}
             className={cn(
-              "rounded-xl border-opacity-30 border-black h-10 placeholder:text-gray-500 text-lg",
-               values.district ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 placeholder:text-gray-400 text-base",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-md hover:shadow-lg"
             )}
           />
         </div>
@@ -123,7 +125,7 @@ export default function SignupForm({
           size="lg"
           type="submit"
           disabled={loading}
-          className="rounded-full text-base w-full max-w-[240px] h-12 bg-blue-400 hover:bg-blue-500 font-semibold" 
+          className="rounded-2xl text-base w-full h-14 bg-blue-600 hover:bg-blue-700 font-semibold shadow-lg shadow-blue-200 transition-all duration-200" 
         >
           {loading ? (
             <>
