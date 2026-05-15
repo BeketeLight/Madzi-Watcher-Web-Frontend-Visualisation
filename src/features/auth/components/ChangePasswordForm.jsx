@@ -44,7 +44,7 @@ export default function ChangePasswordForm({
           <Droplets className="w-12 h-12 text-white" />
        </div>
         <h1 className="text-xl font-bold text-blue-400">Change Account Password</h1>
-        <p className="text-sm text-gray-600">Update your password at any time</p>
+        <p className="text-sm text-gray-600">Update your password here</p>
       </div>
        {/* error message display */}
          {error && (
@@ -56,7 +56,7 @@ export default function ChangePasswordForm({
        </div>
       <div className="grid gap-3 ">
         <div className="grid gap-1.5">
-          <Label htmlFor="currentPassword" className="font-bold text-base">Current Password</Label>
+          <Label htmlFor="currentPassword" className="font-semibold text-gray-700">Current Password</Label>
 
          <div className="relative">
           <Input 
@@ -86,7 +86,7 @@ export default function ChangePasswordForm({
         </div>
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="newPassword" className="font-bold text-base">New Password</Label>
+          <Label htmlFor="newPassword" className="font-semibold text-gray-700">New Password</Label>
 
          <div className="relative">
           <Input 
@@ -99,8 +99,9 @@ export default function ChangePasswordForm({
             disabled={loading}
             onChange={onChange}
             className={cn(
-              "rounded-xl border-opacity-30 border-black h-12 placeholder:text-gray-500 text-lg",
-               values.newPassword ? "border-blue-500" : "border-black"
+             "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400 pr-12",
+             "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+             "transition-all duration-200 shadow-sm hover:shadow-lg"
             )}
           />
           <button
@@ -116,7 +117,7 @@ export default function ChangePasswordForm({
        </div>
 
         <div className="grid gap-1.5">
-          <Label htmlFor="confirmNewPassword" className="font-bold text-base">Confirm New Password</Label>
+          <Label htmlFor="confirmNewPassword" className="font-semibold text-gray-700">Confirm New Password</Label>
 
          <div className="relative"> 
           <Input 
