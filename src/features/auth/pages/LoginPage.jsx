@@ -24,7 +24,7 @@ export default function LoginPage() {
             password: formState.password 
         } 
       })
-      if (loginStatus) navigate('/otp', { state: { otpMessage: message } })
+      if (loginStatus) navigate('/dashboard', { state: { otpMessage: message } })
     } catch (err) {
       console.error('LOGIN ERROR:', err)
     }

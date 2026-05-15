@@ -56,22 +56,26 @@ export function useAuth() {
     setStatus(null)
 
     try {
-      console.log('Attempting login with credentials:', credentials)
+  
       const payload = {
         email: credentials.email,
         password: credentials.password,
         // verificationSessionId,
       }
 
-      console.log('Login payload:', payload)  
-
       const data = await apiLogin(payload)
-      if (!data || data.status !== 'success' || !data.loginSessionId) {
+      console.log('Login response:', data)
+
+       if (data || data.status == 'success' || data.message.sessionId) {
+       console.log('Login successful, session ID:', data.message.sessionId)
+      }
+
+      if (!data || data.status !== 'success' || !data.message.sessionId) {
         throw new Error(data?.message || 'Login failed')
       }
       
       setMessage(data?.message)
-      startLoginSession(data.loginSessionId)
+      startLoginSession(data.message.sessionId)
       setStatus('success')
       console.log(data)
       return data
