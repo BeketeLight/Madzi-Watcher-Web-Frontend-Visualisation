@@ -65,7 +65,7 @@ export default function LoginForm({
             className={cn(
               "rounded-2xl border-2 border-gray-200 h-14 text-base placeholder:text-gray-400",
               "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
-              "transition-all duration-200 shadow-sm hover:shadow-md"
+              "transition-all duration-200 shadow-md hover:shadow-lg"
             )}
           />
         </div>

@@ -70,8 +70,9 @@ export default function SignupForm({
             disabled={loading}
             onChange={onChange}
             className={cn(
-              "rounded-xl border-opacity-30 border-black h-10 placeholder:text-gray-500 text-lg",
-               values.role ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 placeholder:text-gray-400 text-base",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-md hover:shadow-lg"
             )}
           />
         </div>
@@ -90,8 +91,9 @@ export default function SignupForm({
             disabled={loading}
             onChange={onChange}
             className={cn(
-              "rounded-xl border-opacity-30 h-10 placeholder:text-gray-500 text-lg",
-               values.assignedArea ? "border-blue-500" : "border-black"
+              "rounded-2xl border-2 border-gray-200 h-14 placeholder:text-gray-400 text-base",
+              "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus:outline-none",
+              "transition-all duration-200 shadow-md hover:shadow-lg"
             )}
           />
           </div>
