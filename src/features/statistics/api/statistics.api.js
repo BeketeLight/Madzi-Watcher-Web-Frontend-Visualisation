@@ -32,7 +32,7 @@ const getAuthHeaders = () => {
 // Core Statistics with Period Filter Support
 export async function getDashboardStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/dashboard', { params });
+    const { data } = await api.get('water-quality/stats/dashboard', { params });
     return data;
   } catch (error) {
     console.error('❌ Dashboard statistics error:', error);
@@ -41,8 +41,8 @@ export async function getDashboardStatistics(params = {}) {
 }
 
 export async function getMeanStatistics(params = {}) {
-  try {
-    const { data } = await api.get('/stats/mean', { params });
+    try {
+    const { data } = await api.get('water-quality/stats/mean', { params });
     return data;
   } catch (error) {
     throw handleError(error);
@@ -51,7 +51,7 @@ export async function getMeanStatistics(params = {}) {
 
 export async function getVarianceStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/variance', { params });
+    const { data } = await api.get('water-quality/stats/variance', { params });
     return data;
   } catch (error) {
     throw handleError(error);
@@ -60,7 +60,7 @@ export async function getVarianceStatistics(params = {}) {
 
 export async function getStandardDeviationStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/std-dev', { params });
+    const { data } = await api.get('water-quality/stats/std-dev', { params });
     return data;
   } catch (error) {
     throw handleError(error);
@@ -69,7 +69,7 @@ export async function getStandardDeviationStatistics(params = {}) {
 
 export async function getMedianStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/median', { params });
+    const { data } = await api.get('water-quality/stats/median', { params });
     return data;
   } catch (error) {
     throw handleError(error);
@@ -78,7 +78,7 @@ export async function getMedianStatistics(params = {}) {
 
 export async function getMinMaxStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/min-max', { params });
+    const { data } = await api.get('water-quality/stats/min-max', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -87,7 +87,7 @@ export async function getMinMaxStatistics(params = {}) {
 
 export async function getWaterQualityClassification(params = {}) {
   try {
-    const { data } = await api.get('/stats/classification', { params });
+    const { data } = await api.get('water-quality/stats/classification', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -96,7 +96,7 @@ export async function getWaterQualityClassification(params = {}) {
 
 export async function getWaterStabilityScore(params = {}) {
   try {
-    const { data } = await api.get('/stats/stability-score', { params });
+    const { data } = await api.get('water-quality/stats/stability-score', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -106,7 +106,7 @@ export async function getWaterStabilityScore(params = {}) {
 // Time-based Statistics (already support params)
 export async function getDailyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/correlation', getAuthHeaders());
+    const { data } = await api.get('water-quality/stats/correlation', getAuthHeaders());
     return data;
   } catch (error) {
     console.warn('Correlation error:', error);
@@ -116,7 +116,7 @@ export async function getDailyStatistics(params = {}) {
 
 export async function detectOutliers(parameter = 'turbidity', threshold = 3) {
   try {
-    const { data } = await api.get(`/stats/outliers?parameter=${parameter}&threshold=${threshold}`, getAuthHeaders());
+    const { data } = await api.get(`water-quality/stats/outliers?parameter=${parameter}&threshold=${threshold}`, getAuthHeaders());
     return data;
   } catch (error) {
     console.warn('Outliers error:', error);
@@ -127,7 +127,7 @@ export async function detectOutliers(parameter = 'turbidity', threshold = 3) {
 // Location-based (keep as is for now)
 export async function getDistrictStatistics(district, params = {}) {
   try {
-    const { data } = await api.get(`/stats/${district}/district`, { params });
+    const { data } = await api.get(`water-quality/stats/${district}/district`, { params });
     return data;
   } catch (error) {
     throw handleError(error);
@@ -136,7 +136,7 @@ export async function getDistrictStatistics(district, params = {}) {
 
 export async function getTreatmentPlantStatistics(plant, params = {}) {
   try {
-    const { data } = await api.get(`/stats/${plant}/treatment-plant`, { params });
+    const { data } = await api.get(`water-quality/stats/${plant}/treatment-plant`, { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -145,7 +145,7 @@ export async function getTreatmentPlantStatistics(plant, params = {}) {
 
 export async function getTrendAnalysis(params = {}) {
   try {
-    const { data } = await api.get('/stats/trends', { params });
+    const { data } = await api.get('water-quality/stats/trends', { params });
     return data;
   } catch (error) {
     return handleError(error);
@@ -154,7 +154,7 @@ export async function getTrendAnalysis(params = {}) {
 
 export async function getParameterCorrelation(params = {}) {
   try {
-    const { data } = await api.get('/stats/correlation', { params });
+    const { data } = await api.get('water-quality/stats/correlation', { params });
     return data;
   } catch (error) {
     console.warn('Correlation error:', error);
@@ -164,7 +164,7 @@ export async function getParameterCorrelation(params = {}) {
 
 export async function getWeeklyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/weekly', { params });
+    const { data } = await api.get('water-quality/stats/weekly', { params });
     return data;
   } catch (error) {
     console.warn('Weekly statistics error:', error);
@@ -174,7 +174,7 @@ export async function getWeeklyStatistics(params = {}) {
 
 export async function getMonthlyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/monthly', { params });
+    const { data } = await api.get('water-quality/stats/monthly', { params });
     return data;
   } catch (error) {
     console.warn('Monthly statistics error:', error);
@@ -184,7 +184,7 @@ export async function getMonthlyStatistics(params = {}) {
 
 export async function getYearlyStatistics(params = {}) {
   try {
-    const { data } = await api.get('/stats/yearly', { params });
+    const { data } = await api.get('water-quality/stats/yearly', { params });
     return data;
   } catch (error) {
     console.warn('Yearly statistics error:', error);
@@ -193,6 +193,6 @@ export async function getYearlyStatistics(params = {}) {
 } 
 
 export const getTrendLine = async (params = {}) => {
-  const { data } = await api.get('/stats/trend-line', { params });
+  const { data } = await api.get('water-quality/stats/trend-line', { params });
   return data;
 };

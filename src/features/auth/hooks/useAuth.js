@@ -45,22 +45,25 @@ export function useAuth() {
   /* ---------------- LOGIN ---------------- */
   const login = async ({ credentials }) => {
     if (loading) return
-    if (!verificationSessionId) {
-      setStatus('failed')
-      setError('Identity verification required before login')
-      return Promise.reject(new Error('Missing verification session'))
-    }
+    // if (!verificationSessionId) {
+    //   setStatus('failed')
+    //   setError('Identity verification required before login')
+    //   return Promise.reject(new Error('Missing verification session'))
+    // }
 
     setLoading(true)
     setError(null)
     setStatus(null)
 
     try {
+      console.log('Attempting login with credentials:', credentials)
       const payload = {
-        emailAddress: credentials.emailAddress,
+        email: credentials.email,
         password: credentials.password,
-        verificationSessionId,
+        // verificationSessionId,
       }
+
+      console.log('Login payload:', payload)  
 
       const data = await apiLogin(payload)
       if (!data || data.status !== 'success' || !data.loginSessionId) {
