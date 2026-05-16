@@ -26,9 +26,10 @@ import {
     }, [profile, profileLoading, profileError, fetchProfile])
 
     const displayName = React.useMemo(() => {
-        if (!profile?.emailAddress) return 'User'
-        const beforeAt = profile.emailAddress.split('@')[0]
-        return profile.firstName || beforeAt.charAt(0).toUpperCase() + beforeAt.slice(1)
+        if (!profile?.data.email) return 'User'
+        console.log('Calculating display name from profile:', profile.data.email)
+        const beforeAt = profile.data.email.split('@')[0]
+        return `${profile.data.firstName}` + " " + `${profile.data.lastName}` || beforeAt.charAt(0).toUpperCase() + beforeAt.slice(1)
     }, [profile])
 
     const initials = React.useMemo(() => {
@@ -96,7 +97,7 @@ import {
 
                 <div className="space-y-1 text-center sm:text-left">
                 <CardTitle className="text-2xl">{displayName}</CardTitle>
-                <CardDescription className="text-base">{profile?.emailAddress || "No email address available"}</CardDescription>
+                <CardDescription className="text-base">{profile?.data.email || "No email address available"}</CardDescription>
                 </div>
             </div>
             </CardHeader>

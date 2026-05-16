@@ -78,6 +78,7 @@ export function AuthProvider({ children }) {
       refreshToken: tokens.refreshToken,
       user: userData,
     })
+    console.log("User logged in:", userData)
     setUser(userData)
     clearTempSession()
   }

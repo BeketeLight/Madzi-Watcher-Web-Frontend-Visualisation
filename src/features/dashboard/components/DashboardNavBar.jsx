@@ -55,9 +55,9 @@ const OFFICER_NAV_ITEMS = [
   //   path: '/dashboard/notifications'
   // },
   {
-    label: 'Users',
+    label: 'Water Monitors',
     icon: Users,
-    path: '/dashboard/users/me/profile'   // you can adjust later
+    path: '/dashboard/watermonitors'   // you can adjust later
   },
    {
     label: 'Configuration',
@@ -67,8 +67,7 @@ const OFFICER_NAV_ITEMS = [
    {
     label: 'Register WaterMonitor',
     icon: Settings,
-    badge: '3',
-    path: '/dashboard/configuration'
+    path: '/dashboard/register-watermonitors'   // you can adjust later
   },
 ];
 
@@ -113,7 +112,7 @@ function UserProfile({ user, onSignOut, userProfile, onTraverse }) {
           </div>
           <div className="flex-1 min-w-0 ml-3">
             <p className="font-medium text-white text-sm truncate">
-              {userProfile?.firstName || user?.firstName || user?.emailAddress?.split('@')[0] || "User"}
+              {userProfile?.data.firstName || user?.firstName || "User"}
             </p>
             <p className="text-xs text-blue-300 capitalize">
               {user?.role || "Client"}

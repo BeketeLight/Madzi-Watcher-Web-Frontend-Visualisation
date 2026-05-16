@@ -9,7 +9,7 @@ const api = axios.create({
 })
 
 const refreshClient = axios.create({
-  baseURL: BASE_URL + '/api/water-quality',
+  baseURL: BASE_URL + '/api/',
   withCredentials: true,
 })
 

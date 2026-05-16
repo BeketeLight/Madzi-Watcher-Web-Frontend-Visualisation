@@ -9,6 +9,7 @@ import {
   changePassword as apiChangePassword,
   logout as apiLogout,
 } from '../api/auth.api'
+import {setAuthSession, getToken} from '@/lib/storage'
 
 export function useAuth() {
   const {
@@ -67,6 +68,16 @@ export function useAuth() {
       console.log('Login response:', data)
 
        if (data || data.status == 'success' || data.message.sessionId) {
+        // setAuthSession({
+        //   accessToken: data.message.accessTokenInstance,
+        //   refreshToken: data.message.refreshTokenInstance,
+        //   user: data.message.user,
+        // })
+      finalizeLogin(data.message.user ?? user, {
+        accessToken: data.message.accessTokenInstance,
+        refreshToken: data.message.refreshTokenInstance,
+      })
+        console.log('Token:', getToken()) // Log token presence after setting session
        console.log('Login successful, session ID:', data.message.sessionId)
       }
 

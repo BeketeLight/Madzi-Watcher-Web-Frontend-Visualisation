@@ -4,9 +4,9 @@ import api from '@/lib/axios'
 // Example with axios/fetch
 export const getProfile = async () => {
   try {
-    const {data} = await api.get('/users/me/profile'); 
+    const {data} = await api.get('water-monitor/me/profile'); 
     if (data.status === 'success') {
-      return data.user;  
+      return data;  
     }
     throw new Error(data.message || 'Failed to load profile');
   } catch (err) {
@@ -17,7 +17,7 @@ export const getProfile = async () => {
 
 export async function updateUserProfile(profileData) {
   try {
-    const { data } = await api.patch(`/users/me/profile`, profileData)
+    const { data } = await api.patch(`water-monitor/me/profile`, profileData)
     return data.message
   } catch (error) {
     return handleError(error)
@@ -26,7 +26,7 @@ export async function updateUserProfile(profileData) {
 
 export async function getAllUsers() {
   try {
-    const { data } = await api.get('/users')
+    const { data } = await api.get('water-monitor')
     return data.message
   } catch (error) {
     return handleError(error)
@@ -35,7 +35,7 @@ export async function getAllUsers() {
 
 export async function getUserDetails(userId) {
   try {
-    const { data } = await api.get(`/users/${userId}`)
+    const { data } = await api.get(`water-monitor/${userId}`)
   if (data.status === 'success') {
       return data.user;  
     }
@@ -48,7 +48,7 @@ export async function getUserDetails(userId) {
 
 export async function updateUser(userId, userData) {
   try {
-    const { data } = await api.put(`/users/${userId}`, userData)
+    const { data } = await api.put(`water-monitor/${userId}`, userData)
     return data.message
   } catch (error) {
     return handleError(error)
@@ -57,7 +57,7 @@ export async function updateUser(userId, userData) {
 
 export async function deleteUser(userId) {
   try {
-    const { data } = await api.delete(`/users/${userId}`)
+    const { data } = await api.delete(`water-monitor/${userId}`)
     return data.message
   } catch (error) {
     return handleError(error)
@@ -66,7 +66,7 @@ export async function deleteUser(userId) {
 
 export async function promoteUser(userId, newRole) {
   try {
-    const { data } = await api.patch(`/users/${userId}/promote`, { role: newRole })
+    const { data } = await api.patch(`water-monitor/${userId}/promote`, { role: newRole })
     
     if (data.status !== "success") {
       throw new Error(data.message || "Promotion failed");

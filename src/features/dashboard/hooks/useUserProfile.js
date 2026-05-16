@@ -15,6 +15,7 @@ export function useUserProfile() {
         setProfileError(null)
         try {
         const data = await getProfileAPI()
+        console.log('Fetched profile:', data)
         setProfile(data)
         return data
         } catch (err) {
