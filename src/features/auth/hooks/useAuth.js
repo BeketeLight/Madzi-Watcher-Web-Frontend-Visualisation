@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuthContext } from '@/providers/AuthProvider'
 import {
   login as apiLogin,
+  registeruser as apiRegisterUser,
   signup as apiSignup,
   verifyOtp as apiVerifyOtp,
   forgotPassword as apiForgotPassword,
@@ -97,6 +98,29 @@ export function useAuth() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const registerUser = async (payload) => {
+    if (loading) return 
+    setLoading(true)
+    setError(null)
+    setStatus(null) 
+    try {
+      const data = await apiRegisterUser(payload) 
+      if (!data || data.status !== 'success') {
+        setStatus(data?.status || 'failed')
+        throw new Error(data?.message || 'Registration failed')
+      }
+      setStatus('success')
+      setMessage(data?.message) // Added: set message when available
+      return data
+    } catch (err) {
+      setStatus('failed')
+      setError(err?.response?.data?.message || err.message || 'Registration failed')
+      throw err
+    } finally {
+      setLoading(false)
+    } 
   }
 
   /* ---------------- VERIFY OTP ---------------- */
