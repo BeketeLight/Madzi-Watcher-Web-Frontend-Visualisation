@@ -10,6 +10,12 @@ export async function login(credentials) {
   }
 }
 
+export async function registeruser(params) {
+  const { data } = await api.post('/auth/register', params)
+  return data
+  
+}
+
 // SIGNUP / REGISTER
 export async function signup(payload) {
   try {
