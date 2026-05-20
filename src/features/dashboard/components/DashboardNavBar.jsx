@@ -67,7 +67,7 @@ const OFFICER_NAV_ITEMS = [
    {
     label: 'Register WaterMonitor',
     icon: Settings,
-    path: '/dashboard/register-watermonitors'   // you can adjust later
+    path: '/register-watermonitors'   // you can adjust later
   },
 ];
 

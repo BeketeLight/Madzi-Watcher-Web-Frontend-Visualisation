@@ -22,6 +22,7 @@ import DashboardPage from '@/features/dashboard/pages/DashboardPage'
 import DashboardOverview from '@/features/dashboard/components/DashboardOverview'
 import NotificationsPage from '@/features/notifications/pages/NotificationsPage'
 import StatisticsPage from '@/features/dashboard/pages/StatisticsPage'
+import RegisterUserPage from '@/features/auth/pages/RegisterUserPage'
 import DeviceConfiguration from '@/features/dashboard/pages/Configuration'
 import { RoleRoute } from './RoleRoute'
 import ProfilePage from '@/features/dashboard/pages/ProfilePage'
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
               { index: true, element: <DashboardOverview /> , allowedRoles: ['client','officer', 'admin','superadmin'] },
               { path: 'notifications', element: <NotificationsPage />, allowedRoles: ['officer','client', 'admin', 'superadmin']},
               { path: 'stats', element: <StatisticsPage />, allowedRoles: ['officer','admin','superadmin'] },
+              {path: 'register-watermonitors', element: <RegisterUserPage />, allowedRoles: ['admin','superadmin']},  
               { path: 'configuration', element: <DeviceConfiguration />, allowedRoles: ['client','officer', 'admin','superadmin']},
               { path: 'users/me/profile', element: <ProfilePage />, allowedRoles: ['client','officer', 'admin','superadmin']},
               { path: 'users/:userId', element: <UserDetailPage />, allowedRoles: ['admin','superadmin']}
