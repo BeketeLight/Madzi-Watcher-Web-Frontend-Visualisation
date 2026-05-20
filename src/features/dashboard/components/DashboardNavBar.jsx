@@ -7,6 +7,7 @@ import {
   LogOut,
   BarChart3,
   User,
+  UserPlus,
   Settings,
   Users
 } from "lucide-react";
@@ -66,7 +67,7 @@ const OFFICER_NAV_ITEMS = [
   },
    {
     label: 'Register WaterMonitor',
-    icon: Settings,
+    icon: UserPlus,
     path: '/dashboard/register-watermonitors'   // you can adjust later
   },
 ];
