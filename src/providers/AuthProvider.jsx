@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
       const storedUser = isDev === 'true'
         ? { id: 'dev-123', name: 'Dev User', role: 'admin', message: "sent to dev@example.com" }
         : getStoredUser();
+        console.log("Hydrating auth state. Stored user:", storedUser);
 
       const storedTemp = getTempSession();
 
