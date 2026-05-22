@@ -196,3 +196,8 @@ export const getTrendLine = async (params = {}) => {
   const { data } = await api.get('water-quality/stats/trend-line', { params });
   return data;
 };
+
+export const getMovingAverage = async (params = {}) => {      
+  const { data } = await api.get('water-quality/stats/moving-average', { params });       
+  return data;                          
+};      
