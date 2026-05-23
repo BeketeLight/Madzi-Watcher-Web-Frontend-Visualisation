@@ -7,6 +7,13 @@ export default function RegisterUser() {
     district: "",
   });
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div>
       <h2>Register Water Monitor</h2>
@@ -14,16 +21,26 @@ export default function RegisterUser() {
       <form>
         <input
           type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
           placeholder="Employee Email"
         />
 
         <input
           type="text"
+          name="assignedArea"
+          value={formData.assignedArea}
+          onChange={handleChange}
           placeholder="Assigned Area"
         />
 
-        <select>
-          <option>Select District</option>
+        <select
+          name="district"
+          value={formData.district}
+          onChange={handleChange}
+        >
+          <option value="">Select District</option>
         </select>
 
         <button type="submit">
