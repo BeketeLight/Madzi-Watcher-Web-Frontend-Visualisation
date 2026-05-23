@@ -5,6 +5,7 @@ export const mqttCommands = {
   POWER_OFF: 'poweroff',
   CLOSE_VALVE: 'closesolenoidvalve',
   OPEN_VALVE: 'opensolenoidvalve',
+  SWITCH_BROKER: 'switchmqttbroker'
 };
 
 export const publishCommand = (publish, command) => {

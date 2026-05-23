@@ -28,6 +28,11 @@ export const useWaterQuality = (publish) => {
   const turnOff = useCallback(() => {
     publishCommand(publish, mqttCommands.TURN_OFF);
   }, [publish]);
+  const switchBroker = useCallback(() => {
+    if (confirm('Switch to MQTT Local Broker?')) {
+      publishCommand(publish, mqttCommands.SWITCH_BROKER);
+    }
+  }, [publish]);  
 
   const deepSleep = useCallback(() => {
     if (confirm('Put ESP32 into deep sleep for 10 seconds?')) {
@@ -48,6 +53,7 @@ export const useWaterQuality = (publish) => {
     openValve,
     turnOff,
     deepSleep,
+    switchBroker,
     saveConfig,
   };
 };
