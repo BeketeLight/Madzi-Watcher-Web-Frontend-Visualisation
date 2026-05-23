@@ -114,13 +114,47 @@ export default function RegisterUser({ onSubmit }) {
           </div>
         </div>
 
-        <select
-          name="district"
-          value={formData.district}
-          onChange={handleChange}
-        >
-          <option value="">Select District</option>
-        </select>
+        <div>
+          <label className="block text-white font-medium mb-3">
+            District
+          </label>
+
+          <div className="relative">
+            <MapPin
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <select
+              name="district"
+              value={formData.district}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            >
+              <option value="">Select District</option>
+              <option value="Lilongwe">Lilongwe</option>
+              <option value="Blantyre">Blantyre</option>
+              <option value="Mzuzu">Mzuzu</option>
+              <option value="Zomba">Zomba</option>
+              <option value="Mangochi">Mangochi</option>
+            </select>
+          </div>
+        </div>
 
         <button type="submit">
           Register Water Monitor
