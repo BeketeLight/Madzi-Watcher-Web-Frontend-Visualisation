@@ -156,9 +156,28 @@ export default function RegisterUser({ onSubmit }) {
           </div>
         </div>
 
-        <button type="submit">
-          Register Water Monitor
-        </button>
+        <div className="border-t border-[#183B63] pt-6">
+          <button
+            type="submit"
+            className="
+              w-full
+              bg-[#3B82F6]
+              hover:bg-[#2563EB]
+              text-white
+              font-semibold
+              py-4
+              rounded-xl
+              transition-all
+              flex
+              items-center
+              justify-center
+              gap-3
+            "
+          >
+            <UserPlus size={20} />
+            Register Water Monitor
+          </button>
+        </div>
       </form>
     </div>
   );
