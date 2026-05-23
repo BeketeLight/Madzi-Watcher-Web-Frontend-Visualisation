@@ -1,4 +1,10 @@
 import { useState } from "react";
+import {
+  Mail,
+  MapPin,
+  ShieldCheck,
+  UserPlus,
+} from "lucide-react";
 
 export default function RegisterUser({ onSubmit }) {
   const [formData, setFormData] = useState({
