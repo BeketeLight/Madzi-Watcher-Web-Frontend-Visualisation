@@ -38,13 +38,43 @@ export default function RegisterUser({ onSubmit }) {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-7">
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Employee Email"
-        />
+        <div>
+          <label className="block text-white font-medium mb-3">
+            Employee Email
+          </label>
+
+          <div className="relative">
+            <Mail
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="e.g. employee@madziwatcher.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                placeholder:text-[#7EA6D9]
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            />
+          </div>
+        </div>
 
         <input
           type="text"
