@@ -76,13 +76,43 @@ export default function RegisterUser({ onSubmit }) {
           </div>
         </div>
 
-        <input
-          type="text"
-          name="assignedArea"
-          value={formData.assignedArea}
-          onChange={handleChange}
-          placeholder="Assigned Area"
-        />
+        <div>
+          <label className="block text-white font-medium mb-3">
+            Assigned Area
+          </label>
+
+          <div className="relative">
+            <MapPin
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <input
+              type="text"
+              name="assignedArea"
+              placeholder="e.g. Blantyre Water Zone A"
+              value={formData.assignedArea}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                placeholder:text-[#7EA6D9]
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            />
+          </div>
+        </div>
 
         <select
           name="district"
