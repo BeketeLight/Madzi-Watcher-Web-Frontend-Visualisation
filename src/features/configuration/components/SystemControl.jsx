@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Power, PowerOff, RefreshCw ,Icon} from 'lucide-react';
 import { faucet } from '@lucide/lab';
 
-export default function SystemControl({ onTurnOn, onCloseValve, onOpenValve, onTurnOff, onDeepSleep }) {
+export default function SystemControl({ onTurnOn, onCloseValve, onOpenValve, onTurnOff, onDeepSleep , onSwitchBroker}) {
   return (
     <Card className="mb-8 bg-[#0d2137] border-[#16354f] shadow-lg">
       <CardHeader>
@@ -22,6 +22,14 @@ export default function SystemControl({ onTurnOn, onCloseValve, onOpenValve, onT
         >
           <Icon  className="mr-2 h-4 w-4" iconNode={faucet} />
           Open Valve
+        </Button>
+        <Button
+          onClick={onSwitchBroker}
+          size="lg"
+          className="bg-[#10b981] hover:bg-[#059669] active:scale-95 transition-all text-white shadow-md hover:shadow-lg rounded-full px-3 py-2"
+        >
+          <Icon  className="mr-2 h-4 w-4" iconNode={faucet} />
+          Switch to MqqtLocalBroker
         </Button>
         <Button
           onClick={onCloseValve}
