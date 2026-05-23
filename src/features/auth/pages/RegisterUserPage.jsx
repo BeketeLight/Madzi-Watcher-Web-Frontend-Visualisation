@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function RegisterUser() {
+export default function RegisterUser({ onSubmit }) {
   const [formData, setFormData] = useState({
     email: "",
     assignedArea: "",
@@ -14,11 +14,16 @@ export default function RegisterUser() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
   return (
     <div>
       <h2>Register Water Monitor</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
