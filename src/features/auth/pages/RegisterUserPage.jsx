@@ -20,7 +20,7 @@ export default function RegisterUser({ onSubmit }) {
   };
 
   return (
-    <div>
+    <div className="bg-[#071B34] border border-[#123055] rounded-2xl p-8 shadow-xl">
       <h2>Register Water Monitor</h2>
 
       <form onSubmit={handleSubmit}>
