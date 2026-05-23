@@ -1,3 +1,9 @@
+import { useState } from "react";
+const [formData, setFormData] = useState({
+  email: "",
+  assignedArea: "",
+  district: "",
+});
 export default function RegisterUser() {
   return (
     <div>
