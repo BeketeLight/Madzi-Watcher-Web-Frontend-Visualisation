@@ -37,7 +37,7 @@ export default function RegisterUser({ onSubmit }) {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-7">
         <input
           type="email"
           name="email"
