@@ -27,9 +27,15 @@ export default function RegisterUser({ onSubmit }) {
 
   return (
     <div className="bg-[#071B34] border border-[#123055] rounded-2xl p-8 shadow-xl">
-      <h2>Register Water Monitor</h2>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-white">
+          Register Water Monitor
+        </h2>
 
-      <p>Fill in the details below</p>
+        <p className="text-[#7EA6D9] mt-1">
+          Create and assign monitoring accounts
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <input
