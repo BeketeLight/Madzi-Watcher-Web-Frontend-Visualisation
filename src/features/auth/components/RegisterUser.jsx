@@ -1,35 +1,184 @@
-export function RegisterUser({ onSubmit, loading, error, className, ...props }) {
+import { useState } from "react";
+import {
+  Mail,
+  MapPin,
+  ShieldCheck,
+  UserPlus,
+} from "lucide-react";
+
+export default function RegisterUser({ onSubmit }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })    
+    email: "",
+    assignedArea: "",
+    district: "",
+  });
 
-    const handleChange = (e) => {                           
-        const { name, value } = e.target            
-        setFormData((prevData) => ({ ...prevData, [name]: value }))     
-    }                           
-    const handleSubmit = (e) => {   
-        e.preventDefault()          
-        if (loading) return         
-        onSubmit(formData)          
-    }           
-    return (        
-        <form onSubmit={handleSubmit} className={cn("flex flex-col gap-6 p-6 md:p-8 pb-12 bg-white rounded-xl", className)} {...props}> 
-            <div className="flex flex-col items-center gap-1 text-center">      
-                <h1 className="text-2xl font-bold text-blue-400">Register</h1>  
-                <p className="text-sm text-gray-600">Create a new account to get started.</p>
-            </div>  
-            {error && <p className="text-sm text-red-600 text-center">{error}</p>}  
-            <div className="flex flex-col gap-4">
-                <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-                <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-            </div>  
-            <button type="submit" disabled={loading} className="w-full py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">   Register</button>
-        </form>    
-    ) 
-}                                              
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  return (
+    <div className="bg-[#071B34] border border-[#123055] rounded-2xl p-8 shadow-xl">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-white">
+          Register Water Monitor
+        </h2>
+
+        <p className="text-[#7EA6D9] mt-1">
+          Create and assign monitoring accounts
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-7">
+        <div>
+          <label className="block text-white font-medium mb-3">
+            Employee Email
+          </label>
+
+          <div className="relative">
+            <Mail
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="e.g. employee@madziwatcher.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                placeholder:text-[#7EA6D9]
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-white font-medium mb-3">
+            Assigned Area
+          </label>
+
+          <div className="relative">
+            <MapPin
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <input
+              type="text"
+              name="assignedArea"
+              placeholder="e.g. Blantyre Water Zone A"
+              value={formData.assignedArea}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                placeholder:text-[#7EA6D9]
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-white font-medium mb-3">
+            District
+          </label>
+
+          <div className="relative">
+            <MapPin
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A8DFF]"
+            />
+
+            <select
+              name="district"
+              value={formData.district}
+              onChange={handleChange}
+              required
+              className="
+                w-full
+                bg-[#092240]
+                border border-[#183B63]
+                rounded-xl
+                py-4
+                pl-12
+                pr-4
+                text-white
+                focus:outline-none
+                focus:border-[#3B82F6]
+                focus:ring-1
+                focus:ring-[#3B82F6]
+                transition-all
+              "
+            >
+              <option value="">Select District</option>
+              <option value="Lilongwe">Lilongwe</option>
+              <option value="Blantyre">Blantyre</option>
+              <option value="Mzuzu">Mzuzu</option>
+              <option value="Zomba">Zomba</option>
+              <option value="Mangochi">Mangochi</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="border-t border-[#183B63] pt-6">
+          <button
+            type="submit"
+            className="
+              w-full
+              bg-[#3B82F6]
+              hover:bg-[#2563EB]
+              text-white
+              font-semibold
+              py-4
+              rounded-xl
+              transition-all
+              flex
+              items-center
+              justify-center
+              gap-3
+            "
+          >
+            <UserPlus size={20} />
+            Register Water Monitor
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
