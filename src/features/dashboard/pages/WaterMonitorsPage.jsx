@@ -10,6 +10,24 @@ export default function WaterMonitorsPage() {
     setMonitors(data);
   }, []);
 
+  // ✅ DELETE FUNCTION
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this monitor?"
+    );
+
+    if (!confirmDelete) return;
+
+    const existing =
+      JSON.parse(localStorage.getItem("waterMonitors")) || [];
+
+    const updated = existing.filter((m) => m.id !== id);
+
+    localStorage.setItem("waterMonitors", JSON.stringify(updated));
+
+    setMonitors(updated);
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-white text-2xl mb-6">
@@ -24,11 +42,21 @@ export default function WaterMonitorsPage() {
         monitors.map((m) => (
           <div
             key={m.id}
-            className="bg-[#092240] p-4 rounded-xl mb-3"
+            className="bg-[#092240] p-4 rounded-xl mb-3 flex justify-between items-center"
           >
-            <h3 className="text-white">{m.email}</h3>
-            <p className="text-[#7EA6D9]">{m.assignedArea}</p>
-            <p className="text-[#7EA6D9]">{m.district}</p>
+            <div>
+              <h3 className="text-white">{m.email}</h3>
+              <p className="text-[#7EA6D9]">{m.assignedArea}</p>
+              <p className="text-[#7EA6D9]">{m.district}</p>
+            </div>
+
+            {/* ✅ DELETE BUTTON */}
+            <button
+              onClick={() => handleDelete(m.id)}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+            >
+              Delete
+            </button>
           </div>
         ))
       )}
