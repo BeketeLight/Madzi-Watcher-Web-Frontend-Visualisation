@@ -425,7 +425,7 @@ export default function TrendChart({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Chart 2: WQI Breakdown */}
-        <Card className="bg-[#0d2137] border-[#16354f]">
+        {/* <Card className="bg-[#0d2137] border-[#16354f]">
           <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><PieIcon className="h-4 w-4 text-blue-400" /> Classification Breakdown</CardTitle></CardHeader>
           <CardContent>
             <DonutChart data={pieData} />
@@ -439,10 +439,10 @@ export default function TrendChart({
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Chart 3: Distribution */}
-        <Card className="bg-[#0d2137] border-[#16354f]">
+        {/* <Card className="bg-[#0d2137] border-[#16354f]">
           <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><BarChart2 className="h-4 w-4 text-purple-400" /> WQI Distribution</CardTitle></CardHeader>
           <CardContent>
              <ResponsiveContainer width="100%" height={220}>
@@ -463,11 +463,11 @@ export default function TrendChart({
                 ))}
              </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       {/* Chart 4: Radar Comparison */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
+      {/* <Card className="bg-[#0d2137] border-[#16354f]">
         <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><Zap className="h-4 w-4 text-red-400" /> Latest vs Average</CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -481,10 +481,10 @@ export default function TrendChart({
             </RadarChart>
           </ResponsiveContainer>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Chart 5: TDS & Turbidity Correlation */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
+      {/* <Card className="bg-[#0d2137] border-[#16354f]">
         <CardHeader><CardTitle className="text-white text-lg flex items-center gap-2"><Activity className="h-4 w-4 text-amber-400" /> Parameter Correlation</CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={280}>
@@ -500,10 +500,10 @@ export default function TrendChart({
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Chart 6: Statistics */}
-      <Card className="bg-[#0d2137] border-[#16354f]">
+      {/* <Card className="bg-[#0d2137] border-[#16354f]">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-white text-lg flex items-center gap-2"><Sigma className="h-4 w-4 text-cyan-400" /> Statistical Analysis</CardTitle>
           <Select value={selectedStatParam} onValueChange={setSelectedStatParam}>
@@ -520,7 +520,7 @@ export default function TrendChart({
         <CardContent>
           <StatsDonutChart data={statMetrics} />
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

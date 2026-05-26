@@ -216,7 +216,7 @@ export default function StatisticsDashboard() {
               statType="mean"
               onPeriodChange={handlePeriodChange}
             />
-            <StatisticsCards 
+            {/* <StatisticsCards 
               title="Variance"
               statsData={varianceStats}
               statType="variance"
@@ -241,7 +241,7 @@ export default function StatisticsDashboard() {
               statsData={medianStats}
               statType="median"
               onPeriodChange={handlePeriodChange}
-            />
+            /> */}
 
             {/* Your original commented components remain intact */}
             {/* 
@@ -275,7 +275,7 @@ export default function StatisticsDashboard() {
         </div>
         )}
 
-        {activeTab === 'correlations' && (
+        {/* {activeTab === 'correlations' && (
           <div className="mt-8">
             <CorrelationMatrix correlations={correlations} loading={advancedLoading} />
           </div>
@@ -314,7 +314,7 @@ export default function StatisticsDashboard() {
               loading={advancedLoading}
             />
           </div>
-        )}
+        )} */}
       </Tabs>
 
       {/* Floating Refresh Button */}
