@@ -17,6 +17,7 @@ export default function ConfigurationPage() {
     openValve,
     turnOff,
     deepSleep,
+    switchBroker,
     saveConfig
   } = useWaterQuality(publish);
 
@@ -53,6 +54,7 @@ export default function ConfigurationPage() {
           onDeepSleep={deepSleep}
           onCloseValve={closeValve}
           onOpenValve={openValve}
+          onSwitchBroker={switchBroker}
         />
 
         {/* CONFIG FORM */}
