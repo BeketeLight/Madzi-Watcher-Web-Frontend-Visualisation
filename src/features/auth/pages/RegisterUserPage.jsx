@@ -7,16 +7,29 @@ export default function RegisterUserPage() {
   const navigate = useNavigate();
 
   const handleRegister = (data) => {
+    const existing = JSON.parse(localStorage.getItem("waterMonitors")) || [];
+
+    // Check if email already exists
+    const alreadyExists = existing.some((m) => m.email === data.email);
+    if (alreadyExists) {
+      alert("A water monitor with this email already exists!");
+      return;
+    }
+
+    // Create new monitor
     const newMonitor = {
       id: Date.now(),
-      ...data,
+      email: data.email,
+      assignedArea: data.assignedArea,
+      district: data.district,
     };
 
-    const existing = JSON.parse(localStorage.getItem("waterMonitors")) || [];
-    existing.push(newMonitor);
-    localStorage.setItem("waterMonitors", JSON.stringify(existing));
+    const updated = [...existing, newMonitor];
+    localStorage.setItem("waterMonitors", JSON.stringify(updated));
 
-    registerUser(data); // Optional: if you still want to use the auth hook
+    alert("Water monitor registered successfully!");
+
+    registerUser(data); // Optional: if still needed for auth
     navigate("/dashboard/watermonitors");
   };
 
