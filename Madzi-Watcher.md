@@ -5,6 +5,7 @@ It is IoT-based powered system--capable of monitoring water quality parameters 2
 
 CONTRIBUTORS
 
+
 Light Bekete
 |--- StatisticsFeature both backend & frondend
 |--- Architectual Design of (Backend, frondend and CircuitCode)
