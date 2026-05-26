@@ -27,6 +27,7 @@ import DeviceConfiguration from '@/features/dashboard/pages/Configuration'
 import { RoleRoute } from './RoleRoute'
 import ProfilePage from '@/features/dashboard/pages/ProfilePage'
 import UserDetailPage from '@/features/dashboard/pages/UserDetailsPage'
+import WaterMonitorsPage from '@/features/dashboard/pages/WaterMonitorsPage';
 
 export const router = createBrowserRouter([
 
@@ -70,7 +71,8 @@ export const router = createBrowserRouter([
               {path: 'register-watermonitors', element: <RegisterUserPage />, allowedRoles: ['admin','superadmin']},  
               { path: 'configuration', element: <DeviceConfiguration />, allowedRoles: ['client','officer', 'admin','superadmin']},
               { path: 'users/me/profile', element: <ProfilePage />, allowedRoles: ['client','officer', 'admin','superadmin']},
-              { path: 'users/:userId', element: <UserDetailPage />, allowedRoles: ['admin','superadmin']}
+              { path: 'users/:userId', element: <UserDetailPage />, allowedRoles: ['admin','superadmin']},
+              { path: 'watermonitors', element: <WaterMonitorsPage />, allowedRoles: ['admin','superadmin','officer']},
         ]
       },
     ]
