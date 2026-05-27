@@ -20,9 +20,20 @@ export default function RegisterUser({ onSubmit }) {
     });
   };
 
+  const registerData = {
+    
+      email: formData.email,
+      location: {
+        assignedArea: formData.assignedArea,
+        district: formData.district,
+      },
+      role: "water_monitor",
+    } ;
+    
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit(registerData);
   };
 
   return (

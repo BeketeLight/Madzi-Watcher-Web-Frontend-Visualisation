@@ -11,9 +11,14 @@ export async function login(credentials) {
 }
 
 export async function registeruser(params) {
+  try {
   const { data } = await api.post('/auth/register', params)
   return data
-  
+    } catch (error) {
+    // Re-throw the error so it can be caught by the caller
+    throw error;
+
+    }
 }
 
 // SIGNUP / REGISTER

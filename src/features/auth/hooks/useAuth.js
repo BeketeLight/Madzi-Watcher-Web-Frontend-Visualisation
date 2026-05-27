@@ -100,29 +100,32 @@ export function useAuth() {
     }
   }
 
-  const registerUser = async (payload) => {
-    if (loading) return 
-    setLoading(true)
-    setError(null)
-    setStatus(null) 
-    try {
-      const data = await apiRegisterUser(payload) 
-      if (!data || data.status !== 'success') {
-        setStatus(data?.status || 'failed')
-        throw new Error(data?.message || 'Registration failed')
-      }
-      setStatus('success')
-      setMessage(data?.message) // Added: set message when available
-      return data
-    } catch (err) {
-      setStatus('failed')
-      setError(err?.response?.data?.message || err.message || 'Registration failed')
-      throw err
-    } finally {
-      setLoading(false)
-    } 
-  }
+const registerUser = async (payload) => {
+  if (loading) return;
+  setLoading(true);
+  setError(null);
+  setStatus(null);
 
+  try {
+    const data = await apiRegisterUser(payload);
+    console.log('Register response:', data);
+    if (!data || data.status !== 'success') {
+      setStatus(data?.status || 'failed');
+      setError(data?.message || 'Registration failed');
+      return; // Do NOT throw here
+    }
+    console.log('Registration successful:', data);
+    setStatus('success');
+    setMessage(data?.message);
+    return data;
+  } catch (err) {
+    setStatus('failed');
+    setError(err?.response?.data?.message || err.message || 'Registration failed');
+    // DO NOT re-throw the error here
+  } finally {
+    setLoading(false);
+  }
+};
   /* ---------------- VERIFY OTP ---------------- */
   const verifyOtp = async ({ otp }) => {
     if (loading) return
