@@ -18,7 +18,7 @@ export const useMqtt = () => {
   useEffect(() => {
     if (clientRef.current) return; //  prevent double connection (Strict Mode)
 
-    const mqttClient = mqtt.connect(`${MQTT_BROKER_URL}:${MQTT_PORT}`, {
+    const mqttClient = mqtt.connect(`${MQTT_BROKER_URL}:8884/mqtt`, {
       clientId,
       reconnectPeriod: 5000,
       username: MQTT_USERNAME,
