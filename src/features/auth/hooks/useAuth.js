@@ -318,6 +318,7 @@ export function useAuth() {
     
     login,
     verifyOtp,
+    registerUser,
     signup,
     forgotPassword,
     resetPassword,
