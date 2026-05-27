@@ -418,6 +418,15 @@ export default function TrendChart({
                     const day = parseInt(value, 10);
                     if (!isNaN(day)) return `${day}`;
                     return value;
+                    }
+                  if (selectedPeriod === 'this_year') {
+                    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    const m = parseInt(value, 10);
+                    if (!isNaN(m) && m >= 1 && m <= 12) return MONTHS[m - 1];
+                    const d = new Date(value);
+                    if (!isNaN(d)) return MONTHS[d.getMonth()];
+                    return value;
+                  }
                   return value;
                 }}
             </AreaChart>
