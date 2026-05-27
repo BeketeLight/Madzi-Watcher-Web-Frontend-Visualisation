@@ -470,6 +470,22 @@ export default function TrendChart({
                 angle={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? -45 : 0}
                 textAnchor={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 'end' : 'middle'}
                 height={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 50 : 30}
+              />
+              <YAxis tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
+              <Tooltip content={<CustomTooltip />} />
+              {Object.entries(METRIC_META).map(([key, { color }]) =>
+                activeMetrics.includes(key) && (
+                  <Area
+                    key={key}
+                    type="monotone"
+                    dataKey={key}
+                    stroke={color}
+                    strokeWidth={2}
+                    fill={`url(#grad-${key})`}
+                    dot={false}
+                  />
+                )
+              )}
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
