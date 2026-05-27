@@ -412,6 +412,12 @@ export default function TrendChart({
                     if (!isNaN(hour)) return `${hour}:00`;
                     return value;
                   }
+                  if (selectedPeriod === 'this_month' || selectedPeriod === 'last_30_days') {
+                    const d = new Date(value);
+                    if (!isNaN(d)) return `${d.getDate()}`;
+                    const day = parseInt(value, 10);
+                    if (!isNaN(day)) return `${day}`;
+                    return value;
                   return value;
                 }}
             </AreaChart>
