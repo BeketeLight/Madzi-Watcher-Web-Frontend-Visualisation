@@ -402,22 +402,18 @@ export default function TrendChart({
                 ))}
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke={C.divider} vertical={false} />
-              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
-              <YAxis tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
-              <Tooltip content={<CustomTooltip />} />
-              {Object.entries(METRIC_META).map(([key, { color }]) => 
-                activeMetrics.includes(key) && (
-                  <Area
-                    key={key}
-                    type="monotone"
-                    dataKey={key}
-                    stroke={color}
-                    strokeWidth={2}
-                    fill={`url(#grad-${key})`}
-                    dot={false}
-                  />
-                )
-              )}
+              <XAxis
+                dataKey="date"
+                tick={{ fill: C.muted, fontSize: 11 }}
+                axisLine={false}
+                tickFormatter={(value) => {
+                  if (selectedPeriod === 'today') {
+                    const hour = parseInt(value, 10);
+                    if (!isNaN(hour)) return `${hour}:00`;
+                    return value;
+                  }
+                  return value;
+                }}
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
