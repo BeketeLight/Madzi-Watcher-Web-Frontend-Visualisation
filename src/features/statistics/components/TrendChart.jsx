@@ -438,6 +438,12 @@ export default function TrendChart({
                   }
                   return value;
                 }}
+                ticks={(() => {
+                  if (selectedPeriod === 'today') {
+                    return Array.from({ length: 24 }, (_, i) => String(i));
+                  }
+                  return undefined;
+                })()}
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
