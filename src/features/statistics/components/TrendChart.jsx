@@ -427,6 +427,15 @@ export default function TrendChart({
                     if (!isNaN(d)) return MONTHS[d.getMonth()];
                     return value;
                   }
+                  if (selectedPeriod === 'last_7_days') {
+                    const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+                    const d = new Date(value);
+                    if (!isNaN(d)) {
+                      const idx = (d.getDay() + 6) % 7;
+                      return DAYS[idx];
+                    }
+                    return value;
+                  }
                   return value;
                 }}
             </AreaChart>
