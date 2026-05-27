@@ -466,6 +466,10 @@ export default function TrendChart({
                   }
                   return undefined;
                 })()}
+                interval={0}
+                angle={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? -45 : 0}
+                textAnchor={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 'end' : 'middle'}
+                height={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 50 : 30}
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
