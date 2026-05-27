@@ -442,6 +442,11 @@ export default function TrendChart({
                   if (selectedPeriod === 'today') {
                     return Array.from({ length: 24 }, (_, i) => String(i));
                   }
+                  if (selectedPeriod === 'this_month') {
+                    const now = new Date();
+                    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                    return Array.from({ length: daysInMonth }, (_, i) => String(i + 1));
+                  }
                   if (selectedPeriod === 'this_year') {
                     return Array.from({ length: 12 }, (_, i) => String(i + 1));
                   }
