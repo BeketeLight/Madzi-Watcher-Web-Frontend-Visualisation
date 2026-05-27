@@ -447,6 +447,13 @@ export default function TrendChart({
                     const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
                     return Array.from({ length: daysInMonth }, (_, i) => String(i + 1));
                   }
+                  if (selectedPeriod === 'last_30_days') {
+                    return Array.from({ length: 30 }, (_, i) => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - 29 + i);
+                      return d.toISOString().split('T')[0];
+                    });
+                  }
                   if (selectedPeriod === 'this_year') {
                     return Array.from({ length: 12 }, (_, i) => String(i + 1));
                   }
