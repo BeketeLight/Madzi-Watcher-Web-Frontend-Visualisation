@@ -36,6 +36,27 @@ export default function ProfilePage() {
 
     const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
 
+   
+    const handleEditProfile = () => {
+    console.log("🔄 Edit button clicked");
+    console.log("Full profile object:", profile);
+
+    // Try multiple possible ID locations
+    const userId = profile?.data?._id || 
+                   profile?._id || 
+                   profile?.data?.id;
+
+    console.log("Extracted userId:", userId);
+
+    if (userId) {
+      console.log(`🚀 Navigating to: /users/${userId}`);
+      navigate(`/dashboard/users/${userId}`);
+    } else {
+      console.error("❌ Could not find user ID in profile");
+      alert("Could not find user ID. Please check console and refresh.");
+    }
+  };
+
     if (profileLoading) {
         return (
             <div className="container mx-auto max-w-2xl py-20 px-4 flex justify-center mt-12">
@@ -59,14 +80,7 @@ export default function ProfilePage() {
         <Card className="overflow-hidden rounded-[2rem] border-none shadow-2xl">
           {/* Blue Header */}
           <div className="relative bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 px-10 py-12 text-white overflow-hidden">
-            {/* Edit Button */}
-            <div className="absolute top-6 right-6">
-              <Button className="rounded-full bg-white text-blue-900 hover:bg-blue-100 font-semibold">
-                <Edit3 className="w-4 h-4 mr-2" />
-                Edit 
-              </Button>
-            </div>
-
+          
             {/* Background Decorative Circles */}
             <div className="absolute -top-10 -right-10 h-60 w-60 rounded-full bg-white/5" />
             <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-white/5" />
@@ -112,7 +126,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Bottom White Section */}
-          <CardContent className="bg-white px-8 py-10 mt-20">
+          <CardContent className="bg- px-8 py-10 mt-20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <InfoCard
                 title="Email Address"
