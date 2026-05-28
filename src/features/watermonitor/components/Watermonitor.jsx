@@ -98,11 +98,11 @@ export default function WaterMonitorsPage() {
                 <h3 className="text-white">{m.email || "No Email"}</h3>
 
                 <p className="text-[#7EA6D9]">
-                  Assigned Area: {m.assigned_area || m.assignedArea || "N/A"}
+                  Assigned Area: {m.location?.assignedArea || "N/A"}
                 </p>
 
                 <p className="text-[#7EA6D9]">
-                  District: {m.district_name || m.district || "N/A"}
+                  District: {m.location?.district || "N/A"}
                 </p>
               </div>
 
