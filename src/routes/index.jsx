@@ -27,7 +27,7 @@ import DeviceConfiguration from '@/features/dashboard/pages/Configuration'
 import { RoleRoute } from './RoleRoute'
 import ProfilePage from '@/features/dashboard/pages/ProfilePage'
 import UserDetailPage from '@/features/dashboard/pages/UserDetailsPage'
-import WaterMonitorsPage from '@/features/dashboard/pages/WaterMonitorsPage';
+import WaterMonitorsPage from '@/features/watermonitor/pages/WaterMonitorsPage';
 
 export const router = createBrowserRouter([
 
