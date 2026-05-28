@@ -43,15 +43,31 @@ export default function Navbar() {
         </div>
       </div>
 
-      {isOpen && (
+{isOpen && (
         <div className="md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-1">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="block px-3 py-2 text-base font-medium text-slate-600 hover:text-[#2C7BE5] hover:bg-slate-50 rounded-md" onClick={() => setIsOpen(false)}>
+            <a 
+              key={link.name} 
+              href={link.href} 
+              className="block px-3 py-2 text-base font-medium text-slate-600 hover:text-[#2C7BE5] hover:bg-slate-50 rounded-md" 
+              onClick={() => setIsOpen(false)}
+            >
               {link.name}
             </a>
           ))}
+
+          {/* Login Button for Mobile */}
           <div className="px-3 pt-4">
-            <Button className="w-full bg-[#2C7BE5] rounded-full">Subscribe</Button>
+            <Button 
+              size="sm" 
+              onClick={() => {
+                navigate('/login');
+                setIsOpen(false);        // Close mobile menu after clicking
+              }} 
+              className="w-full bg-[#2C7BE5] hover:bg-blue-700 rounded-full py-6 text-base"
+            >
+              Login
+            </Button>
           </div>
         </div>
       )}
