@@ -4,6 +4,7 @@ import {
   MapPin,
   ShieldCheck,
   UserPlus,
+  Loader2,  
 } from "lucide-react";
 
 export default function RegisterUser({ onSubmit }) {
@@ -12,6 +13,8 @@ export default function RegisterUser({ onSubmit }) {
     assignedArea: "",
     district: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);   // ← Added
 
   const handleChange = (e) => {
     setFormData({
@@ -31,9 +34,15 @@ export default function RegisterUser({ onSubmit }) {
     } ;
     
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(registerData);
+    setIsLoading(true); // ← Set loading state
+    // onSubmit(registerData);
+    try {
+      await onSubmit(registerData);          // ← Wait for parent to finish
+    } finally {
+      setIsLoading(false);                   // ← Stop loading
+    }
   };
 
   return (
@@ -170,6 +179,7 @@ export default function RegisterUser({ onSubmit }) {
         <div className="border-t border-[#183B63] pt-6">
           <button
             type="submit"
+            disabled={isLoading}
             className="
               w-full
               bg-[#3B82F6]
@@ -184,9 +194,18 @@ export default function RegisterUser({ onSubmit }) {
               justify-center
               gap-3
             "
-          >
-            <UserPlus size={20} />
-            Register Water Monitor
+>
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                Registering...
+              </>
+            ) : (
+              <>
+                <UserPlus size={20} />
+                Register Water Monitor
+              </>
+            )}
           </button>
         </div>
       </form>
