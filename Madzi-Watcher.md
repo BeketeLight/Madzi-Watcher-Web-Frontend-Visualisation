@@ -151,3 +151,58 @@ method: PATCH
 method: PATCH
 --used by admins to change position of user to either admin or superadmin
 
+```
+NOTIFICATIONS CONTROLLER URLS
+
+```
+/api/notifications/
+method: POST
+--allows creation of notification by the system
+
+/api/notifications/:id/read
+method: PATCH
+--marks notifications as read
+
+/api/notification/:id
+method: DELETE
+-- deletes notification
+```
+WATER QUALITY CONTROLLER URLS
+
+```
+/api/water-quality/stats/dashboard
+method: GET
+--used to get statistics of WQI on the dashboard for clients viewing
+
+/api/water-quality/stats/mean
+method: GET
+--used to  get average on the WQI
+
+/api/water-quality/stats/std-dev
+method: GET
+--used to know how unstable the WQI index is
+
+/api/water-quality/stats/daily
+method: GET
+--used to get water qaulity index (WQI) based on the day
+
+/api/water-quality/stats/weekly
+method: GET
+--used to get water qaulity index (WQI) based on the week 
+
+/api/water-quality/stats/monthly
+method: GET
+--used to get water qaulity index (WQI) based on the month
+
+/api/water-quality/stats/:district/district
+method: GET
+--used to get water qaulity index (WQI) based on district
+
+/api/water-quality/stats/daily
+method: GET
+--used to get water qaulity index (WQI) based on the day
+
+/api/water-quality/stats/:treatment-plant/treatment-plant
+method: GET
+--used to get Water quality index (WQI) from treatment plant
+
