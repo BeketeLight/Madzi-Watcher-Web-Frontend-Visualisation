@@ -26,7 +26,7 @@ Terrence Kabango
 ```
 WEB BACKEND URLS
 ```
-AuthenticationFeature
+AuthenticationController
 
 /api/auth/login
 Method: POST
@@ -94,6 +94,14 @@ expected response-body
 	"message": "Password reset OTP sent to bryan@madzi.com"
 }
 
+/api/auth/refresh-token
+method: POST
+--ensures that user is logged for a period of time
+
+/api/auth/logout
+method: POST
+--enables user to sign out
+
 /api/auth/reset-password
 method: POST
 expected request-body
@@ -107,3 +115,39 @@ expected response-body
 	"status": "success",
     "message": "Password reset successful. You can now log in with your new password.
 }
+
+/api/auth/request-reset
+method: POST
+--it validates if the email requesting for password change is valid
+
+/api/auth/change-password
+method: POST
+--it allows validated user to change password
+
+```
+WATER MONITOR CONTROLLER URLS
+```
+/api/water-monitor/
+method: GET
+--used by Admins only to get all users
+
+/api/water-monitor/me/profile
+method: GET
+--used get logged in users profile
+
+/api/water-monitor/:id
+method: GET
+--used by admins to get user by his/her ID
+
+/api/water-monitor/:id
+method: DELETE
+--used by admins only to delete user 
+
+/api/water-monitor/me/profile
+method: PATCH
+-- used by logged in user to update profile
+
+/api/water-monitor/:id/promote
+method: PATCH
+--used by admins to change position of user to either admin or superadmin
+
