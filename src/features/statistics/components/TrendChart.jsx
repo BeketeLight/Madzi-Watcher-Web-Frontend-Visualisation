@@ -36,7 +36,7 @@ const PERIOD_OPTIONS = [
   { value: 'last_30_days', label: 'Last 30 Days' },
   { value: 'this_month',   label: 'This Month' },
   { value: 'this_year',    label: 'This Year' },
-  { value: 'all',          label: 'All Time' },
+  // { value: 'all',          label: 'All Time' },
 ];
 
 const METRIC_META = {
@@ -402,10 +402,78 @@ export default function TrendChart({
                 ))}
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke={C.divider} vertical={false} />
-              <XAxis dataKey="date" tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
+              <XAxis
+                dataKey="date"
+                tick={{ fill: C.muted, fontSize: 11 }}
+                axisLine={false}
+                tickFormatter={(value) => {
+                  if (selectedPeriod === 'today') {
+                    const hour = parseInt(value, 10);
+                    if (!isNaN(hour)) return `${hour}:00`;
+                    return value;
+                  }
+                  if (selectedPeriod === 'this_month' || selectedPeriod === 'last_30_days') {
+                    const d = new Date(value);
+                    if (!isNaN(d)) return `${d.getDate()}`;
+                    const day = parseInt(value, 10);
+                    if (!isNaN(day)) return `${day}`;
+                    return value;
+                    }
+                  if (selectedPeriod === 'this_year') {
+                    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    const m = parseInt(value, 10);
+                    if (!isNaN(m) && m >= 1 && m <= 12) return MONTHS[m - 1];
+                    const d = new Date(value);
+                    if (!isNaN(d)) return MONTHS[d.getMonth()];
+                    return value;
+                  }
+                  if (selectedPeriod === 'last_7_days') {
+                    const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+                    const d = new Date(value);
+                    if (!isNaN(d)) {
+                      const idx = (d.getDay() + 6) % 7;
+                      return DAYS[idx];
+                    }
+                    return value;
+                  }
+                  return value;
+                }}
+                ticks={(() => {
+                  if (selectedPeriod === 'today') {
+                    return Array.from({ length: 24 }, (_, i) => String(i));
+                  }
+                  if (selectedPeriod === 'this_month') {
+                    const now = new Date();
+                    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                    return Array.from({ length: daysInMonth }, (_, i) => String(i + 1));
+                  }
+                  if (selectedPeriod === 'last_30_days') {
+                    return Array.from({ length: 30 }, (_, i) => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - 29 + i);
+                      return d.toISOString().split('T')[0];
+                    });
+                  }
+                  if (selectedPeriod === 'this_year') {
+                    return Array.from({ length: 12 }, (_, i) => String(i + 1));
+                  }
+                  if (selectedPeriod === 'last_7_days') {
+                    return Array.from({ length: 7 }, (_, i) => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - 6 + i);
+                      return d.toISOString().split('T')[0];
+                    });
+                  }
+                  return undefined;
+                })()}
+                interval={0}
+                angle={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? -45 : 0}
+                textAnchor={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 'end' : 'middle'}
+                height={['today', 'this_month', 'last_30_days'].includes(selectedPeriod) ? 50 : 30}
+              />
               <YAxis tick={{ fill: C.muted, fontSize: 11 }} axisLine={false} />
               <Tooltip content={<CustomTooltip />} />
-              {Object.entries(METRIC_META).map(([key, { color }]) => 
+              {Object.entries(METRIC_META).map(([key, { color }]) =>
                 activeMetrics.includes(key) && (
                   <Area
                     key={key}
