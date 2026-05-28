@@ -1,7 +1,8 @@
                                                            MADZI-WATCHER 
-
+```
 Real-Time Water monitoring platform, a system which solves the problem of manual water quality testing parameters
 It is IoT-based powered system--capable of monitoring water quality parameters 24 hours..
+```
 
 CONTRIBUTORS
 
@@ -22,132 +23,75 @@ Grace Mphande
 
 Terrence Kabango
 |--- UserProfile both backend and frontend
-|
+|--- Configurations
 ```
 WEB BACKEND URLS
 ```
 AuthenticationController
 
-/api/auth/login
+https://madzi-watcher-backend.onrender.com/api/auth/login
 Method: POST
+--to login user is expected to hit this point
 
-expected request-body
-{
-	"email": "superadmin@madzi.com"
-	"password": "superadminpassword"
-}
-expected response-body
-{
-	"status": "success"
-	"message": {object of tokens}
-	"otpCode": ""
-	"sessionId":
-	"user": {object}
-}
-
-/api/auth/otp
+https://madzi-watcher-backend.onrender.com/api/auth/otp
 method: POST
+--to be logged in user need to verify this identity using OTP
 
-expected request-body
-{
-	"email": "superadmin@madzi.com"
-	"otp": ""
-}
 
-expected response-body
-{
-	"status": "success"
-	"message": "OTP verified successfully.You can log in now."
-}
-
-/api/auth/register
+https://madzi-watcher-backend.onrender.com/api/auth/register
 method: POST
+--Admin is going to hit this endpoint to register new water monitor
 
-expected request-body
-{
-  "email": "bryan@madzi.com",
-  "role": "water_monitor",
-  "location": {
-    "assignedArea": "Chirunga",
-    "district": "Zomba"
-  },
-  "verificationSessionId": "69aee51a6afd69aa40057699"
-}
 
-expected response-body
-{
-	"status": "success"
-	"message": "Water monitor registered successfully"
-}
 
-/api/auth/request-reset
+https://madzi-watcher-backend.onrender.com/api/auth/request-reset
 method: POST
+--if the user want to request for password change has to hit this endpoint
 
-expected request-body
-{
-	"email": "bryan@madzi.com"
-}
-
-expected response-body
-{
-	"status": "success"
-	"message": "Password reset OTP sent to bryan@madzi.com"
-}
-
-/api/auth/refresh-token
+https://madzi-watcher-backend.onrender.com/api/auth/refresh-token
 method: POST
---ensures that user is logged for a period of time
+--ensures user is logged in and checks if session still exists
 
 /api/auth/logout
 method: POST
 --enables user to sign out
 
-/api/auth/reset-password
+https://madzi-watcher-backend.onrender.com/api/auth/reset-password
 method: POST
-expected request-body
-{
-  "email": "bryan@madzi.com",
-  "newPassword": "1234",
-  "confirmNewPassword": "1234"
-}
-expected response-body
-{
-	"status": "success",
-    "message": "Password reset successful. You can now log in with your new password.
-}
+--enable user reset password
 
-/api/auth/request-reset
+https://madzi-watcher-backend.onrender.com/api/auth/request-reset
 method: POST
 --it validates if the email requesting for password change is valid
 
-/api/auth/change-password
+https://madzi-watcher-backend.onrender.com/api/auth/change-password
 method: POST
 --it allows validated user to change password
 
 ```
 WATER MONITOR CONTROLLER URLS
 ```
-/api/water-monitor/
+https://madzi-watcher-backend.onrender.com/api/water-monitor/
 method: GET
 --used by Admins only to get all users
 
-/api/water-monitor/me/profile
+https://madzi-watcher-backend.onrender.com/api/water-monitor/me/profile
 method: GET
 --used get logged in users profile
 
-/api/water-monitor/:id
+https://madzi-watcher-backend.onrender.com/api/water-monitor/:id
 method: GET
 --used by admins to get user by his/her ID
 
-/api/water-monitor/:id
+https://madzi-watcher-backend.onrender.com/api/water-monitor/:id
 method: DELETE
 --used by admins only to delete user 
 
-/api/water-monitor/me/profile
+https://madzi-watcher-backend.onrender.com/api/water-monitor/me/profile
 method: PATCH
 -- used by logged in user to update profile
 
-/api/water-monitor/:id/promote
+https://madzi-watcher-backend.onrender.com/api/water-monitor/:id/promote
 method: PATCH
 --used by admins to change position of user to either admin or superadmin
 
@@ -155,54 +99,50 @@ method: PATCH
 NOTIFICATIONS CONTROLLER URLS
 
 ```
-/api/notifications/
+https://madzi-watcher-backend.onrender.com/api/notifications/
 method: POST
 --allows creation of notification by the system
 
-/api/notifications/:id/read
+https://madzi-watcher-backend.onrender.com/api/notifications/:id/read
 method: PATCH
 --marks notifications as read
 
-/api/notification/:id
+https://madzi-watcher-backend.onrender.com/api/notification/:id
 method: DELETE
 -- deletes notification
 ```
 WATER QUALITY CONTROLLER URLS
 
 ```
-/api/water-quality/stats/dashboard
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/dashboard
 method: GET
---used to get statistics of WQI on the dashboard for clients viewing
+--used fetches data for dashboard viewing including average of water paremeters, graphs of WQI and tables
 
-/api/water-quality/stats/mean
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/mean
 method: GET
---used to  get average on the WQI
+--used to  get average on the WQI, value on which WQI tends to cling to
 
-/api/water-quality/stats/std-dev
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/daily
 method: GET
---used to know how unstable the WQI index is
+--used to get water qaulity index (WQI) based on the day(per hour)
 
-/api/water-quality/stats/daily
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/weekly
 method: GET
---used to get water qaulity index (WQI) based on the day
+--used to get water qaulity index (WQI) based on the week (monday, Tuesday...)
 
-/api/water-quality/stats/weekly
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/monthly
 method: GET
---used to get water qaulity index (WQI) based on the week 
-
-/api/water-quality/stats/monthly
-method: GET
---used to get water qaulity index (WQI) based on the month
-
-/api/water-quality/stats/:district/district
-method: GET
---used to get water qaulity index (WQI) based on district
-
-/api/water-quality/stats/daily
-method: GET
---used to get water qaulity index (WQI) based on the day
+--used to get water qaulity index (WQI) based on the month(January, February...)
 
 /api/water-quality/stats/:treatment-plant/treatment-plant
 method: GET
 --used to get Water quality index (WQI) from treatment plant
+
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/trends
+method: GET
+--used in proting graphs
+
+https://madzi-watcher-backend.onrender.com/api/water-quality/stats/trend-line
+method: GET
+--used to differenciate x and y axis
 
