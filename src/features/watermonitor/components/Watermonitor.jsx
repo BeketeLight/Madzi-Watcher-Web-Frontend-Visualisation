@@ -2,7 +2,7 @@ import { useState } from "react";
 import useWaterMonitors from "../hooks/useWatermonitor";
 import api from "@/lib/axios";
 
-// If you already have this somewhere else, import it instead
+// Auth headers helper
 const getAuthHeaders = () => {
   const token =
     localStorage.getItem("token") ||
@@ -26,6 +26,7 @@ export default function WaterMonitorsPage() {
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  // DELETE MONITOR
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this monitor?"
@@ -34,21 +35,21 @@ export default function WaterMonitorsPage() {
     if (!confirmDelete) return;
 
     try {
-      await api.delete(`water-monitor/${id}`, getAuthHeaders());
+      await api.delete(`/water-monitor/${id}`, getAuthHeaders());
       refetch();
     } catch (err) {
       console.error("Failed to delete monitor:", err);
     }
   };
 
-  // ✅ SAFE FILTER (no crashes)
+  // SAFE FILTER (prevents crashes)
   const filteredMonitors = (Array.isArray(monitors) ? monitors : []).filter(
     (m) => {
       const query = searchQuery.toLowerCase();
 
-      const email = m.email?.toLowerCase() || "";
-      const area = m.assignedArea?.toLowerCase() || "";
-      const district = m.district?.toLowerCase() || "";
+      const email = (m.email || "").toLowerCase();
+      const area = (m.assigned_area || m.assignedArea || "").toLowerCase();
+      const district = (m.district_name || m.district || "").toLowerCase();
 
       return (
         email.includes(query) ||
@@ -70,6 +71,7 @@ export default function WaterMonitorsPage() {
     <div className="p-6">
       <h2 className="text-white text-2xl mb-6">Water Monitors</h2>
 
+      {/* SEARCH INPUT */}
       <div className="mb-4">
         <input
           type="text"
@@ -80,33 +82,39 @@ export default function WaterMonitorsPage() {
         />
       </div>
 
+      {/* LIST */}
       {filteredMonitors.length === 0 ? (
         <p className="text-gray-400">No monitors found</p>
       ) : (
-        filteredMonitors.map((m) => (
-          <div
-            key={m.id}
-            className="bg-[#092240] p-4 rounded-xl mb-3 flex justify-between items-center"
-          >
-            <div>
-              <h3 className="text-white">{m.email || "No Email"}</h3>
-              <p className="text-[#7EA6D9]">
-                Assigned Area: {m.assignedArea || "N/A"}
-              </p>
-              <p className="text-[#7EA6D9]">
-                District: {m.district || "N/A"}
-              </p>
-            </div>
+        filteredMonitors.map((m) => {
+          const id = m._id || m.id;
 
-            <button
-              key={m._id}
-              onClick={() => handleDelete(m._id)}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+          return (
+            <div
+              key={id}
+              className="bg-[#092240] p-4 rounded-xl mb-3 flex justify-between items-center"
             >
-              Delete
-            </button>
-          </div>
-        ))
+              <div>
+                <h3 className="text-white">{m.email || "No Email"}</h3>
+
+                <p className="text-[#7EA6D9]">
+                  Assigned Area: {m.assigned_area || m.assignedArea || "N/A"}
+                </p>
+
+                <p className="text-[#7EA6D9]">
+                  District: {m.district_name || m.district || "N/A"}
+                </p>
+              </div>
+
+              <button
+                onClick={() => handleDelete(id)}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })
       )}
     </div>
   );
