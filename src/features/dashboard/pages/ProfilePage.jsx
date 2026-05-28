@@ -38,7 +38,7 @@ export default function ProfilePage() {
 
    
     const handleEditProfile = () => {
-    console.log("🔄 Edit button clicked");
+    console.log("Edit button clicked");
     console.log("Full profile object:", profile);
 
     // Try multiple possible ID locations
@@ -49,10 +49,10 @@ export default function ProfilePage() {
     console.log("Extracted userId:", userId);
 
     if (userId) {
-      console.log(`🚀 Navigating to: /users/${userId}`);
+      console.log(`Navigating to: /users/${userId}`);
       navigate(`/dashboard/users/${userId}`);
     } else {
-      console.error("❌ Could not find user ID in profile");
+      console.error("Could not find user ID in profile");
       alert("Could not find user ID. Please check console and refresh.");
     }
   };
