@@ -3,6 +3,21 @@
 Real-Time Water monitoring platform, a system which solves the problem of manual water quality testing parameters
 It is IoT-based powered system--capable of monitoring water quality parameters 24 hours..
 ```
+BUSINESS CASE
+```
+	Title: Madzi-Watcher-- Real-Time water monitoring platform
+	Problem: People in Malawi drink unsafe wate due to manual detection of water quality parameters
+	Solution: To mitigate this problem, Madzi-watcher project come in where ESP32-based sensors are being used
+						to measure water ph, turbidity, TDS(Total Dissolved Solutes), and Electrical conductivity and send 
+						data to dashboard for analysis, Water monitors are notified on violation in real-time, no delays
+
+	Benefits: Early detection of pollution, data driven decision and minimizises downtime and damage
+	Expected cost: MWK185,000 to buy all materials(esp32,tsd,ph,turbidity and ec sensors).
+	Expected Returns: improved public health
+	Risks:		Sensor damage, network issues and low adoption.
+
+
+```
 
 CONTRIBUTORS
 
