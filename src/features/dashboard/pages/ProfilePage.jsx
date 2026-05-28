@@ -38,7 +38,7 @@ export default function ProfilePage() {
 
    
     const handleEditProfile = () => {
-    console.log("Edit button clicked");
+    console.log("🔄 Edit button clicked");
     console.log("Full profile object:", profile);
 
     // Try multiple possible ID locations
@@ -49,10 +49,10 @@ export default function ProfilePage() {
     console.log("Extracted userId:", userId);
 
     if (userId) {
-      console.log(`Navigating to: /users/${userId}`);
+      console.log(`🚀 Navigating to: /users/${userId}`);
       navigate(`/dashboard/users/${userId}`);
     } else {
-      console.error("Could not find user ID in profile");
+      console.error("❌ Could not find user ID in profile");
       alert("Could not find user ID. Please check console and refresh.");
     }
   };
@@ -79,10 +79,16 @@ export default function ProfilePage() {
       <div className="max-w-5xl mx-auto">
         <Card className="overflow-hidden rounded-[2rem] border-none shadow-2xl">
           {/* Blue Header */}
-          <div className="relative bg-blue-950 px-10 py-12 text-white overflow-hidden">
+          <div className="relative bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 px-10 py-12 text-white overflow-hidden">
+          
+            {/* Background Decorative Circles */}
+            <div className="absolute -top-10 -right-10 h-60 w-60 rounded-full bg-white/5" />
+            <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-white/5" />
+
             <div className="relative flex flex-col md:flex-row items-center gap-10">
               {/* Avatar */}
               <Avatar className="h-40 w-40 border-[6px] border-white shadow-2xl">
+                {/* <AvatarImage src="https://i.pravatar.cc/300" /> */}
                 <AvatarFallback className="text-4xl font-bold text-black">
                   {initials}
                 </AvatarFallback>
@@ -120,7 +126,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Bottom White Section */}
-          <CardContent className="bg-blue-950 px-8 py-10 mt-20">
+          <CardContent className="bg- px-8 py-10 mt-20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <InfoCard
                 title="Email Address"
