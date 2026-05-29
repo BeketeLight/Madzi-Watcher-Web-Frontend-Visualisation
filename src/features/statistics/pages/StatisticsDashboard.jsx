@@ -319,13 +319,13 @@ export default function StatisticsDashboard() {
 
       {/* Floating Refresh Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <Button
+        {/* <Button
           onClick={refreshAllData}
           className="bg-[#2C7BE5] hover:bg-blue-600 text-white rounded-full shadow-lg px-6 py-3"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh Data
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
