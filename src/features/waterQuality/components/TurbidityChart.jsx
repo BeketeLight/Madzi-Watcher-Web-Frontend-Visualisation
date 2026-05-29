@@ -28,14 +28,56 @@ export const TurbidityChart = ({ history }) => {
   const labels = history.map(d => d.timestamp);
 
   const commonOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
-      x: { grid: { display: false } },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { 
+    legend: { display: false } 
+  },
+  scales: {
+    y: {
+      grid: { 
+        color: 'rgba(255, 255, 255, 0.08)'   // Light grid lines
+      },
+      ticks: {
+        color: '#ffffff',                    // ← Y-axis numbers color (readings)
+        font: { size: 11 },
+      },
+      title: {
+        display: true,
+        text: 'Value',
+        color: '#fafafa',                    // ← Y-axis title color
+        font: { size: 12, weight: '500' }
+      }
     },
-  };
+    x: {
+      grid: { 
+        display: false 
+      },
+      ticks: {
+        color: 'rgb(252, 252, 252)',                    // ← X-axis labels color (Time)
+        font: { size: 11 },
+        maxRotation: 45,
+        minRotation: 45
+      },
+      title: {
+        display: true,
+        text: 'Time',
+        color: '#ffffff',                    // ← X-axis title color
+        font: { size: 12, weight: '500' }
+      }
+    },
+  },
+};
+
+  // const commonOptions = {
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   plugins: { legend: { display: false } },
+  //   scales: {
+  //     y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+  //     x: { grid: { display: false } },
+  //   },
+  // };
 
   const chartData = (label, key, color) => ({
     labels,
