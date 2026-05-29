@@ -65,42 +65,42 @@ export const StatisticsCards = ({
       // Default = Mean / Average
       default:
         return [
-          {
-            key: 'pH',
-            label: 'pH Level',
-            unit: '',
-            icon: Activity,
-            color: 'bg-emerald-600'
-          },
-          {
-            key: 'tds',
-            label: 'TDS',
-            unit: 'ppm',
-            icon: Gauge,
-            color: 'bg-purple-600'
-          },
+          // {
+          //   key: 'pH',
+          //   label: 'pH Level',
+          //   unit: '',
+          //   icon: Activity,
+          //   color: 'bg-emerald-600'
+          // },
+          // {
+          //   key: 'tds',
+          //   label: 'TDS',
+          //   unit: 'ppm',
+          //   icon: Gauge,
+          //   color: 'bg-purple-600'
+          // },
           {
             key: 'turbidity',
             label: 'Turbidity',
             unit: 'NTU',
             icon: Droplets,
             color: 'bg-cyan-600'
-          },
-          {
-            key: 'electricalConductivity',
-            label: 'Electrical Conductivity',
-            unit: '',
-            icon: Target,
-            color: 'bg-blue-600'
-          },
-          {
-            key: 'waterQualityIndex',
-            label: 'Water Quality Index',
-            unit: 'WQI',
-            icon: TrendingUp,
-            color: 'bg-rose-600',
-            hasClassification: true
-          },
+          }
+          // {
+          //   key: 'electricalConductivity',
+          //   label: 'Electrical Conductivity',
+          //   unit: '',
+          //   icon: Target,
+          //   color: 'bg-blue-600'
+          // },
+          // {
+          //   key: 'waterQualityIndex',
+          //   label: 'Water Quality Index',
+          //   unit: 'WQI',
+          //   icon: TrendingUp,
+          //   color: 'bg-rose-600',
+          //   hasClassification: true
+          // },
         ];
     }
   };
