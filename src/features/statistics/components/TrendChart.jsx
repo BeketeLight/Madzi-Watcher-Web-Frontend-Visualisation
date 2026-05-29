@@ -63,17 +63,18 @@ export default function TrendChart({
   const [activeMetrics, setActiveMetrics] = useState(Object.keys(METRIC_META));
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const lineData = useMemo(() => {
-    if (!Array.isArray(trendStats) || trendStats.length === 0) return [];
-    return trendStats.map(item => ({
-      date: item.date || 'N/A',
-      pH: item.avgPH !== null ? Number(item.avgPH) : null,
-      TDS: item.avgTDS !== null ? Number(item.avgTDS) : null,
-      Turbidity: item.avgTurbidity !== null ? Number(item.avgTurbidity) : null,
-      Conductivity: item.avgConductivity !== null ? Number(item.avgConductivity) : null,
-      WQI: item.avgWQI !== null ? Number(item.avgWQI) : null,
-    }));
-  }, [trendStats]);
+const lineData = useMemo(() => {
+  if (!Array.isArray(trendStats) || trendStats.length === 0) return [];
+
+  return trendStats.map(item => ({
+    date: item.date || 'N/A',
+    pH: item.avgPH != null ? Number(item.avgPH) : null,
+    TDS: item.avgTDS != null ? Number(item.avgTDS) : null,
+    Turbidity: item.avgTurbidity != null ? Number(item.avgTurbidity) : null,
+    Conductivity: item.avgConductivity != null ? Number(item.avgConductivity) : null,
+    WQI: item.avgWQI != null ? Number(item.avgWQI) : null,
+  }));
+}, [trendStats]);
 
   const handlePeriodChange = (newPeriod) => {
     setSelectedPeriod(newPeriod);
@@ -247,7 +248,7 @@ const getTickFormatter = (value) => {
                     strokeWidth={2.5}
                     fill={`url(#grad-${key})`}
                     dot={false}
-                    connectNulls={false}
+                    connectNulls={true}
                     isAnimationActive={false}
                   />
                 )
