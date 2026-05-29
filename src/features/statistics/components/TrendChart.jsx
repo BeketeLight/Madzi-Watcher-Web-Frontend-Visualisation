@@ -170,18 +170,23 @@ const getTickFormatter = (value) => {
               Refresh
             </Button>
 
-          <Select value={selectedPeriod} onValueChange={handlePeriodChange}>
-            <SelectTrigger className="w-[160px] bg-[#0d2137] border-[#16354f] text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-[#0d2137] border-[#16354f]">
-              {PERIOD_OPTIONS.map(opt => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <Select value={selectedPeriod} onValueChange={handlePeriodChange}>
+                <SelectTrigger className="w-[160px] bg-[#0d2137] border-[#16354f] text-white">
+                  <SelectValue className="text-white" />
+                </SelectTrigger>
+
+                <SelectContent className="bg-[#0d2137] border-[#16354f] text-white">
+                  {PERIOD_OPTIONS.map(opt => (
+                    <SelectItem
+                      key={opt.value}
+                      value={opt.value}
+                      className="text-white focus:bg-[#16354f] focus:text-white"
+                    >
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
         </div>
       </div>
 
